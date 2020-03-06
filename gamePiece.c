@@ -3,14 +3,20 @@
 #include "gamePiece.h"
 
 
-posPiece *newShip(Point* p1, Point* p2) {
+posPiece* newShip(List* pieces, char* name) {
 
     posPiece* newResult = malloc(sizeof(posPiece));
-    newResult -> p1 = p1;
-    newResult -> p2 = p2;
+    newResult -> pieces = pieces;
+    newResult -> name = name;
 
     return newResult;
 
 }
+
+
+
+
+
+
 
 

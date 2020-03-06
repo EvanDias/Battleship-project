@@ -1,18 +1,18 @@
 #pragma once
 #include <stdio.h>
+#include "list.h"
 #include "point.h"
 
 typedef struct posPiece_ posPiece;
 
-struct posPiece_
-{
+struct posPiece_ {
 
-    Point *p1, *p2;
-            
-};
+    List* pieces; 
+    char* name;
+
+}; 
 
 
-posPiece* newShip(Point* p1, Point* p2);
-
+posPiece* initShip(List* pieces, char* name);
 
 
