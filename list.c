@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "list.h"
 
-ListNode* initNode(void* data, ListNode* next) {
+ListNode *initNode(void* data, ListNode* next) {
 
     ListNode* newNode = malloc(sizeof(ListNode));
 
@@ -13,38 +13,38 @@ ListNode* initNode(void* data, ListNode* next) {
 
 }
 
-List* initList() {
+List *initList() {
 
     List* newList = malloc(sizeof(List));
 
-    
-    return newList;
+    newList -> head = NULL;
 
+    newList -> size = 0;
+
+    return newList;
 }
 
-List* headList(List* list, void* elem) {
+
+List *headList(List* list, void* elem) {
 
     ListNode* newNode = malloc(sizeof(ListNode));
     
-    newNode -> data = elem; 
+    newNode -> data = elem;
 
     if(list -> head == NULL) {  //list is empty
-
-        list -> head = newNode; 
+        list -> head = newNode;
         newNode -> next = NULL;
-
     }
 
-    if(list -> head != NULL) {
+    else if(list -> head != NULL) {
 
-        newNode -> next = list -> head; 
-        list -> head = newNode;        
-
+        newNode -> next = list -> head;
+        list -> head = newNode;
     }
 
-    return list;        
+    list -> size++;
 
-
+    return list;
 }
 
 void deleteList(List* list) {

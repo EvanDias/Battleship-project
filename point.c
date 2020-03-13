@@ -5,10 +5,10 @@
 Point* newPoint(int x_, int y_) {
 
     Point* newResult = malloc(sizeof(Point));
-     newResult -> x = x_;
-     newResult -> y = y_;
+    newResult -> x = x_;
+    newResult -> y = y_;
 
-     return newResult;
+    return newResult;
 }
 
 void deletePoint(Point* p) {
