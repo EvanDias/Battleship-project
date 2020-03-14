@@ -24,6 +24,6 @@ ListNode *initNode(void* data, ListNode* next);
 List *initList();
 void *headList(List *list, void *elem);
 List *removeNode(List *list, void *node);
-void printList(List *l);
+//void printList(List *l);
 void deleteList(List* list);
 
