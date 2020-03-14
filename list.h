@@ -7,7 +7,7 @@ typedef struct list_ List;
 
 struct listNode_ {
 
-    Point *data;
+    void *data;
     ListNode *next;
 
 };
@@ -22,6 +22,8 @@ struct list_ {
 
 ListNode *initNode(void* data, ListNode* next);
 List *initList();
-List *headList(List *list, void *elem);
+void *headList(List *list, void *elem);
+List *removeNode(List *list, void *node);
+void printList(List *l);
 void deleteList(List* list);
 
