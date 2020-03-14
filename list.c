@@ -49,6 +49,8 @@ void *headList(List* list, void* elem) {
 
 
 
+/*
+
 List *removeNode(List *list, void *node) {
 
     printf("tamanho da fila inicial: %d \n", list -> size);
@@ -57,10 +59,12 @@ List *removeNode(List *list, void *node) {
 
     //newNode -> data = node; 
 
+    if(list == NULL) printf("Não há lista");
+
     ListNode *current = list -> head;
     ListNode *temp = NULL;
 
-    while (current != NULL) {
+    while (list != NULL) {
 
         printf("current: %d \n",current -> data);
 
@@ -93,7 +97,7 @@ List *removeNode(List *list, void *node) {
 
 
         }
-        */
+     
 
         printf("current: antes o while %d \n",current -> data);
  
@@ -108,9 +112,22 @@ List *removeNode(List *list, void *node) {
     return list;
       
 
-}
+}*/
 
+List *removeNode(List *list, void *node) {
 
+    List *newList = initList();
+
+    ListNode* current = list -> head;
+
+    while(current != NULL) {
+     if(current -> data != node) headList(newList,current -> data);
+        current = current -> next;
+    }
+
+    return newList;
+
+} 
 void deleteList(List* list) {
 
     free(list);
@@ -142,7 +159,7 @@ int main() {
 
 
 
-    list = removeNode(list,2);
+    list = removeNode(list,12);
 
     printf("Nova Lista: ");
     printf("TAMANHO: %d \n", list -> size);
