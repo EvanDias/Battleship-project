@@ -15,8 +15,7 @@ int main() {
     printf("(2) Rules \n");
 
     int numberMenu; 
-    int numberChoiceShips;
-
+ 
     scanf("%d", &numberMenu);
     choiceMenu(numberMenu);
     //choiceShips(numberChoiceShips);
