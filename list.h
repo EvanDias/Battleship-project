@@ -7,7 +7,7 @@ typedef struct list_ List;
 
 struct listNode_ {
 
-    void *data;
+    Point *data;
     ListNode *next;
 
 };

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "matrix.h"
-#include "point.h"
+
 
 
 
@@ -42,7 +42,21 @@ Matrix *insertShipInMatrix(Matrix *a, SHIP *ship) {
     return a;
 }
 
+void *lookupInMatrix(Matrix *a, Point *point) {
 
+
+    if(a -> data[point -> y][point -> x] == 'x') {
+        a -> data[point -> y][point -> x] = '-';
+        printf("acertou num barco \n");
+
+
+    }
+
+    else printf("errou \n ");    
+
+}
+
+/*
 
 int main() {
 
@@ -50,6 +64,8 @@ int main() {
 
     Point *a = newPoint(2,3);
     Point *b = newPoint(2,4);
+    Point *c = newPoint(2,3);
+    Point *d = newPoint(2,1);
 
     List *l = initList();
 
@@ -60,7 +76,10 @@ int main() {
 
     SHIP *sh = new_ship(SOLO,l);
 
-    insertionMatrix(x, sh);
+    insertShipInMatrix(x, sh);
+
+    lookupInMatrix(x,c);
+    lookupInMatrix(x,d);
 
 
     for(int i = 0; i < 5; i++) {
@@ -72,3 +91,5 @@ int main() {
     }
 
 }
+
+*/

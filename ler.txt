@@ -1,0 +1,8 @@
+removeList -> já está a funcionar 
+afinal cada jogador tem de começar com o mesmo numerod e barcos: vamos ter que ja predefinir os barcos  -> vamos fazer só para 10x10 agora
+--1 T, 2 de 4, 3 de 3, 4 de 2 e 5 de 1 
+
+e consoante vao aumentando a matrix(vemos depois)
+
+era fixe que conseguiste apagar o terminal e também que quando carregasse nas rules, aquilo lia dum ficheiro as rules e punha no terminal - só para parecer que aprendemos a cena de ler ficheiros
+

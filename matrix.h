@@ -1,7 +1,6 @@
-#pragma once
 #include <stdio.h>
 #include "ship.h"
-#include "point.h"
+
 
 typedef struct matrix_ Matrix; 
 
