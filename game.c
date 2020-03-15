@@ -45,36 +45,43 @@ void choiceMenu(int numberMenu) {
 
     int numberMatrix;
 
-    if(numberMenu == 1) {  
+    if(numberMenu == 1) {
+       system("clear");
        printf("Write a number of matrix (n*n, n >=10): ");
        numberMatrix = choiceMatrix();
        choiceOne();
       }
 
     else if(numberMenu == 2) {
-        printf("Rules are: \n");
+        system("clear");
+        printf("Rules are: \n\n");
         choiceTwo();
     }
-    else printf("Don't exist that option");
 
+    else if(numberMenu == 3) {
+        exit(0);
+    }
 
 }
 
+
 void choiceOne() {
 
-    
-        printf("Create a user 1 \n");
-        printf("Your name \n");
-        char *name1 = malloc(sizeof(char)*1024); 
-        scanf("%s", name1);
-        User *user1= initUser(name1);
-        printf("User 1: %s \n", user1 -> nameUser);
-        printf("Create a user 2 \n");
-        printf("Your name \n");
-        char *name2 = malloc(sizeof(char)*1024); 
-        scanf("%s", name2);
-        User *user2= initUser(name2);
-        printf("User 2: %s \n", user2 -> nameUser);
+    system("clear");
+
+    printf("Create a user 1 \n");
+    printf("Your name: ");
+    char *name1 = malloc(sizeof(char)*1024);
+    scanf("%s", name1);
+    User *user1= initUser(name1);
+
+    printf("\nCreate a user 2 \n");
+    printf("Your name: ");
+    char *name2 = malloc(sizeof(char)*1024);
+    scanf("%s", name2);
+    User *user2= initUser(name2);
+    printf("\nUser 1: %s \n", user1 -> nameUser);
+    printf("User 2: %s \n", user2 -> nameUser);
  
 }
 
@@ -85,11 +92,23 @@ void choiceTwo() {
     int c;
     FILE *file;
     file = fopen("rules.txt", "r");
+
     if(file) {
         while((c = getc(file)) != EOF) putchar(c);
-        fclose(file);
-        }
-    printf("\n");
+          fclose(file);
+    }
+
+
+    /*
+    printf("\n\n-> Type 1 to return to the main Menu: ");
+    int choice;
+    scanf("%d",&choice);
+
+     while(choice != 1) {
+        printf("Wrong option, choose again: ");
+        scanf("%d", &choice);
+    }
+    */
 
 }
 
