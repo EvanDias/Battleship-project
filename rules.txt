@@ -1,0 +1,7 @@
+1) Each player have a number of ships( depending on the size of the board) to place somewhere on their board(random or manual). The ships can only be placed vertically or horizontally.
+2) Once the guessing begins, the players may not move the ships;
+3) The ships are: Solo (occupies 1 space), Dual (occupies 2 spaces), Trial (occupies 3 spaces), Quad (occupies 4 spaces) and T_Guy (occupies 5 spaces).
+4) Player's take turns guessing by calling out the coordinates (x and y).
+5) If player hits a boat coordinate, he can play again until he fails. If he hists all boat coordinates, the boat is sunk.
+6) If player miss a boat coordinate, is the opposing player's turn.
+7) The game  end when a player's boats are all sunk.
