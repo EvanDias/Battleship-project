@@ -1,7 +1,3 @@
-//
-// Created by evan on 09/03/20.
-//
-
 #include <stdio.h>
 #include "ship.h"
 

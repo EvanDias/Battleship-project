@@ -1,7 +1,3 @@
-//
-// Created by evan on 06/03/20.
-//
-
 #ifndef RANDOM_SHIP_H
 #define RANDOM_SHIP_H
 #include "point.h"
