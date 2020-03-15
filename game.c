@@ -2,13 +2,14 @@
 #include <stdlib.h>
 #include "game.h"
 
+#define MAX_BUFFER 1024 
 
-User *initUser(char *nameUser, SHIP **arrayShips) {
+User *initUser(char *nameUser) {
 
     User *newUser = malloc(sizeof(User));
 
     newUser -> nameUser = nameUser;
-    newUser -> arrayShips = arrayShips;
+    //newUser -> arrayShips = arrayShips;
 
 
     return newUser;
@@ -40,8 +41,6 @@ int choiceMatrix() {
 }
 
 
-}
-
 void choiceMenu(int numberMenu) {
 
     int numberMatrix;
@@ -52,7 +51,10 @@ void choiceMenu(int numberMenu) {
        choiceOne();
       }
 
-    else if(numberMenu == 2) printf("Rules are: ");
+    else if(numberMenu == 2) {
+        printf("Rules are: \n");
+        choiceTwo();
+    }
     else printf("Don't exist that option");
 
 
@@ -74,6 +76,21 @@ void choiceOne() {
         User *user2= initUser(name2);
         printf("User 2: %s \n", user2 -> nameUser);
  
+}
+
+
+void choiceTwo() {
+
+    char buffer[MAX_BUFFER];
+    int c;
+    FILE *file;
+    file = fopen("rules.txt", "r");
+    if(file) {
+        while((c = getc(file)) != EOF) putchar(c);
+        fclose(file);
+        }
+    printf("\n");
+
 }
 
 
