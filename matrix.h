@@ -14,6 +14,6 @@ struct matrix_
 
 Matrix *initMatrix(int size);
 Matrix *insertShipInMatrix(Matrix *a, SHIP *ship);
-
+void printMatrix(Matrix *m);
 
 

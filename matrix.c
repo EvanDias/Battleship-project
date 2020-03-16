@@ -18,7 +18,7 @@ Matrix* initMatrix(int size) {
     
     for(int i = 0; i < size; i++) {
        for(int j = 0; j< size; j++) { 
-            data[i][j] = '0';
+            data[i][j] = '.';
 
         }
     }
@@ -55,6 +55,59 @@ void *lookupInMatrix(Matrix *a, Point *point) {
     else printf("errou \n ");    
 
 }
+
+
+void printMatrix(Matrix *x) {
+    printf("   A ");
+    char ch = 'B';
+    for(char j = 1; j < (x -> size); j++) {
+        printf("%c ", ch);
+        ch++;
+    }
+    printf("\n");
+
+    char aux = 'A';
+
+    for(int i = 0; i < x -> size; i++) {
+       printf("%c  ", aux);
+
+       for(int j = 0; j< x -> size; j++) {
+       printf("%c ", x -> data[i][j]);
+    }
+        printf("\n");
+        aux++;
+    }
+
+}
+
+
+/*
+
+    // WITH NUMBERS
+void printMatrix(Matrix *x) {
+    printf("   0 ");
+    for(int j = 1; j < (x -> size); j++) {
+        printf("%d ", j);
+    }
+    printf("\n");
+
+    int aux = 0;
+
+    for(int i = 0; i < x -> size; i++) {
+       if(aux < 10) printf("%d  ", aux);
+       else printf("%d ", aux);
+
+       for(int j = 0; j< x -> size; j++) {
+       printf("%c ", x -> data[i][j]);
+    }
+        printf("\n");
+        aux++;
+    }
+
+}
+
+*/
+
 
 /*
 
