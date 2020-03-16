@@ -5,7 +5,7 @@
 
 #define MAX_BUFFER 1024 
 
-typedef enum {true, false} bool;
+//typedef enum {true, false} bool;
 
 User *initUser(char *nameUser) {
 
@@ -33,6 +33,8 @@ SHIP **arrayWithShips(Point **arrayPoints)  {
     return new;
 }
 
+
+// Verificar se um Navio horizontal não sai fora da área do jogo
 bool verifyPointHorizontal(int direction, Point *inicial, SHIP *ship, int n) {
 
     if(direction == 1) {
@@ -47,6 +49,8 @@ bool verifyPointHorizontal(int direction, Point *inicial, SHIP *ship, int n) {
 
 }
 
+
+// Verificar se um Vertical horizontal não sai fora da área do jogo
 bool verifyPointVertical(int direction, Point *inicial, SHIP *ship, int n) {
 
     if(direction == 1) { //cima para baixo
@@ -62,6 +66,7 @@ bool verifyPointVertical(int direction, Point *inicial, SHIP *ship, int n) {
 }
 
 
+// Introduzir um Navio na posição Horizontal no tabuleiro
 SHIP *horizontal(int direction, Point *inicial, SHIP *ship, int n) {
 
     int count = inicial -> x;
@@ -89,6 +94,8 @@ SHIP *horizontal(int direction, Point *inicial, SHIP *ship, int n) {
 
 }
 
+
+// Introduzir um Navio na posição Vertical no tabuleiro
 SHIP *vertical(int direction, Point *inicial, SHIP *ship, int n) {
 
     int count = inicial -> y;
@@ -113,11 +120,10 @@ SHIP *vertical(int direction, Point *inicial, SHIP *ship, int n) {
     }
 
     return ship;
-
 }
 
 
-
+//
 int choiceMatrix() {
 
     int numberN;
@@ -246,11 +252,8 @@ void initializeGame(User *user1, User *user2, int matrixSize) {
 
     // Matrix of the player 1
     Matrix *num1 = initMatrix(matrixSize);
-   // printMatrix(num1);
-
-    printMenuShips(); 
-
-
+    printMatrix(num1);
+/*
     Point *point = newPoint(2,3);
 
     List *list = initList();
@@ -265,9 +268,86 @@ void initializeGame(User *user1, User *user2, int matrixSize) {
     //SHIP **new = arrayWithShips(point);
 
     num1 = insertShipInMatrix(num1,shipTest);
+*/
 
-    printMatrix(num1);
-    
 
+
+    shipChoice(num1);
 
 }
+
+
+
+void shipChoice(Matrix *matrix) {
+
+    char ch_x, ch_y;
+
+
+    // SOLO SHIP
+    //for(int i=0; i<2; i++) {
+        printf("\nChoose one point to put SOLO ship:\n");
+        printf("x: ");
+        scanf(" %c", &ch_x);
+        printf("y: ");
+        scanf(" %c", &ch_y);
+
+        int x = charToInt(ch_x);
+        int y = charToInt(ch_y);
+
+        printf("x: %d -- y: %d\n", x, y);
+
+        Point *point = newPoint(x,y);
+
+        List *list = initList();
+
+        list = headList(list, point);
+
+        SHIP *shipSolo = new_ship(SOLO,list);
+
+
+        // FALTA FUNÇÃO PARA VER SE JA NAO EXISTE UM SHIP NO LOCAL
+
+        matrix = insertShipInMatrix(matrix, shipSolo);
+
+        printMatrix(matrix);
+    }
+
+
+
+
+
+// convert Character to int. Ex: (A B C D E ...) -> (0 1 2 3 4 ...)
+int charToInt(char chInput) {
+
+    int inc = 0;
+
+    char ch = 'A';
+
+    while(1) {
+
+        if(ch == chInput)
+            return inc;
+
+        ch++;
+        inc++;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

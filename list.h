@@ -9,7 +9,7 @@ typedef enum {true, false} bool;
 
 struct listNode_ {
 
-    void *data;
+    Point *data;
     ListNode *next;
 
 };
