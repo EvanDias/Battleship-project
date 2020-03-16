@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "list.h"
 
+
 ListNode *initNode(void* data, ListNode* next) {
 
     ListNode* newNode = malloc(sizeof(ListNode));
@@ -92,6 +93,21 @@ List *removeNode(List *list, void *node) {
     return list;
 }
 
+bool lookUp(List *list, void *point) {
+
+    ListNode *current = list -> head;
+    
+    int aux = 0; 
+
+    while(current != NULL) {
+        if(current -> data == point) aux = 1; 
+
+        current = current -> next;          
+    } 
+
+    return aux;
+}
+
 
 
 /*
@@ -143,9 +159,12 @@ int main() {
     headList(list,0);
     headList(list,9);
     headList(list,8);
-
+    
     printf("Lista: ");
     printList(list);
+
+    int encontrei = lookUp(list,2);
+    printf("%d \n ", encontrei);
 
     list = removeNode(list,8);
 
@@ -155,6 +174,5 @@ int main() {
     
 }
 
+
 */
-
-
