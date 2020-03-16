@@ -12,12 +12,16 @@ struct ship_ {
 
     ShipKind kind;
 
+    int size;
+
     List *list;
 
 };
 
 
 SHIP *new_ship(ShipKind kind, List *list);
+int sizeShip(SHIP *ship);
+
 void delete_ship(SHIP *sh);
 
 #endif //RANDOM_SHIP_H

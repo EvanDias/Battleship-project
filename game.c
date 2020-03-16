@@ -5,6 +5,8 @@
 
 #define MAX_BUFFER 1024 
 
+typedef enum {true, false} bool;
+
 User *initUser(char *nameUser) {
 
     User *newUser = malloc(sizeof(User));
@@ -16,12 +18,103 @@ User *initUser(char *nameUser) {
     return newUser;
 }
 
-SHIP **arrayWithShips()  {
+
+
+SHIP **arrayWithShips(Point **arrayPoints)  {
 
     SHIP **new = malloc(sizeof(SHIP*));
+    
+    SHIP *newShip = malloc(sizeof(SHIP));
+
+    List * list = initList();
+
+    
+
+    return new;
+}
+
+bool verifyPointHorizontal(int direction, Point *inicial, SHIP *ship, int n) {
+
+    if(direction == 1) {
+        if(inicial -> x + ship -> size - 1 > n) return false;
+        else return true;
+    }
+
+    if(direction == 2) {
+        if(inicial -> x - ship -> size - 1 < 0) return false; 
+        else return true; 
+    }
+
+}
+
+bool verifyPointVertical(int direction, Point *inicial, SHIP *ship, int n) {
+
+    if(direction == 1) { //cima para baixo
+        if(inicial -> y + ship -> size - 1 > n) return false;
+        else return true;
+    }
+
+    if(direction == 2) {  //baixo para cima
+        if(inicial -> y - ship -> size - 1 < 0) return false; 
+        else return true; 
+    }
+
 }
 
 
+SHIP *horizontal(int direction, Point *inicial, SHIP *ship, int n) {
+
+    int count = inicial -> x;
+
+    ship -> list = headList(ship-> list,inicial);   
+
+    if(direction == 1)  { //1 => esquerda p/direita
+    for(int i = 0;  i < ship -> size; i++) {
+        Point *p1 = malloc(sizeof(Point));
+        p1 = newPoint(count++,inicial -> y);
+        ship -> list = headList(ship -> list, p1);
+        }
+    }
+
+    if(direction == 2) { //2 => direita p/esqueda
+    for(int i = 0; i < ship -> size; i++) {
+        Point *p1 = malloc(sizeof(Point));
+        p1 = newPoint(count--, inicial -> y);
+        ship -> list = headList(ship -> list, p1);
+        
+        }
+    }
+
+    return ship;
+
+}
+
+SHIP *vertical(int direction, Point *inicial, SHIP *ship, int n) {
+
+    int count = inicial -> y;
+
+    ship -> list = headList(ship-> list,inicial);   
+
+    if(direction == 1)  { //1 => cima p/baixo
+    for(int i = 0;  i < ship -> size; i++) {
+        Point *p1 = malloc(sizeof(Point));
+        p1 = newPoint(inicial -> x,count++);
+        ship -> list = headList(ship -> list, p1);
+        }
+    }
+
+    if(direction == 2) { //2 => baixo p/ cima
+    for(int i = 0; i < ship -> size; i++) {
+        Point *p1 = malloc(sizeof(Point));
+        p1 = newPoint(inicial -> x, count--);
+        ship -> list = headList(ship -> list, p1);
+        
+        }
+    }
+
+    return ship;
+
+}
 
 
 
@@ -149,17 +242,32 @@ void initializeGame(User *user1, User *user2, int matrixSize) {
 
     system("clear");
 
-    printf("USER %s GAME BOARD: \n\n", user1 -> nameUser);
+    printf("GAME BOARD of user %s: \n\n", user1 -> nameUser);
 
     // Matrix of the player 1
     Matrix *num1 = initMatrix(matrixSize);
+   // printMatrix(num1);
+
+    printMenuShips(); 
+
+
+    Point *point = newPoint(2,3);
+
+    List *list = initList();
+
+    SHIP *shipTest = new_ship(QUAD,list);
+    //printf("SIZE: %d", shipTest -> size);
+
+    if(verifyPointVertical(2,point,shipTest,matrixSize)==true) shipTest = vertical(2,point,shipTest,matrixSize);
+    else printf("Try other point \n");
+    
+        
+    //SHIP **new = arrayWithShips(point);
+
+    num1 = insertShipInMatrix(num1,shipTest);
+
     printMatrix(num1);
-
-
-
+    
 
 
 }
-
-
-

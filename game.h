@@ -12,6 +12,8 @@ struct user_ {
 
 };
 
+
+
 User *initUser(char *nameUsers);
 void choiceMenu(int number);
 SHIP **arrayWithShips();  //array com as listas todas
