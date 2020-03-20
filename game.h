@@ -13,13 +13,14 @@ struct user_ {
 };
 
 
-
 User *initUser(char *nameUsers);
 void choiceMenu(int number);
-SHIP **arrayWithShips();  //array com as listas todas
-int choiceMatrix();       //escolher o valor da matrix
-void choiceOne();          //o que acontece na opção 1     
-void choiceTwo();         //o q acontece na opção 2
+SHIP **arrayWithShips();
+int choiceMatrix();
+void choiceOne();
+void choiceTwo();
 void mainMenu();
 void initializeGame(User *user1, User *user2, int matrixSize);
 int charToInt(char c);
+int * getNumShips();
+SHIP *initShip(int x, int y);
