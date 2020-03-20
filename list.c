@@ -3,17 +3,20 @@
 #include "list.h"
 
 
+//create a node
 ListNode *initNode(void* data, ListNode* next) {
 
     ListNode* newNode = malloc(sizeof(ListNode));
 
-        newNode -> data = data; 
+        newNode -> data = data;
         newNode -> next = next;
-    
+
     return newNode;
 
 }
 
+
+//init a list
 List *initList() {
 
     List* newList = malloc(sizeof(List));
@@ -26,10 +29,12 @@ List *initList() {
 }
 
 
+
+//add node a head list
 void *headList(List* list, void* elem) {
 
     ListNode* newNode = malloc(sizeof(ListNode));
-    
+
     newNode -> data = elem;
 
     if(list -> head == NULL) {  //list is empty
@@ -45,9 +50,10 @@ void *headList(List* list, void* elem) {
 
     list -> size++;
 
-   
+
 }
 
+//remove a specific node of list
 List *removeNode(List *list, void *node) {
 
     ListNode *current = list -> head;
@@ -57,7 +63,7 @@ List *removeNode(List *list, void *node) {
 
     if(current -> data == node) {
 
-        current -> data = current -> next -> data; 
+        current -> data = current -> next -> data;
         current -> next = current -> next -> next;
         list -> size--;
 
@@ -75,7 +81,7 @@ List *removeNode(List *list, void *node) {
             list -> size--;
 
         }
-        
+
         else if(current -> next != NULL && current -> data == node) {
 
             temp -> next = current -> next;
@@ -93,17 +99,18 @@ List *removeNode(List *list, void *node) {
     return list;
 }
 
+//look up a specific node's value of list
 bool lookUp(List *list, void *point) {
 
     ListNode *current = list -> head;
-    
-    int aux = 0; 
+
+    int aux = 0;
 
     while(current != NULL) {
-        if(current -> data == point) aux = 1; 
+        if(current -> data == point) aux = 1;
 
-        current = current -> next;          
-    } 
+        current = current -> next;
+    }
 
     return aux;
 }
@@ -128,7 +135,9 @@ List *removeNode(List *list, void *node) {
 }
 
 */
- 
+
+
+//delete a list
 void deleteList(List* list) {
 
     free(list);
@@ -139,7 +148,7 @@ void deleteList(List* list) {
 /*
 void printList(List *list) {
 
-    ListNode *node = list -> head; 
+    ListNode *node = list -> head;
 
     while( node != NULL) {
         printf("%d ", node -> data);
@@ -151,7 +160,7 @@ void printList(List *list) {
 
 int main() {
 
-   
+
     List *list = initList();
     headList(list,2);
     headList(list,5);
@@ -159,7 +168,7 @@ int main() {
     headList(list,0);
     headList(list,9);
     headList(list,8);
-    
+
     printf("Lista: ");
     printList(list);
 
@@ -171,7 +180,7 @@ int main() {
     printf("Nova Lista: ");
     printf("TAMANHO: %d \n", list -> size);
     printList(list);
-    
+
 }
 
 

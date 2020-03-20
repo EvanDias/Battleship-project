@@ -3,32 +3,32 @@
 #include "matrix.h"
 
 
-
-
+//init a matrix with its size and fill with '.'
 Matrix* initMatrix(int size) {
 
     Matrix* matrix = malloc(sizeof(Matrix));
-    matrix -> size = size; 
+    matrix -> size = size;
 
     char** data = malloc(sizeof(char*) * size);
 
-   
-   for(int i = 0; i < size; i++) 
+
+   for(int i = 0; i < size; i++)
         data[i] = malloc(size * sizeof(char));
-    
+
     for(int i = 0; i < size; i++) {
-       for(int j = 0; j< size; j++) { 
+       for(int j = 0; j< size; j++) {
             data[i][j] = '.';
 
         }
     }
 
-    matrix -> data = data; 
-    
+    matrix -> data = data;
+
     return matrix;
 }
 
 
+//insert a ship in matrix, that's, when put a point of ship, this point in matrix is replace for 'x'
 Matrix *insertShipInMatrix(Matrix *a, SHIP *ship) {
 
     ListNode *current =  ship -> list -> head;
@@ -42,6 +42,8 @@ Matrix *insertShipInMatrix(Matrix *a, SHIP *ship) {
     return a;
 }
 
+
+//loojup a point of matrix, and if this point is a ship's point, it say acertou or errou  - working in progress 
 void *lookupInMatrix(Matrix *a, Point *point) {
 
 
@@ -52,11 +54,12 @@ void *lookupInMatrix(Matrix *a, Point *point) {
 
     }
 
-    else printf("errou \n ");    
+    else printf("errou \n ");
 
 }
 
 
+//function to print a matrix
 void printMatrix(Matrix *x) {
     printf("   A ");
     char ch = 'B';
@@ -140,7 +143,7 @@ int main() {
 
 
     for(int i = 0; i < 5; i++) {
-       for(int j = 0; j< 5; j++) { 
+       for(int j = 0; j< 5; j++) {
        printf("%c ", x -> data[i][j]);
 
     }

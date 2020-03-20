@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "ship.h"
 
+//create a ship with kind and point's list
 SHIP *new_ship(ShipKind kind, List *list) {
 
     SHIP *ship = malloc(sizeof(SHIP));
@@ -12,44 +13,32 @@ SHIP *new_ship(ShipKind kind, List *list) {
     switch(ship -> kind) {
 
         case SOLO: ship -> size = 1;
-        break;       
+        break;
         case DUAL: ship -> size = 2;
-         break;    
+         break;
         case TRIAL: ship -> size = 3;
-         break;    
-        case QUAD: ship -> size = 4; 
-         break;    
+         break;
+        case QUAD: ship -> size = 4;
+         break;
         case T_GUY: ship -> size = 5;
-         break;    
+         break;
 
     }
 
     return ship;
 }
 
-
+//return a ship's size
 int sizeShip(SHIP *ship) {
-    
+
     return ship -> size;
 
 }
 
-
+//delete a ship
 void delete_ship(SHIP *sh) {
 
     free(sh -> list);
 
     free(sh);
 }
-
-
-
-
-
-
-
-
-
-
-
-

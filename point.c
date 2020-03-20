@@ -1,7 +1,10 @@
-#include <stdio.h> 
+#include <stdio.h>
 #include <stdlib.h>
 #include "point.h"
 
+
+
+//create a new point
 Point* newPoint(int x_, int y_) {
 
     Point* newResult = malloc(sizeof(Point));
@@ -11,9 +14,9 @@ Point* newPoint(int x_, int y_) {
     return newResult;
 }
 
+//delete a point
 void deletePoint(Point* p) {
 
     free(p);    //delete the memory
 
 }
-
