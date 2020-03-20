@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "ship.h"
+#include "matrix.h"
 
 typedef struct user_ User; 
 
@@ -22,3 +22,4 @@ void choiceTwo();
 void mainMenu();
 void initializeGame(User *user1, User *user2, int matrixSize);
 int charToInt(char c);
+void shipChoice(Matrix *matrix);
