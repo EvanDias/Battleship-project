@@ -1,4 +1,4 @@
-OBJS=game.o ship.o matrix.o list.o point.o main.o
+OBJS=game.o ship.o matrix.o list.o point.o menu.o main.o 
 PROGRAM=./main
 CFLAGS=-g
 
