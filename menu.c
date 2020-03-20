@@ -31,28 +31,6 @@ void mainMenu() {
 
 
 
-// Chosen option of the mainMenu()
-void choiceMenu(int numberMenu) {
-
-    int numberMatrix;
-
-    if(numberMenu == 1) {
-       choiceOne();
-      }
-
-    else if(numberMenu == 2) {
-        system("clear");
-        printf("Rules are: \n\n");
-        choiceTwo();
-    }
-
-    else if(numberMenu == 3) { // Close the program
-        exit(0);
-    }
-}
-
-
-
 // Start game
 void choiceOne() {
 
@@ -108,3 +86,27 @@ void choiceTwo() {
     mainMenu();
 
 }
+
+
+
+// Chosen option of the mainMenu()
+void choiceMenu(int numberMenu) {
+
+    int numberMatrix;
+
+    if(numberMenu == 1) {
+       choiceOne();
+      }
+
+    else if(numberMenu == 2) {
+        system("clear");
+        printf("Rules are: \n\n");
+        choiceTwo();
+    }
+
+    else if(numberMenu == 3) { // Close the program
+        exit(0);
+    }
+}
+
+

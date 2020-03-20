@@ -5,3 +5,4 @@
 void choiceOne();
 void choiceTwo();
 void mainMenu();
+void choiceMenu(int numberMenu);

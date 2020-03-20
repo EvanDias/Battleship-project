@@ -22,3 +22,7 @@ int choiceMatrix();
 void initializeGame(User *user1, User *user2, int matrixSize);
 int charToInt(char c);
 void shipChoice(Matrix *matrix);
+ShipKind whichKind(int flag);
+SHIP *initHeadShip(int x, int y);
+int * getNumShips();
+int size_Ship(int flag);
