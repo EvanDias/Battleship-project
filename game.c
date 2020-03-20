@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "game.h"
 #include "matrix.h"
+
 #define MAX_BUFFER 1024
 
 // Create a user
@@ -11,6 +12,7 @@ User *initUser(char *nameUser) {
 
     newUser -> nameUser = nameUser;
     //newUser -> arrayShips = arrayShips;
+
 
     return newUser;
 }
@@ -71,7 +73,6 @@ void mainMenu() {
     }
 
     choiceMenu(choice_menu);
-
 }
 
 
@@ -156,36 +157,6 @@ void choiceTwo() {
 
 
 
-void initializeGame(User *user1, User *user2, int matrixSize) {
-
-    system("clear");
-
-    printf("GAME BOARD of user %s: \n\n", user1 -> nameUser);
-
-    // Matrix of the player 1
-    Matrix *num1 = initMatrix(matrixSize);
-    printMatrix(num1);
-/*
-    Point *point = newPoint(2,3);
-
-    List *list = initList();
-
-    SHIP *shipTest = new_ship(QUAD,list);
-    //printf("SIZE: %d", shipTest -> size);
-
-    if(verifyPointVertical(2,point,shipTest,matrixSize)==true) shipTest = vertical(2,point,shipTest,matrixSize);
-    else printf("Try other point \n");
-
-
-    //SHIP **new = arrayWithShips(point);
-
-    num1 = insertShipInMatrix(num1,shipTest);
-*/
-
-    shipChoice(num1);
-}
-
-
 
 // Verify if a horizontal ship doesn't leave the game area
 bool verifyPointHorizontal(int direction, Point *inicial, SHIP *ship, int n) {
@@ -204,9 +175,8 @@ bool verifyPointHorizontal(int direction, Point *inicial, SHIP *ship, int n) {
 
 
 
-
 // Verify if a vertical ship doesn't leave the game area
-bool verifyPointVertical(int direction, Point *inicial, SHIP *ship) {
+bool verifyPointVertical(int direction, Point *inicial, SHIP *ship, int n) {
 
     if(direction == 1) { //cima para baixo
         if(inicial -> y + ship -> size - 1 > n) return false;
@@ -247,18 +217,16 @@ SHIP *horizontal(int direction, Point *inicial, SHIP *ship, int n) {
     }
 
     return ship;
+
 }
 
 
-
 // Insert a ship in the vertical position
-void vertical(int direction, SHIP *ship, Matrix *matrix, Point *initial) {
-
-    if(verifyPointVertical(direction, initial, ship) == false) {
-        printf("Boas\n");
-    }
+SHIP *vertical(int direction, Point *inicial, SHIP *ship, int n) {
 
     int count = inicial -> y;
+
+    ship -> list = headList(ship-> list,inicial);
 
     if(direction == 1)  { //1 => cima p/baixo
     for(int i = 0;  i < ship -> size; i++) {
@@ -277,22 +245,49 @@ void vertical(int direction, SHIP *ship, Matrix *matrix, Point *initial) {
         }
     }
 
-    insertShipInMatrix(matrix, ship);
+    return ship;
 }
 
+
+
+void initializeGame(User *user1, User *user2, int matrixSize) {
+
+
+    system("clear");
+
+    printf("GAME BOARD of user %s: \n\n", user1 -> nameUser);
+
+    // Matrix of the player 1
+    Matrix *num1 = initMatrix(matrixSize);
+    printMatrix(num1);
+/*
+    Point *point = newPoint(2,3);
+    List *list = initList();
+    SHIP *shipTest = new_ship(QUAD,list);
+    //printf("SIZE: %d", shipTest -> size);
+    if(verifyPointVertical(2,point,shipTest,matrixSize)==true) shipTest = vertical(2,point,shipTest,matrixSize);
+    else printf("Try other point \n");
+
+
+    //SHIP **new = arrayWithShips(point);
+    num1 = insertShipInMatrix(num1,shipTest);
+*/
+
+
+
+    shipChoice(num1);
+
+}
 
 
 // User choosing where to put yours ships
 void shipChoice(Matrix *matrix) {
 
-    int * numShips;
-    numShips = getNumShips();
-
     char ch_x, ch_y;
 
-    /*
+
     // SOLO SHIP
-    for(int i=0; i < numShips[0] ; i++) {
+    //for(int i=0; i<2; i++) {
         printf("\nChoose one point to put SOLO ship:\n");
         printf("x: ");
         scanf(" %c", &ch_x);
@@ -302,69 +297,45 @@ void shipChoice(Matrix *matrix) {
         int x = charToInt(ch_x);
         int y = charToInt(ch_y);
 
-        Point *initial = newPoint(x,y);
+        Point *point = newPoint(x,y);
+
+        List *list = initList();
+
+        list = headList(list, point);
+
+        SHIP *shipSolo = new_ship(SOLO,list);
+
 
         // FALTA FUNÇÃO PARA VER SE JA NAO EXISTE UM SHIP NO LOCAL
 
-        matrix = insertShipInMatrix(matrix, initHeadShip(x,y));
-
-        printMatrix(matrix);
-    }
-    */
-
-
-
-
-    // REMAINING SHIPS
-    for(int j=0; j < 1; j++) {
-        int choice, direction;
-
-        printf("Chose a positions for dual ship: \n");
-        printf("1) Vertical\n");
-        printf("2) Horizontal\n");
-        printf("Choice: ");
-        scanf("%d", &choice);
-
-        if(choice == 1) {
-            printf("1) Top -> down\n");
-            printf("2) Bottom -> up\n");
-            printf("Choice: ");
-            scanf("%d", &direction);
-
-
-        } else if(choice == 2) {
-            printf("1) Left to right\n ");
-            printf("2) Right to lef\n");
-            printf("Choice: ");
-            scanf("%d", &direction);
-        } else {
-            printf("Erro");
-        }
-
-        printf("\nChoose the first point: \n");
-        printf("x: ");
-        scanf(" %c", &ch_x);
-        printf("y: ");
-        scanf(" %c", &ch_y);
-
-        int x = charToInt(ch_x);
-        int y = charToInt(ch_y);
-
-        Point *initial = newPoint(x,y);
-
-        if(choice == 1) {
-
-            vertical(direction, initHeadShip(x,y), matrix, initial);
-        }
-
-        //else if(choice == 2)
+        matrix = insertShipInMatrix(matrix, shipSolo);
 
         printMatrix(matrix);
     }
 
+
+
+
+
+// convert Character to int. Ex: (A B C D E ...) -> (0 1 2 3 4 ...)
+int charToInt(char chInput) {
+
+    int inc = 0;
+
+    char ch = 'A';
+
+    while(1) {
+
+        if(ch == chInput)
+            return inc;
+
+        ch++;
+        inc++;
+    }
 }
 
 
+/*
 
 SHIP *initHeadShip(Point *initial) {
 
@@ -394,23 +365,7 @@ int * getNumShips() {
 }
 
 
-
-// convert Character to int. Ex: (A B C D E ...) -> (0 1 2 3 4 ...)
-int charToInt(char chInput) {
-
-    int inc = 0;
-
-    char ch = 'A';
-
-    while(1) {
-
-        if(ch == chInput)
-            return inc;
-
-        ch++;
-        inc++;
-    }
-}
+*/
 
 
 

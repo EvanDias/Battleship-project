@@ -22,5 +22,3 @@ void choiceTwo();
 void mainMenu();
 void initializeGame(User *user1, User *user2, int matrixSize);
 int charToInt(char c);
-int * getNumShips();
-SHIP *initShip(int x, int y);
