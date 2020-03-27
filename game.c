@@ -2,24 +2,23 @@
 #include <stdlib.h>
 #include "game.h"
 
-// Create a user
-User *initUser(char *nameUser) {
+    // Create a user
+    User *initUser(char *nameUser) {
 
-    User *newUser = malloc(sizeof(User));
+        User *newUser = malloc(sizeof(User));
 
-    newUser -> nameUser = nameUser;
-    //newUser -> arrayShips = arrayShips;
+        newUser -> nameUser = nameUser;
+        //newUser -> arrayShips = arrayShips;
 
-
-    return newUser;
-}
-
+        return newUser;
+    }
 
 
-// Array containing all ships of a User
-SHIP **arrayWithShips(Point **arrayPoints)  {
 
-    SHIP **new = malloc(sizeof(SHIP*));
+    // Array containing all ships of a User
+    SHIP **arrayWithShips(Point **arrayPoints)  {
+
+        SHIP **new = malloc(sizeof(SHIP*));
 
     SHIP *newShip = malloc(sizeof(SHIP));
 

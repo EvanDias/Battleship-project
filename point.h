@@ -8,6 +8,7 @@ struct Point_
 {
     int x;
     int y;
+
 };
 
 Point* newPoint(int x, int y);
