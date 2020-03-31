@@ -2,6 +2,16 @@
 #include <stdlib.h>
 #include "matrix.h"
 
+Cell *initCell() {
+
+    Cell *cell = malloc(sizeof(Cell));
+
+    cell -> notEmpty.shot = '0';
+
+    return cell;
+}
+
+
 
 //init a matrix with its size and fill with '.'
 Matrix* initMatrix(int size) {
@@ -9,15 +19,14 @@ Matrix* initMatrix(int size) {
     Matrix* matrix = malloc(sizeof(Matrix));
     matrix -> size = size;
 
-    char** data = malloc(sizeof(char*) * size);
+    Cell** data = malloc(sizeof(Cell*) * size);
 
-
-   for(int i = 0; i < size; i++)
-        data[i] = malloc(size * sizeof(char));
+    for(int i = 0; i < size; i++)
+        data[i] = malloc(size * sizeof(Cell));
 
     for(int i = 0; i < size; i++) {
-       for(int j = 0; j< size; j++) {
-            data[i][j] = '.';
+       for(int j = 0; j < size; j++) {
+            data[i][j] = initCell();
 
         }
     }
@@ -27,7 +36,7 @@ Matrix* initMatrix(int size) {
     return matrix;
 }
 
-
+/*
 //insert a ship in matrix, that's, when put a point of ship, this point in matrix is replace for 'x'
 Matrix *insertShipInMatrix(Matrix *a, SHIP *ship) {
 
@@ -125,3 +134,5 @@ int main() {
 }
 
 */
+
+

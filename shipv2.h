@@ -4,7 +4,7 @@
 #include "bitmap.h"
 
 
-typedef enum {SOLO, DUAL, TRIAL, QUAD, T_GUY} ShipKind;
+typedef enum {SOLO, TRIAL, SMALL_QUAD, BIGGEST_QUAD, L_GUY} ShipKind;
 
 typedef struct ship_ SHIP;
 
@@ -14,11 +14,14 @@ struct ship_ {
 
     BitMap *bp;
 
+    int columns, rows;
+
 };
 
 
 SHIP *newShip(ShipKind kind, BitMap *bp);
-//void delete_ship(SHIP *sh);
+SHIP *getShipSize(SHIP *sh)
+void delete_ship(SHIP *sh);
 
 #endif //RANDOM_SHIP_H
 
