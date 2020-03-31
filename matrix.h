@@ -28,7 +28,7 @@ struct cell_ {
 struct matrix_
 {
     int size;
-    Cell** data;
+    Cell*** data;
 };
 
 

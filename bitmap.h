@@ -1,9 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "point.h"
 
 typedef struct bitmap_ BitMap;
-
 
 struct bitmap_ {
 
@@ -16,8 +14,8 @@ struct bitmap_ {
 };
 
 BitMap *initBitMap(int columns, int row);
-void printBItMap(BitMap *x);
-BitMap *changeCellValue(BitMap *bp, Point *point, unsigned char ternaryValue);
+void printBitMap(BitMap *x);
+BitMap *changeCellValue(BitMap *bp, int x, int y, unsigned char ternaryValue);
 
 
 

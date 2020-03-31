@@ -7,10 +7,9 @@ Cell* initCell() {
     Cell* cell = malloc(sizeof(Cell));
 
     cell -> union1.empty.shot = '0';
-    cell -> union1.empty.value = '0';
+    cell -> union1.empty.value = '.';
     return cell;
 }
-
 
 
 //init a matrix with its size and fill with '.'
@@ -25,31 +24,67 @@ Matrix* initMatrix(int size) {
         data[i] = malloc(size * sizeof(Cell));
     }
 
-    Cell* newcell = initCell();
-  //  printf("%c \n", newcell -> union1.empty.shot);
-
     for(int i = 0; i < size; i++) {
        for(int j = 0; j < size; j++) {
-         Cell* newcell = initCell();
-         //printf("loop %c \n", newcell -> union1.empty.shot);
-        // printf("data[i][j]= %d \n", data[i][j]);
-         data[i][j] = newcell;
-         printf("shot %c \n", newcell -> union1.empty.shot);
-         printf("value %c \n", newcell -> union1.empty.value);
+         data[i][j] = initCell();
+
         }
     }
 
-  matrix -> data = data;
+    matrix -> data = data;
 
     return matrix;
 }
 
 int main() {
 
-  Matrix* x = initMatrix(2);
+  Matrix* x = initMatrix(5);
+  printMatrix(x);
+}
 
+
+
+Matrix* insertShipInMatrix(Matrix* matrix, SHIP *ship, Point *p) {
+
+    //
+    for(int i = 0; i < ship -> columns; i++) {
+      for(int j = 0; j < ship -> rows; i++) {
+          matrix -> data[i][j] -> union1.empty.value = '1';
+      }
+    }
+
+    return matrix;
+}
+
+
+
+//function to print a matrix
+void printMatrix(Matrix *x) {
+    printf("   A ");
+    char ch = 'B';
+    for(char j = 1; j < (x -> size); j++) {
+        printf("%c ", ch);
+        ch++;
+    }
+    printf("\n");
+
+    char aux = 'A';
+
+    for(int i = 0; i < x -> size; i++) {
+       printf("%c  ", aux);
+
+       for(int j = 0; j< x -> size; j++) {
+       printf("%c ", x -> data[i][j] -> union1.empty.value);
+    }
+        printf("\n");
+        aux++;
+    }
 
 }
+
+
+
+
 
 /*
 //insert a ship in matrix, that's, when put a point of ship, this point in matrix is replace for 'x'
@@ -81,32 +116,6 @@ void *lookupInMatrix(Matrix *a, Point *point) {
     else printf("errou \n ");
 
 }
-
-
-//function to print a matrix
-void printMatrix(Matrix *x) {
-    printf("   A ");
-    char ch = 'B';
-    for(char j = 1; j < (x -> size); j++) {
-        printf("%c ", ch);
-        ch++;
-    }
-    printf("\n");
-
-    char aux = 'A';
-
-    for(int i = 0; i < x -> size; i++) {
-       printf("%c  ", aux);
-
-       for(int j = 0; j< x -> size; j++) {
-       printf("%c ", x -> data[i][j]);
-    }
-        printf("\n");
-        aux++;
-    }
-
-}
-
 
 
 

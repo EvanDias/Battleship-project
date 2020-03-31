@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include "bitmap.h"
 
-
-
 BitMap * initBitMap(int columns, int row) {
 
     BitMap *bp = malloc(sizeof(BitMap));
@@ -30,10 +28,13 @@ BitMap * initBitMap(int columns, int row) {
 }
 
 
-// Modify the ternary value contained in the BitMap
-BitMap *changeCellValue(BitMap *bp, Point* point, unsigned char ternaryValue) {
 
-    bp -> data[point -> x][point -> y] = ternaryValue;
+
+
+// Modify the ternary value contained in the BitMap
+BitMap *changeCellValue(BitMap *bp, int x, int y, unsigned char ternaryValue) {
+
+    bp -> data[x][y] = ternaryValue;
 
     return bp;
 }
@@ -56,7 +57,7 @@ void printBitMap(BitMap *x) {
 
 
 
-
+/*
 int main() {
 
     BitMap* x = initBitMap(7,4);
@@ -65,15 +66,13 @@ int main() {
 
     printf("\n\n");
 
-    Point *p = newPoint(2,2);
-
-    changeCellValue(x,p,'2');
+    changeCellValue(x,2,2,'2');
 
     printBitMap(x);
 
     printf("\n");
 
-}
+}*/
 
 
 
