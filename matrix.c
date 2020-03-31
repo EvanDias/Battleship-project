@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include "matrix.h"
 
-Cell *initCell() {
+Cell* initCell() {
 
-    Cell *cell = malloc(sizeof(Cell));
+    Cell* cell = malloc(sizeof(Cell));
 
-    cell -> notEmpty.shot = '0';
-
+    cell -> union1.empty.shot = '0';
+    cell -> union1.empty.value = '0';
     return cell;
 }
 
@@ -19,21 +19,36 @@ Matrix* initMatrix(int size) {
     Matrix* matrix = malloc(sizeof(Matrix));
     matrix -> size = size;
 
-    Cell** data = malloc(sizeof(Cell*) * size);
+    Cell*** data = malloc(sizeof(Cell*) * size);
 
-    for(int i = 0; i < size; i++)
+    for(int i = 0; i < size; i++) {
         data[i] = malloc(size * sizeof(Cell));
+    }
+
+    Cell* newcell = initCell();
+  //  printf("%c \n", newcell -> union1.empty.shot);
 
     for(int i = 0; i < size; i++) {
        for(int j = 0; j < size; j++) {
-            data[i][j] = initCell();
-
+         Cell* newcell = initCell();
+         //printf("loop %c \n", newcell -> union1.empty.shot);
+        // printf("data[i][j]= %d \n", data[i][j]);
+         data[i][j] = newcell;
+         printf("shot %c \n", newcell -> union1.empty.shot);
+         printf("value %c \n", newcell -> union1.empty.value);
         }
     }
 
-    matrix -> data = data;
+  matrix -> data = data;
 
     return matrix;
+}
+
+int main() {
+
+  Matrix* x = initMatrix(2);
+
+
 }
 
 /*
@@ -52,7 +67,7 @@ Matrix *insertShipInMatrix(Matrix *a, SHIP *ship) {
 }
 
 
-//loojup a point of matrix, and if this point is a ship's point, it say acertou or errou  - working in progress 
+//loojup a point of matrix, and if this point is a ship's point, it say acertou or errou  - working in progress
 void *lookupInMatrix(Matrix *a, Point *point) {
 
 
@@ -134,5 +149,3 @@ int main() {
 }
 
 */
-
-

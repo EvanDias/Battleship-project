@@ -7,17 +7,19 @@ typedef struct cell_ Cell;
 
 
 struct cell_ {
-
     union {
+      struct {
         unsigned char shot;
+        unsigned char value;
 
-        struct {
+      }empty;
+
+      struct {
         BitMap *bp;
         unsigned char shot;
-        }s;
-
-    }notEmpty;
-
+        unsigned char value;
+      }notEmpty;
+    }union1;
 };
 
 
@@ -30,9 +32,7 @@ struct matrix_
 };
 
 
-Cell *initCell();
+Cell* initCell();
 Matrix *initMatrix(int size);
 Matrix *insertShipInMatrix(Matrix *a, SHIP *ship);
 void printMatrix(Matrix *m);
-
-
