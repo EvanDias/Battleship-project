@@ -15,8 +15,6 @@ struct ship_ {
 
     int columns, rows;
 
-    int direction; // VER DEPOIS
-
     int shotCount;
 
 };
@@ -26,7 +24,8 @@ SHIP *newShip(ShipKind kind);
 void *shipToOne(SHIP *sh);
 SHIP *getShipSize(SHIP *sh);
 int numCells(SHIP *sh);
+void translation(SHIP *sh, int sizeVertical, int sizeHorizontal);
+void rotation(SHIP *sh, int degrees);
 void delete_ship(SHIP *sh);
 
 #endif //RANDOM_SHIP_H
-
