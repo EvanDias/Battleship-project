@@ -6,8 +6,9 @@ Cell* initCell() {
 
     Cell* cell = malloc(sizeof(Cell));
 
-    cell -> union1.empty.shot = '0';
-    cell -> union1.empty.value = '.';
+    cell -> ship = NULL;
+    cell -> shot = ' ';
+    cell -> value = '.';
     return cell;
 }
 
@@ -18,7 +19,7 @@ Matrix* initMatrix(int size) {
     Matrix* matrix = malloc(sizeof(Matrix));
     matrix -> size = size;
 
-    pCell* data = malloc(sizeof(Cell*) * size);
+    Cell*** data = malloc(sizeof(Cell*) * size);
 
     for(int i = 0; i < size; i++) {
         data[i] = malloc(size * sizeof(Cell));
@@ -36,21 +37,96 @@ Matrix* initMatrix(int size) {
     return matrix;
 }
 
-Matrix *changeCellValue(Matrix *matrix, int x, int y) {
+
+void insertShipInMatrix(Matrix *matrix, SHIP *ship, int x, int y) {
+
+
+      bool insert = canInsert(matrix,ship,x,y);
+
+      //printf("%d\n", insert);
+
+      if(insert) {
+      for(int i = 0; i < ship -> columns; i++) {
+        for(int j = 0; j < ship -> rows; j++) {
+          if (ship -> bp -> data[j][i] == '1') {
+            matrix -> data[j+y][i+x]-> ship = ship;
+            matrix -> data[j+y][i+x]-> value = 'x';
+          }
+        }
+      }
+    }
+}
+
+
+bool canInsert(Matrix *matrix, SHIP *ship, int x, int y) {
+
+    bool insert = true;
+
+    for(int i = 0; i < ship -> columns; i++) {
+      for(int j = 0; j < ship -> rows; j++) {
+          if(matrix -> data[j+y][i+x] -> value == 'x') {
+          insert = false;
+        }
+
+
+      }
+    }
+
+     return insert;
+}
 
 
 
+void changeValueOfMatrix(Matrix *a, int x, int y, unsigned char valueTernary) {
+
+      a -> data[x][y] -> shot  = valueTernary;
 
 }
 
+
+
+
+
+void printMatrix(Matrix *matrix) {
+
+    for(int i = 0; i < matrix -> size; i++) {
+      printf("\n");
+      for(int j = 0; j < matrix -> size; j++) {
+        printf("%c ", matrix -> data[i][j] -> value);
+      }
+    }
+    printf("\n");
+}
+
+
+
+
+
 /*
+
+
 int main() {
 
-  Matrix* x = initMatrix(5);
+  Matrix* x = initMatrix(20);
+
+  SHIP *sh = newShip(4);
+
+  SHIP *sh1 = newShip(4);
+
+  SHIP *sh2 = newShip(3);
+
+
+  insertShipInMatrix(x,sh,2,3);
+
+  insertShipInMatrix(x,sh1,3,3);
+
   printMatrix(x);
+
+  //printMatrix(x);
 }
-*/
-/*
+
+
+/
 
 Matrix* insertShipInMatrix(Matrix* matrix, SHIP *ship, int x, int y) {
 

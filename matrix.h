@@ -3,22 +3,13 @@
 
 typedef struct matrix_ Matrix;
 typedef struct cell_ Cell;
-typedef struct Cell** pCell;
+//typedef struct Cell** pCell;
 
 struct cell_ {
-    union {
-      struct {
+
+        SHIP *ship;
         unsigned char shot;
         unsigned char value;
-
-      }empty;
-
-      struct {
-        BitMap *bp;
-        unsigned char shot;
-        unsigned char value;
-      }notEmpty;
-    }union1;
 };
 
 
@@ -27,11 +18,13 @@ struct cell_ {
 struct matrix_
 {
     int size;
-    pCell* data;
+    Cell*** data;
 };
 
 
 Cell* initCell();
 Matrix *initMatrix(int size);
-//Matrix *insertShipInMatrix(Matrix *a, SHIP *ship);
-Matrix *changeValueOfMatrix(Matrix *a, int x, int y);
+void insertShipInMatrix(Matrix *a, SHIP *ship, int x, int y);
+void changeValueOfMatrix(Matrix *a, int x, int y, unsigned char valueTernary);
+void printMatrix(Matrix *matrix);
+bool canInsert(Matrix *matrix, SHIP *ship, int x, int y);
