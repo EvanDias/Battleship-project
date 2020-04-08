@@ -1,10 +1,9 @@
 #include <stdio.h>
-#include "ship.h"
-#include "bitmap.h"
+#include "list.h"
 
 typedef struct matrix_ Matrix;
 typedef struct cell_ Cell;
-
+typedef struct Cell** pCell;
 
 struct cell_ {
     union {
@@ -28,11 +27,11 @@ struct cell_ {
 struct matrix_
 {
     int size;
-    Cell*** data;
+    pCell* data;
 };
 
 
 Cell* initCell();
 Matrix *initMatrix(int size);
-Matrix *insertShipInMatrix(Matrix *a, SHIP *ship);
-void printMatrix(Matrix *m);
+//Matrix *insertShipInMatrix(Matrix *a, SHIP *ship);
+Matrix *changeValueOfMatrix(Matrix *a, int x, int y);

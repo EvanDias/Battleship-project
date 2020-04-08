@@ -16,9 +16,3 @@ struct bitmap_ {
 BitMap *initBitMap(int columns, int row);
 void printBitMap(BitMap *x);
 BitMap *changeCellValue(BitMap *bp, int x, int y, unsigned char ternaryValue);
-
-
-
-
-
-
