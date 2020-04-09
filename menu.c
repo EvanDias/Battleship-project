@@ -5,7 +5,7 @@
 
 void mainMenu() {
 
-    system("clear");
+    //system("clear");
 
     printf("------------------------------------------------ \n");
     printf("            WELCOME TO BATTLESHIP                \n");
@@ -35,27 +35,40 @@ void mainMenu() {
 void choiceOne() {
 
     system("clear");
-    printf("Write the size of the matrix (n*n, n >=10): ");
-    int sizerMatrix = choiceMatrix();
+
+    int sizerMatrix = chooseMatrixSize();
 
     printf("Create a user 1 \n");
     printf("Your name: ");
     char *name1 = malloc(sizeof(char)*1024);
     scanf("%s", name1);
-    User *user1 = initUser(name1);
+    User *user1 = initUser(name1,sizerMatrix);
 
     printf("\nCreate a user 2 \n");
     printf("Your name: ");
     char *name2 = malloc(sizeof(char)*1024);
     scanf("%s", name2);
-    User *user2= initUser(name2);
-
-    printf("\nUser 1: %s \n", user1 -> nameUser);
-    printf("User 2: %s \n", user2 -> nameUser);
+    User *user2= initUser(name2,sizerMatrix);
 
 
-    initializeGame(user1, user2, sizerMatrix);
 
+    printf("\nUser 1: %s \n", user1 -> username);
+    printf("User 2: %s \n", user2 -> username);
+
+        /*
+        ListNode *node = user1 -> shipList -> head;
+        while(node != NULL) {
+            printBitMap(node -> ship -> bp);
+            printf("\n");
+            node = node -> next;
+        }
+        */
+
+
+    //printMatrix(user1 -> matrix);
+    //initializeGame(user1, user2, sizerMatrix);
+    choiceShips(user1);
+    choiceShips(user2);
 }
 
 
@@ -108,5 +121,76 @@ void choiceMenu(int numberMenu) {
         exit(0);
     }
 }
+
+
+void choiceShips(User *user) {
+
+    ListNode *node = user -> shipList -> head;
+    int x,y, degrees;
+
+    for(int i=0; i<5; i++) {
+    //while(user -> shipList -> size != 0) {
+
+        printf("Choose a translation of ship KIND\n");
+        printf("x: ");
+        scanf("%d", &x);
+        printf("\ny: ");
+        scanf("%d",&y);
+
+        translation(node -> ship, y, x);
+
+
+
+
+        printf("Choose a rotation to the ship KIND\n");
+        printf("Degrees: ");
+        scanf("%d", &degrees);
+
+        rotation(node -> ship, degrees);
+
+        printf("Ponto refenrecia: \n");
+
+
+        printf("x: ");
+        scanf("%d", &x);
+        printf("\ny: ");
+        scanf("%d",&y);
+
+
+
+        bool inserted = insertShipInMatrix(user -> matrix, node -> ship, x, y);
+
+        while(inserted == false) {
+            printf("x: ");
+            scanf("%d", &x);
+            printf("\ny: ");
+            scanf("%d",&y);
+
+            inserted = insertShipInMatrix(user -> matrix, node -> ship, x, y);
+        }
+
+        printf("translationx: %d || translationy: %d || rotation: %d\n", node -> ship -> translationx,node -> ship -> translationy, node -> ship -> rotation );
+        node = node -> next;
+
+        printMatrix(user -> matrix);
+
+    }
+
+
+/*
+    ListNode *node = user1 -> shipList -> head;
+        while(node != NULL) {
+            printBitMap(node -> ship -> bp);
+            printf("\n");
+            node = node -> next;
+        }
+        */
+
+
+
+}
+
+
+
 
 

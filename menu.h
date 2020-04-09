@@ -2,7 +2,10 @@
 #include <stdlib.h>
 #include "gamev2.h"
 
+#define MAX_BUFFER 1024
+
+void mainMenu();
 void choiceOne();
 void choiceTwo();
-void mainMenu();
 void choiceMenu(int numberMenu);
+void choiceShips(User *user);

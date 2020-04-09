@@ -1,43 +1,41 @@
 #include <stdio.h>
 #include "gamev2.h"
 
-User *initUser(char *username, List *shipList, Matrix *matrix) {
+User *initUser(char *username, int sizeMatrix) {
 
   User *newUser = malloc(sizeof(User));
 
   newUser -> username = username;
 
-  matrix = initMatrix(matrix->size);
+  Matrix *matrix = initMatrix(sizeMatrix);
 
   newUser -> matrix = matrix;
 
-  shipList = listShips(matrix->size);
+  newUser -> shipList = listShips(sizeMatrix);
 
-  newUser -> listShips = shipList;
-
-  return newUser;
-
+   return newUser;
 }
+
 
 List *listShips(int sizeMatrix) {
 
     int number = numberShips(sizeMatrix);
 
-    List *list = initList();
+    List *shipList = initList();
 
     int i = 0;
 
     while(number != 0) {
       while(i < 5 && number != 0) {
         SHIP *ship = newShip(i);
-        headList(list,ship);
+        headList(shipList,ship);
         number--;
         i++;
       }
       i = 0;
     }
 
-    return list;
+    return shipList;
 
 }
 
@@ -119,6 +117,20 @@ void printList(List *list) {
     printf("\n");
 
   }
+
+int chooseMatrixSize() {
+    int size;
+
+    printf("Write the size of the matrix (20 <= x <= 40): ");
+    scanf("%d", &size);
+
+    while(size < 20 || size > 40) {
+        printf("Write the size of the matrix (20 <= x <= 40): ");
+        scanf("%d", &size);
+    }
+
+    return size;
+}
 
 
 /*

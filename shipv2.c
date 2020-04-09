@@ -32,12 +32,6 @@ SHIP *newShip(ShipKind kind) {
 
     ship -> bp = bp;
 
-    ship -> rotation = 0;
-
-    ship -> translationx = 0;
-
-    ship -> translationy = 0;
-
     shipToOne(ship);
 
     return ship;
@@ -148,8 +142,8 @@ void translation(SHIP *sh, int sizeVertical, int sizeHorizontal) {
 }
     else printf("This boat can't translate! \n");
 
-    sh -> translationx = sizeVertical;
-    sh -> translationy = sizeHorizontal;
+    sh -> translationy = sizeVertical;
+    sh -> translationx = sizeHorizontal;
 
 }
 
@@ -178,10 +172,13 @@ void rotation(SHIP *sh, int degrees) {
         printf("This ship can't rotate\n");
         break;
       }
-      }
+     }
 
     sh -> bp = bitFinal;
     sh -> rotation = degrees;
+    int aux = sh -> columns;
+    sh -> columns = sh -> rows;
+    sh -> rows = aux;
 }
 
 
@@ -194,17 +191,4 @@ int numberShips(int sizeMatrix) {
   return number;
 
 }
-
-
-
-/*
-bool shotState(SHIP *sh, int x, int y) {
-
-  if(sh -> bp -> data[y][x] == '1') {
-    sh -> shotCount--;
-    return true;
-  }
-  else return false;
-}
-*/
 

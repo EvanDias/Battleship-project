@@ -49,6 +49,7 @@ void printBitMap(BitMap *x) {
     for(int i = 0; i < x->row; i++) {
         printf("\n");
            for(int j = 0; j< x -> columns; j++) {
+                //if(x->data[i][j]=='1') printf("%c ", x -> data[i][j]);
                 printf("%c ", x -> data[i][j]);
             }
         }

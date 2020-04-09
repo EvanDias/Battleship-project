@@ -24,7 +24,7 @@ struct matrix_
 
 Cell* initCell();
 Matrix *initMatrix(int size);
-void insertShipInMatrix(Matrix *a, SHIP *ship, int x, int y);
+bool insertShipInMatrix(Matrix *a, SHIP *ship, int x, int y);
 void changeValueOfMatrix(Matrix *a, int x, int y, unsigned char valueTernary);
 void printMatrix(Matrix *matrix);
 bool canInsert(Matrix *matrix, SHIP *ship, int x, int y);

@@ -158,8 +158,8 @@ void printList(List *list) {
     printf("\n");
 
   }
-
 */
+
 /*
 int main() {
 

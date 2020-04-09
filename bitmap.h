@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define sizeBitMap 5
+
 typedef struct bitmap_ BitMap;
 
 struct bitmap_ {

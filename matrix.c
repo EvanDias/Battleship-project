@@ -38,41 +38,54 @@ Matrix* initMatrix(int size) {
 }
 
 
-void insertShipInMatrix(Matrix *matrix, SHIP *ship, int x, int y) {
+bool insertShipInMatrix(Matrix *matrix, SHIP *ship, int x, int y) {
 
 
       bool insert = canInsert(matrix,ship,x,y);
-
-      //printf("%d\n", insert);
+      bool insertMatrix = false;
 
       if(insert) {
       ship -> bp -> refx = x; 
       ship -> bp -> refy = y;
 
-      for(int i = 0; i < ship -> columns; i++) {
-        for(int j = 0; j < ship -> rows; j++) {
+      printBitMap(ship -> bp); printf("\n");
+      for(int i = 0; i < sizeBitMap; i++) {
+        for(int j = 0; j < sizeBitMap; j++) {
           if (ship -> bp -> data[j][i] == '1') {
             matrix -> data[j+y][i+x]-> ship = ship;
             matrix -> data[j+y][i+x]-> value = 'x';
+            insertMatrix = true;
           }
         }
       }
     }
+
+    return insertMatrix;
 }
 
 
 bool canInsert(Matrix *matrix, SHIP *ship, int x, int y) {
 
     bool insert = true;
+    int broke = 0;
 
     for(int i = 0; i < ship -> columns; i++) {
       for(int j = 0; j < ship -> rows; j++) {
-          if((j+y) >= matrix -> size || (i+x) >= matrix -> size) insert = false;
+          if((j+y) >= matrix -> size || (i+x) >= matrix -> size) {
+            insert = false;
+            broke = 1;
+            break;
+          }
+
           else if(matrix -> data[j+y][i+x] -> value == 'x') {
-          insert = false;
-        }
-
-
+            insert = false;
+            broke = 1;
+            break;
+          }
+      }
+      if(broke) {
+        fprintf(stderr, "Error, you dont insert this ship\n");
+        break;
       }
     }
 
@@ -95,38 +108,31 @@ void printMatrix(Matrix *matrix) {
 
 
 
+
+
 /*
-
-
-
-
 int main() {
 
   Matrix* x = initMatrix(20);
 
-  SHIP *sh = newShip(4);
+  SHIP *sh = newShip(3);
 
-  SHIP *sh1 = newShip(4);
+  SHIP *sh1 = newShip(3);
 
-  SHIP *sh2 = newShip(3);
+  SHIP *sh2 = newShip(4);
+
+  rotation(sh, 270);
+
+  //printBitMap(sh -> bp);
 
 
   insertShipInMatrix(x,sh,2,3);
 
   insertShipInMatrix(x,sh1,3,3);
 
-  insertShipInMatrix(x,sh1,17,2);
+  //insertShipInMatrix(x,sh1,17,2);
 
   printMatrix(x);
-
-  for(int i = 0; i < x -> size; i++) {
-    for(int j = 0; j < x -> size; j++) {
-        printf("kind: %d \n", x -> data[i][j] -> ship -> kind);
-
-    }
-  }
-  //printMatrix(x);
 }
-
 
 */
