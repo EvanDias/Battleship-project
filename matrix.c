@@ -7,7 +7,7 @@ Cell* initCell() {
     Cell* cell = malloc(sizeof(Cell));
 
     cell -> ship = NULL;
-    cell -> shot = ' ';
+    cell -> shot = '0';
     cell -> value = '.';
     return cell;
 }
@@ -46,6 +46,9 @@ void insertShipInMatrix(Matrix *matrix, SHIP *ship, int x, int y) {
       //printf("%d\n", insert);
 
       if(insert) {
+      ship -> bp -> refx = x; 
+      ship -> bp -> refy = y;
+
       for(int i = 0; i < ship -> columns; i++) {
         for(int j = 0; j < ship -> rows; j++) {
           if (ship -> bp -> data[j][i] == '1') {
@@ -64,7 +67,8 @@ bool canInsert(Matrix *matrix, SHIP *ship, int x, int y) {
 
     for(int i = 0; i < ship -> columns; i++) {
       for(int j = 0; j < ship -> rows; j++) {
-          if(matrix -> data[j+y][i+x] -> value == 'x') {
+          if((j+y) >= matrix -> size || (i+x) >= matrix -> size) insert = false;
+          else if(matrix -> data[j+y][i+x] -> value == 'x') {
           insert = false;
         }
 
@@ -74,15 +78,6 @@ bool canInsert(Matrix *matrix, SHIP *ship, int x, int y) {
 
      return insert;
 }
-
-
-
-void changeValueOfMatrix(Matrix *a, int x, int y, unsigned char valueTernary) {
-
-      a -> data[x][y] -> shot  = valueTernary;
-
-}
-
 
 
 
@@ -100,9 +95,9 @@ void printMatrix(Matrix *matrix) {
 
 
 
-
-
 /*
+
+
 
 
 int main() {
@@ -120,50 +115,18 @@ int main() {
 
   insertShipInMatrix(x,sh1,3,3);
 
+  insertShipInMatrix(x,sh1,17,2);
+
   printMatrix(x);
 
+  for(int i = 0; i < x -> size; i++) {
+    for(int j = 0; j < x -> size; j++) {
+        printf("kind: %d \n", x -> data[i][j] -> ship -> kind);
+
+    }
+  }
   //printMatrix(x);
 }
 
 
-/
-
-Matrix* insertShipInMatrix(Matrix* matrix, SHIP *ship, int x, int y) {
-
-    for(int i = x; i < matrix -> size; i++) {
-      for(int j = y; j < matrix -> size;j++) {
-        matrix -> data[i][j] = ship -> bp -> data[i][j];
-      }
-    }
-
-    return matrix;
-}
-
-Matrix *auxInserShip(Matrix* matrix, SHIP *ship) {
-
-    for(int i = 0; i < matrix -> size; i++) {
-      for(int j = 0; j < matrix -> size; j++) {
-        matrix -> data[i][j] = ship -> bp -> data[i][j];
-      }
-    }
-
-    return matrix;
-}
-
-
-
-
-//function to print a matrix
-void printMatrix(Matrix *x) {
-
-    for(int i = 0; i < x->size; i++) {
-        printf("\n");
-            for(int j = 0; j< x -> size; j++) {
-              printf("%c ", x -> data[i][j] -> union1.notEmpty.shot);
-              }
-          }
-
-}
-
-//loojup a point of matrix, and if this point is a ship's point, it say acertou or errou  - working in progress
 */

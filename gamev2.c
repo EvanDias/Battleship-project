@@ -41,20 +41,66 @@ List *listShips(int sizeMatrix) {
 
 }
 
+bool sinkBoat(SHIP *ship) {
+
+    int sinkBoatV = false; 
+
+    if(ship -> shotCount == 0) sinkBoatV = true;
+     
+    return sinkBoatV;
+}
+
+void sinkBoatMatrix(Matrix *x) {
+
+    bool sinkingBoat = false; 
+    int broke = 0;
+
+    for(int i = 0; i < x -> size; i++) {
+      for(int j = 0; j < x -> size; j++) {
+        if(x -> data[j][i] -> value == '#') {
+          if(sinkBoat(x -> data[j][i] -> ship)==true) {
+            broke = 1;  
+            printf("Sink a boat with coordenates (%d,%d) \n", j,i); 
+            break;      
+        }
+      }
+    }
+    if(broke) {
+      break;
+    }
+  }
+}
+
+
+void changeValueShotBp(Matrix *matrix, int x, int y) {
+
+    int x_value = matrix -> data[y][x]-> ship -> bp -> refx; 
+    int y_value = matrix -> data[y][x]-> ship -> bp -> refy;
+
+    matrix -> data[y][x]-> ship -> bp -> data[y-y_value][x -x_value] = '2';
+
+}
 
 void shotInPlayer(Matrix *self, Matrix *other, int x, int y) {
 
   if(other -> data[y][x] -> value == 'x') {
+    //o que aparece quando é acertado 
     other -> data[y][x] -> value = '#';
     other -> data[y][x] -> ship -> shotCount--;
+    changeValueShotBp(other,x,y);
+    //alterar o shot da nossa celula para 2
     self -> data[y][x] -> shot = '2';
+
+    //alterar o valor do nosso value para Shot
     self -> data[y][x] -> value = 'S';
     printf("shotCount: %d\n", other -> data[y][x] -> ship -> shotCount);
   }
 
   else if(other -> data[y][x] -> value == '.') {
+    //o valor do outro passa para +
     other -> data[y][x] -> value = '+';
     self -> data[y][x] -> shot = '1';
+    //alterar o shot para wrong
     self -> data[y][x] -> value = 'W';
 
   }
@@ -75,45 +121,38 @@ void printList(List *list) {
   }
 
 
+/*
+
 int main() {
-
-        /*SHIP *sh = newShip(2);
-        printBitMap(sh -> bp);
-        printf("\n\n");
-        translation(sh,2,2);
-        printBitMap(sh -> bp);
-        printf("\n\n");
-        //printf("\n\n");
-        rotation(sh,90);
-        printBitMap(sh -> bp);
-
-        printf("\n\n");
-
-      List *ships = listShips(20);
-*/
 
       Matrix *matrix = initMatrix(20);
       Matrix *self = initMatrix(20);
 
-      List *list = initList();
-      User *usr1 = initUser("ola",list,matrix);
-
       SHIP *sh = newShip(4);
-      SHIP *sh2 = newShip(2);
+      SHIP *sh2 = newShip(3);
+      SHIP *sh1 = newShip(0);
 
-
-      insertShipInMatrix(matrix, sh,2,3);
-      insertShipInMatrix(matrix,sh,10,5);
-      insertShipInMatrix(matrix,sh2,15,15);
-
-
-      shotInPlayer(self,matrix,2,3);
-      shotInPlayer(self,matrix,2,5);
-      shotInPlayer(self,matrix,3,7);
-      shotInPlayer(self,matrix,1,1);
+      insertShipInMatrix(matrix, sh,0,0);
+      insertShipInMatrix(matrix,sh2,2,2);
+      insertShipInMatrix(matrix,sh1,15,15);
+      insertShipInMatrix(matrix,sh2,17,17);
+     
+      shotInPlayer(self, matrix,0,4);
+      shotInPlayer(self,matrix,14,14);
+      shotInPlayer(self,matrix,50,15);
 
       printMatrix(matrix);
+      //printMatrix(self);
 
-      printMatrix(self);
+      sinkBoatMatrix(matrix);
+
+      printBitMap(matrix -> data[0][0]-> ship -> bp);
+
+   
+
+
 
 }
+
+
+*/

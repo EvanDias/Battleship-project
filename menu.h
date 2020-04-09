@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "game.h"
+#include "gamev2.h"
 
 void choiceOne();
 void choiceTwo();

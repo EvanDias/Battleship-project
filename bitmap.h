@@ -7,8 +7,9 @@ struct bitmap_ {
 
     int columns;
     int row;
-
     unsigned char** data;
+    int refx; 
+    int refy;
 
 
 };

@@ -17,4 +17,5 @@ struct user_ {
 User *initUser(char *username, List *shipList, Matrix *matrix);
 List *listShips(int sizeMatrix);
 void shotInPlayer(Matrix *self, Matrix *other, int x, int y);
+void sinkBoatMatix(Matrix *x);
 void printList(List *list);

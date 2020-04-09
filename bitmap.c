@@ -8,6 +8,9 @@ BitMap * initBitMap(int columns, int row) {
     bp -> columns = columns;
     bp -> row = row;
 
+    bp -> refx = 0; 
+    bp -> refy = 0;
+
     unsigned char** data = malloc(sizeof(unsigned char*) * 1024);
 
     for(int i = 0; i < columns; i++)
