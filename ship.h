@@ -32,11 +32,12 @@ SHIP *newShip(ShipKind kind);
 void *shipToOne(SHIP *sh);
 SHIP *getShipSize(SHIP *sh);
 int numCells(SHIP *sh);
-void translation(SHIP *sh, int sizeVertical, int sizeHorizontal);
-void rotation(SHIP *sh, int degrees);
+bool translation(SHIP *sh, int sizeVertical, int sizeHorizontal);
+bool rotation(SHIP *sh, int degrees);
 int numberShips(int sizeMatrix);
 void delete_ship(SHIP *sh);
 SHIP *createShips(int sizeMatrix);
 int numberShips(int sizeMatrix);
+char *nameShip(SHIP *sh);
 
 #endif //RANDOM_SHIP_H

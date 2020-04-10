@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include "menu.h"
-
 
 void mainMenu() {
 
@@ -36,7 +36,9 @@ void choiceOne() {
 
     system("clear");
 
-    int sizerMatrix = chooseMatrixSize();
+    //int sizerMatrix = chooseMatrixSize();
+
+    int sizerMatrix = 9;
 
     printf("Create a user 1 \n");
     printf("Your name: ");
@@ -50,25 +52,13 @@ void choiceOne() {
     scanf("%s", name2);
     User *user2= initUser(name2,sizerMatrix);
 
-
-
-    printf("\nUser 1: %s \n", user1 -> username);
-    printf("User 2: %s \n", user2 -> username);
-
-        /*
-        ListNode *node = user1 -> shipList -> head;
-        while(node != NULL) {
-            printBitMap(node -> ship -> bp);
-            printf("\n");
-            node = node -> next;
-        }
-        */
-
-
-    //printMatrix(user1 -> matrix);
-    //initializeGame(user1, user2, sizerMatrix);
+    printf("User %s choose your ships\n", name1);
     choiceShips(user1);
+
+    printf("User %s choose your ships\n", name2);
     choiceShips(user2);
+
+    initializedGame(user1, user2);
 }
 
 
@@ -122,55 +112,90 @@ void choiceMenu(int numberMenu) {
     }
 }
 
+void scanPointsTranslation(ListNode *node) {
+
+  int x, y = 0;
+  char *kind = "";
+  if(node -> ship -> kind != 4) {
+    kind = nameShip(node -> ship);
+    printf("Choose the points to do translation of %s \n", kind);
+    printf("x: ");
+    scanf("%d", &x);
+    printf("\ny: ");
+    scanf("%d",&y);
+
+  }
+
+    bool translate = translation(node -> ship, y, x);
+
+    while(translate == false) {
+      printf("Try Again: \n");
+      printf("x: ");
+      scanf("%d", &x);
+      printf("\ny: ");
+      scanf("%d",&y);
+      translate = translation(node -> ship, y, x);
+    }
+
+}
+
+void scanPointRotation(ListNode *node) {
+
+  int degrees = 0;
+
+
+  char * kind = nameShip(node -> ship);
+  printf("Choose the angle to do rotation of %s \n", kind);
+  printf("Degrees: ");
+  scanf("%d", &degrees);
+
+  bool rotate = rotation(node -> ship, degrees);
+
+  while(rotate == false) {
+    printf("Try Again: \n");
+    printf("Degrees: ");
+    scanf("%d", &degrees);
+    rotate = rotation(node -> ship, degrees);
+  }
+
+}
+
+void scanPointInsert(ListNode *node, Matrix *matrix) {
+
+  int x,y = 0;
+
+  char * kind = nameShip(node -> ship);
+
+  printf("Choose a point to insert %s in matrix\n",kind );
+  printf("x: ");
+  scanf("%d", &x);
+  printf("\ny: ");
+  scanf("%d",&y);
+
+  bool inserted = insertShipInMatrix(matrix, node -> ship, x, y);
+
+  while(inserted == false) {
+      printf("Try again !\n");
+      printf("x: ");
+      scanf("%d", &x);
+      printf("\ny: ");
+      scanf("%d",&y);
+      inserted = insertShipInMatrix(matrix, node -> ship, x, y);
+  }
+
+}
 
 void choiceShips(User *user) {
 
     ListNode *node = user -> shipList -> head;
-    int x,y, degrees;
 
-    for(int i=0; i<5; i++) {
-    //while(user -> shipList -> size != 0) {
+  //  for(int i = 0; i < 5;i++) {
+      while(node != NULL) {
+        scanPointsTranslation(node);
+        scanPointRotation(node);
+        scanPointInsert(node, user -> matrix);
 
-        printf("Choose a translation of ship KIND\n");
-        printf("x: ");
-        scanf("%d", &x);
-        printf("\ny: ");
-        scanf("%d",&y);
-
-        translation(node -> ship, y, x);
-
-
-
-
-        printf("Choose a rotation to the ship KIND\n");
-        printf("Degrees: ");
-        scanf("%d", &degrees);
-
-        rotation(node -> ship, degrees);
-
-        printf("Ponto refenrecia: \n");
-
-
-        printf("x: ");
-        scanf("%d", &x);
-        printf("\ny: ");
-        scanf("%d",&y);
-
-
-
-        bool inserted = insertShipInMatrix(user -> matrix, node -> ship, x, y);
-
-        while(inserted == false) {
-            printf("x: ");
-            scanf("%d", &x);
-            printf("\ny: ");
-            scanf("%d",&y);
-
-            inserted = insertShipInMatrix(user -> matrix, node -> ship, x, y);
-        }
-
-        printf("translationx: %d || translationy: %d || rotation: %d\n", node -> ship -> translationx,node -> ship -> translationy, node -> ship -> rotation );
-        node = node -> next;
+        node =  node -> next;
 
         printMatrix(user -> matrix);
 
@@ -189,8 +214,3 @@ void choiceShips(User *user) {
 
 
 }
-
-
-
-
-

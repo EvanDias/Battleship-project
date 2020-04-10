@@ -44,19 +44,25 @@ bool insertShipInMatrix(Matrix *matrix, SHIP *ship, int x, int y) {
       bool insert = canInsert(matrix,ship,x,y);
       bool insertMatrix = false;
 
-      if(insert) {
-      ship -> bp -> refx = x; 
+      printBitMap(ship -> bp);
+
+
+      ship -> bp -> refx = x;
       ship -> bp -> refy = y;
 
-      printBitMap(ship -> bp); printf("\n");
+
       for(int i = 0; i < sizeBitMap; i++) {
         for(int j = 0; j < sizeBitMap; j++) {
           if (ship -> bp -> data[j][i] == '1') {
+            if(insert) {
+            ship -> bp -> refx = x;
+            ship -> bp -> refy = y;
             matrix -> data[j+y][i+x]-> ship = ship;
             matrix -> data[j+y][i+x]-> value = 'x';
             insertMatrix = true;
           }
         }
+
       }
     }
 
@@ -70,21 +76,22 @@ bool canInsert(Matrix *matrix, SHIP *ship, int x, int y) {
     int broke = 0;
 
     for(int i = 0; i < ship -> columns; i++) {
-      for(int j = 0; j < ship -> rows; j++) {
-          if((j+y) >= matrix -> size || (i+x) >= matrix -> size) {
+      for(int j = 0; j <ship -> rows; j++) {
+
+          if((i+y) >= matrix -> size || (j+x) >= matrix -> size) {
             insert = false;
             broke = 1;
             break;
           }
 
-          else if(matrix -> data[j+y][i+x] -> value == 'x') {
+          else if(matrix -> data[i+y][j+x] -> value == 'x') {
             insert = false;
             broke = 1;
             break;
           }
       }
       if(broke) {
-        fprintf(stderr, "Error, you dont insert this ship\n");
+        fprintf(stderr, "ERROR: you can't insert this ship\n");
         break;
       }
     }

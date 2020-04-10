@@ -20,3 +20,8 @@ void shotInPlayer(Matrix *self, Matrix *other, int x, int y);
 void sinkBoatMatix(Matrix *x);
 void printList(List *list);
 int chooseMatrixSize();
+User *whoStartGame(User *usr1, User *usr2);
+void initializedGame(User *usr1, User *usr2);
+bool allShipsSink(User *usr);
+void game(User *usr1, User *usr2);
+void modeGame(User *star, User *other, int x, int y);

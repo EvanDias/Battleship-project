@@ -115,11 +115,36 @@ int numCells(SHIP *sh) {
 
 }
 
+char *nameShip(SHIP *sh) {
+
+  char *kind = "";
+  switch(sh -> kind) {
+
+    case 0: kind = "SOLO";
+            break;
+    case 1: kind = "TRIAL";
+            break;
+    case 2: kind = "SMALL_QUAD";
+            break;
+    case 3: kind = "BIGGEST_QUAD";
+            break;
+    case 4: kind = "L_GUY";
+            break;
+    default : kind = "";
+            break;
+
+  }
+
+  return kind;
+
+}
+
 //translation - sizeVertical: quanto quer andar para baixo -- sizeHorizontal: quanto quer andar para a direita
-void translation(SHIP *sh, int sizeVertical, int sizeHorizontal) {
+bool translation(SHIP *sh, int sizeVertical, int sizeHorizontal) {
 
   BitMap *bitaux = initBitMap(5,5);
 
+  bool translate = false;
   int broke = 0;
 
   if(sh -> kind != L_GUY) {
@@ -131,30 +156,39 @@ void translation(SHIP *sh, int sizeVertical, int sizeHorizontal) {
         }
         sh -> bp = bitaux;
         sh -> bp = changeCellValue(sh -> bp, j + sizeVertical, i + sizeHorizontal, '1');
-
+        translate = true;
       }
 
       if(broke) {
-        printf("Can't this values to translate ship");
+        printf("Can't this values to translate! \n");
+        translate = false;
         break;
       }
   }
 }
-    else printf("This boat can't translate! \n");
+    else {
+      char *kind = nameShip(sh);
+      printf("Ship of %s' type can't translate! \n", kind);
+      translate = true;
+    }
 
     sh -> translationy = sizeVertical;
     sh -> translationx = sizeHorizontal;
 
+    return translate;
+
 }
 
 
-void rotation(SHIP *sh, int degrees) {
+bool rotation(SHIP *sh, int degrees) {
 
   BitMap *bitFinal = initBitMap(5,5);
 
   int x_line, y_line = 0;
 
   int broke = 0;
+  bool rotate = false;
+
 
   for(int i = 0; i < 5; i++) {
     for(int j = 0; j < 5; j++) {
@@ -166,6 +200,7 @@ void rotation(SHIP *sh, int degrees) {
           break;
         }
         bitFinal = changeCellValue(bitFinal,y_line,x_line,'1');
+        rotate = true;
       }
       }
       if(broke) {
@@ -179,6 +214,8 @@ void rotation(SHIP *sh, int degrees) {
     int aux = sh -> columns;
     sh -> columns = sh -> rows;
     sh -> rows = aux;
+
+    return rotate;
 }
 
 
@@ -191,4 +228,3 @@ int numberShips(int sizeMatrix) {
   return number;
 
 }
-
