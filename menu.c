@@ -36,9 +36,9 @@ void choiceOne() {
 
     system("clear");
 
-    //int sizerMatrix = chooseMatrixSize();
+    int sizerMatrix = chooseMatrixSize();
 
-    int sizerMatrix = 9;
+  //  int sizerMatrix = 9;
 
     printf("Create a user 1 \n");
     printf("Your name: ");
@@ -52,13 +52,33 @@ void choiceOne() {
     scanf("%s", name2);
     User *user2= initUser(name2,sizerMatrix);
 
-    printf("User %s choose your ships\n", name1);
-    choiceShips(user1);
-
-    printf("User %s choose your ships\n", name2);
-    choiceShips(user2);
+    choiceModeGame(user1);
+    choiceModeGame(user2);
 
     initializedGame(user1, user2);
+}
+
+
+void choiceModeGame(User *user) {
+
+      int numberChoice = 0;
+      printf("%s choose a mode game\n", user -> username);
+      printf("1 - Manual Setup\n");
+      printf("2 - Randomize Setup\n");
+      printf("3 - Return principal menu\n");
+      scanf("%d", &numberChoice);
+
+      switch (numberChoice) {
+        case 1: choiceShipsManual(user);
+              break;
+        case 2: choiceShipsAuto(user);
+              break;
+        case 3: mainMenu();
+              break;
+        default: choiceModeGame(user);
+              break;
+      }
+
 }
 
 
@@ -190,11 +210,26 @@ void scanPointInsert(ListNode *node, Matrix *matrix) {
 
 }
 
-void choiceShips(User *user) {
+void choiceShipsAuto(User *user) {
 
     ListNode *node = user -> shipList -> head;
 
-  //  for(int i = 0; i < 5;i++) {
+    while(node != NULL) {
+      randomTranslation(node);
+      randomRotation(node);
+      randomInsertMatrix(node, user -> matrix);
+
+      node =  node -> next;
+
+      printMatrix(user -> matrix);
+
+    }
+}
+
+void choiceShipsManual(User *user) {
+
+    ListNode *node = user -> shipList -> head;
+
       while(node != NULL) {
         scanPointsTranslation(node);
         scanPointRotation(node);
@@ -206,18 +241,5 @@ void choiceShips(User *user) {
 
         printMatrix(user -> matrix);
 
-    }
-
-
-/*
-    ListNode *node = user1 -> shipList -> head;
-        while(node != NULL) {
-            printBitMap(node -> ship -> bp);
-            printf("\n");
-            node = node -> next;
-        }
-        */
-
-
-
-}
+      }
+  }

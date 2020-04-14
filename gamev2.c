@@ -167,7 +167,7 @@ void game(User *start, User *other) {
 
   int x, y = 0;
     while(1) {
-    printf("Choose point to hit a ship of %s\n", other -> username);
+    printf("%s choose point to hit a ship of %s\n", start -> username, other -> username);
     printf("x: ");
     scanf("%d", &x);
     printf("\ny: ");
@@ -177,11 +177,16 @@ void game(User *start, User *other) {
     if(sinkBoatMatrix(other -> matrix))
         printSinkShip(other -> matrix, x, y);
 
+    printf("Matrix %s \n", start -> username);
+    printEnemyMatrix(start -> matrix);
+    printf("Matrix %s\n",other -> username);
+    printEnemyMatrix(other -> matrix);
+
     if(allShipsSink(start) || allShipsSink(other)) {
         printf("The player %s win the game! \n", start -> username);
         break;
     }
-    printf("Choose point to hit a ship of %s \n", start -> username);
+    printf("%s choose point to hit a ship of %s \n", other -> username, start -> username);
     printf("x: ");
     scanf("%d", &x);
     printf("\ny: ");
@@ -192,6 +197,7 @@ void game(User *start, User *other) {
         printSinkShip(start -> matrix, x, y);
 
     if(allShipsSink(start) || allShipsSink(other)) {
+        printf("||     CONGRULATIONS!     \n");
         printf("The player %s win the game! \n", other -> username);
         break;
     }
@@ -200,7 +206,8 @@ void game(User *start, User *other) {
     printEnemyMatrix(other -> matrix);
     printf("Matrix %s\n",start -> username);
     printEnemyMatrix(start -> matrix);
-    }
+
+  }
 }
 
 bool allShipsSink(User *usr) {
@@ -271,4 +278,3 @@ int main() {
 }
 
 */
-

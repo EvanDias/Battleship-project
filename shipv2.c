@@ -160,7 +160,7 @@ bool translation(SHIP *sh, int sizeVertical, int sizeHorizontal) {
       }
 
       if(broke) {
-        printf("Can't this values to translate! \n");
+      //  printf("Can't this values to translate! \n");
         translate = false;
         break;
       }
@@ -211,9 +211,10 @@ bool rotation(SHIP *sh, int degrees) {
 
     sh -> bp = bitFinal;
     sh -> rotation = degrees;
-    int aux = sh -> columns;
-    sh -> columns = sh -> rows;
-    sh -> rows = aux;
+
+    //int aux = sh -> columns;
+    //sh -> columns = sh -> rows;
+    //sh -> rows = aux;
 
     return rotate;
 }
