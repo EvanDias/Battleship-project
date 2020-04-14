@@ -24,7 +24,6 @@ struct ship_ {
     int translationy;
 
     int shotCount;
-
 };
 
 

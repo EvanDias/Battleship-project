@@ -41,69 +41,62 @@ List *listShips(int sizeMatrix) {
 
 bool sinkBoat(SHIP *ship) {
 
-    int sinkBoatV = false;
+    bool sinkBoatV = false;
 
     if(ship -> shotCount == 0) sinkBoatV = true;
 
     return sinkBoatV;
 }
 
-void sinkBoatMatrix(Matrix *x) {
-
-    bool sinkingBoat = false;
-    int broke = 0;
-
+bool sinkBoatMatrix(Matrix *x) {
     for(int i = 0; i < x -> size; i++) {
       for(int j = 0; j < x -> size; j++) {
-        if(x -> data[j][i] -> value == '#') {
+        if(x -> data[j][i] -> value == '*') {
           if(sinkBoat(x -> data[j][i] -> ship)==true) {
-            broke = 1;
             printf("Sink a boat with coordenates (%d,%d) \n", j,i);
-            break;
+            return true;
         }
       }
     }
-    if(broke) {
-      break;
-    }
   }
+  return false;
 }
 
 
-void changeValueShotBp(Matrix *matrix, int x, int y) {
+void changeValueShotBp(Matrix *matrix, int x, int y, unsigned char ternaryValue) {
 
     int x_value = matrix -> data[y][x]-> ship -> bp -> refx;
     int y_value = matrix -> data[y][x]-> ship -> bp -> refy;
 
-    matrix -> data[y][x]-> ship -> bp -> data[y-y_value][x -x_value] = '2';
-
+    matrix -> data[y][x]-> ship -> bp -> data[y-y_value][x -x_value] = ternaryValue;
 }
 
 void shotInPlayer(Matrix *self, Matrix *other, int x, int y) {
 
-  if(other -> data[y][x] -> value == 'x') {
-    //o que aparece quando é acertado
-    other -> data[y][x] -> value = '#';
-    other -> data[y][x] -> ship -> shotCount--;
-    changeValueShotBp(other,x,y);
-    //alterar o shot da nossa celula para 2
-    self -> data[y][x] -> shot = '2';
-
-    //alterar o valor do nosso value para Shot
-    self -> data[y][x] -> value = 'S';
-    printf("shotCount: %d\n", other -> data[y][x] -> ship -> shotCount);
-  }
-
-  else if(other -> data[y][x] -> value == '.') {
-    //o valor do outro passa para +
-    other -> data[y][x] -> value = '+';
-    self -> data[y][x] -> shot = '1';
-    //alterar o shot para wrong
-    self -> data[y][x] -> value = 'W';
-
-  }
-  else printf("Não acertou\n");
-
+    if(other -> data[y][x] -> value == 'x') {
+        //o que aparece quando é acertado
+        other -> data[y][x] -> value = '*';
+        other -> data[y][x] -> ship -> shotCount--;
+        changeValueShotBp(other,x,y,'2');
+        //alterar o shot da nossa celula para 2
+        self -> data[y][x] -> shot = '2';
+    }
+    else if(other -> data[y][x] -> value == '.') {
+        //o valor do outro passa para +
+        other -> data[y][x] -> value = '+';
+        self -> data[y][x] -> shot = '1';
+        printf("You hit a empty cell\n");
+    }
+    else {
+        printf("Your already  hit this positions\n");
+        printf("Choose other position: \n");
+        printf("x: ");
+        scanf("%d",&x);
+        printf("\ny: ");
+        scanf("%d",&y);
+        printf("\n");
+        shotInPlayer(self, other, x, y);
+    }
 }
 
 void printList(List *list) {
@@ -173,96 +166,109 @@ void initializedGame(User *usr1, User *usr2) {
 void game(User *start, User *other) {
 
   int x, y = 0;
-      printf("Choose point to hit a ship of other user \n");
-      printf("x: ");
-      scanf("%d", &x);
-      printf("\ny: ");
-      scanf("%d",&y);
-
-      modeGame(start,other,x,y);
-  }
-
-
-void modeGame(User *star, User *other, int x, int y) {
-
-
-  while(allShipsSink(star) == false && allShipsSink(other) == false) {
-
-    shotInPlayer(star -> matrix,other -> matrix, x,y);
-    printf("Choose point to hit a ship of other user \n");
+    while(1) {
+    printf("Choose point to hit a ship of %s\n", other -> username);
     printf("x: ");
     scanf("%d", &x);
     printf("\ny: ");
     scanf("%d",&y);
-    shotInPlayer(other -> matrix, star -> matrix,x,y);
+
+    shotInPlayer(start -> matrix,other -> matrix, x,y);
+    if(sinkBoatMatrix(other -> matrix))
+        printSinkShip(other -> matrix, x, y);
+
+    if(allShipsSink(start) || allShipsSink(other)) {
+        printf("The player %s win the game! \n", start -> username);
+        break;
+    }
+    printf("Choose point to hit a ship of %s \n", start -> username);
+    printf("x: ");
+    scanf("%d", &x);
+    printf("\ny: ");
+    scanf("%d",&y);
+    shotInPlayer(other -> matrix, start -> matrix,x,y);
+
+    if(sinkBoatMatrix(start -> matrix))
+        printSinkShip(start -> matrix, x, y);
+
+    if(allShipsSink(start) || allShipsSink(other)) {
+        printf("The player %s win the game! \n", other -> username);
+        break;
+    }
 
     printf("Matrix %s \n", other -> username);
-    printMatrix(other -> matrix);
-    printf("Matriz %s\n",star -> username);
-    printMatrix(star -> matrix);
-  }
-
+    printEnemyMatrix(other -> matrix);
+    printf("Matrix %s\n",start -> username);
+    printEnemyMatrix(start -> matrix);
+    }
 }
-
 
 bool allShipsSink(User *usr) {
 
   ListNode *node = usr -> shipList -> head;
   int countShips = numberShips(usr -> matrix -> size);
 
-  bool sink;
-
-  bool all = false;
+  bool sink = false;
 
   while(node != NULL) {
-
     sink = sinkBoat(node -> ship);
     if(sink) countShips--;
     node = node -> next;
   }
 
-  if(countShips==0) all = true;
-
-  else all = false;
-
-  return all;
-
-
+  if(countShips==0)
+    return true;
+  else
+    return false;
 }
 
 
-/*
+void printSinkShip(Matrix *matrix, int x, int y) {
+    SHIP *ship = matrix -> data[y][x] -> ship;
 
+    int xref = ship -> bp -> refx;
+    int yref = ship -> bp -> refy;
+
+    printf("KIND: %d\n", ship -> kind);
+
+    for(int i = 0; i < sizeBitMap; i++) {
+      for(int j = 0; j < sizeBitMap; j++) {
+        if (ship -> bp -> data[j][i] == '2') {
+            matrix -> data[j+yref][i+xref]-> value = '#';
+        }
+      }
+    }
+}
+
+
+
+
+/*
 int main() {
 
       Matrix *matrix = initMatrix(20);
       Matrix *self = initMatrix(20);
 
-      SHIP *sh = newShip(4);
+      SHIP *sh = newShip(1);
       SHIP *sh2 = newShip(3);
       SHIP *sh1 = newShip(0);
 
       insertShipInMatrix(matrix, sh,0,0);
-      insertShipInMatrix(matrix,sh2,2,2);
-      insertShipInMatrix(matrix,sh1,15,15);
-      insertShipInMatrix(matrix,sh2,17,17);
+      //insertShipInMatrix(matrix,sh2,2,2);
+      //insertShipInMatrix(matrix,sh1,15,15);
+      //insertShipInMatrix(matrix,sh2,17,17);
 
-      shotInPlayer(self, matrix,0,4);
-      shotInPlayer(self,matrix,14,14);
-      shotInPlayer(self,matrix,50,15);
+      shotInPlayer(self, matrix, 0, 0);
+      shotInPlayer(self, matrix, 1, 0);
+      shotInPlayer(self, matrix, 2, 0);
 
-      printMatrix(matrix);
-      //printMatrix(self);
+      printSinkShip(matrix, 2,0);
 
-      sinkBoatMatrix(matrix);
-
-      printBitMap(matrix -> data[0][0]-> ship -> bp);
-
-
-
+        printMatrix(matrix);
+      printEnemyMatrix(matrix);
 
 
 }
 
-
 */
+

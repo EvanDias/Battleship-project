@@ -44,12 +44,8 @@ bool insertShipInMatrix(Matrix *matrix, SHIP *ship, int x, int y) {
       bool insert = canInsert(matrix,ship,x,y);
       bool insertMatrix = false;
 
-      printBitMap(ship -> bp);
-
-
       ship -> bp -> refx = x;
       ship -> bp -> refy = y;
-
 
       for(int i = 0; i < sizeBitMap; i++) {
         for(int j = 0; j < sizeBitMap; j++) {
@@ -103,18 +99,28 @@ bool canInsert(Matrix *matrix, SHIP *ship, int x, int y) {
 
 
 void printMatrix(Matrix *matrix) {
-
+    printf("\n");
     for(int i = 0; i < matrix -> size; i++) {
-      printf("\n");
       for(int j = 0; j < matrix -> size; j++) {
         printf("%c ", matrix -> data[i][j] -> value);
-      }
     }
+    printf("\n");
+    }
+}
+
+void printEnemyMatrix(Matrix *matrix) {
+    printf("\n");
+    for(int i = 0; i < matrix -> size; i++) {
+        for(int j = 0; j < matrix -> size; j++) {
+            if(matrix -> data[i][j] -> value == 'x')
+                printf(". ");
+            else
+                printf("%c ", matrix -> data[i][j] -> value);
+        }
     printf("\n");
 }
 
-
-
+}
 
 
 /*

@@ -143,20 +143,25 @@ void scanPointRotation(ListNode *node) {
 
   int degrees = 0;
 
-
   char * kind = nameShip(node -> ship);
   printf("Choose the angle to do rotation of %s \n", kind);
   printf("Degrees: ");
   scanf("%d", &degrees);
 
+  while(degrees % 90 != 0) {
+    printf("Try again: ");
+    scanf("%d", &degrees);
+  }
+
   bool rotate = rotation(node -> ship, degrees);
 
+   /*
   while(rotate == false) {
     printf("Try Again: \n");
     printf("Degrees: ");
     scanf("%d", &degrees);
     rotate = rotation(node -> ship, degrees);
-  }
+  }*/
 
 }
 
@@ -193,6 +198,8 @@ void choiceShips(User *user) {
       while(node != NULL) {
         scanPointsTranslation(node);
         scanPointRotation(node);
+        printBitMap(node -> ship -> bp);
+        printf("\n");
         scanPointInsert(node, user -> matrix);
 
         node =  node -> next;
