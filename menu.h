@@ -9,5 +9,7 @@ void choiceOne();
 void choiceTwo();
 void choiceMenu(int numberMenu);
 void choiceModeGame(User *user);
+void choiceShips();
 void choiceShipsAuto(User *user);
 void choiceShipsManual(User *user);
+void insertMode(User *user);

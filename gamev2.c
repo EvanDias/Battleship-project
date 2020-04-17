@@ -116,7 +116,7 @@ int chooseMatrixSize() {
 
     printf("Write the size of the matrix (20 <= x <= 40): ");
     scanf("%d", &size);
-
+    
     while(size < 20 || size > 40) {
         printf("Write the size of the matrix (20 <= x <= 40): ");
         scanf("%d", &size);

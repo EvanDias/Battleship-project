@@ -58,31 +58,6 @@ void choiceOne() {
     initializedGame(user1, user2);
 }
 
-
-void choiceModeGame(User *user) {
-
-      int numberChoice = 0;
-      printf("%s choose a mode game\n", user -> username);
-      printf("1 - Manual Setup\n");
-      printf("2 - Randomize Setup\n");
-      printf("3 - Return principal menu\n");
-      scanf("%d", &numberChoice);
-
-      switch (numberChoice) {
-        case 1: choiceShipsManual(user);
-              break;
-        case 2: choiceShipsAuto(user);
-              break;
-        case 3: mainMenu();
-              break;
-        default: choiceModeGame(user);
-              break;
-      }
-
-}
-
-
-
 // See rules of the game
 void choiceTwo() {
 
@@ -210,9 +185,99 @@ void scanPointInsert(ListNode *node, Matrix *matrix) {
 
 }
 
+
+void choiceModeGame(User *user) {
+
+      int numberChoice = 0;
+      printf("%s choose a mode game\n", user -> username);
+      printf("1 - Manual Setup\n");
+      printf("2 - Randomize Setup\n");
+      printf("3 - Manual/Randomize Setup \n");
+      printf("4 - Return principal menu\n");
+      scanf("%d", &numberChoice);
+
+      switch (numberChoice) {
+        case 1: choiceShipsManual(user);
+              break;
+        case 2: choiceShipsAuto(user);
+              break;
+        case 3: choiceShips(user);
+              break;
+        case 4: mainMenu();
+              break;
+        default: choiceModeGame(user);
+              break;
+      }
+
+}
+
+
+void choiceShips(User *user) {
+
+    ListNode *node = user -> shipList -> head;
+    int choice;
+
+    while(node != NULL) {
+      printf("How %s want to do a ship?\n", user -> username);
+      printf("1) MANUAL\n");
+      printf("2) AUTO \n");
+      scanf("%d", &choice);
+      switch(choice) {
+        case 1: scanPointsTranslation(node);
+          scanPointRotation(node);
+          printBitMap(node -> ship -> bp);
+          printf("\n");
+          insertMode(user);
+          break;
+        case 2: randomTranslation(node);
+          randomRotation(node);
+          printBitMap(node -> ship -> bp);
+          printf("\n");
+          insertMode(user);
+          break;
+
+        default: printf("Try again \n");
+          scanf("%d", &choice);
+          break;
+      }
+
+      node = node -> next;
+    }
+}
+
+void insertMode(User *user) {
+
+
+  ListNode *node = user -> shipList -> head;
+  int insertMode;
+
+  printf("How %s want to insert ship? \n", user -> username);
+  printf("1) MANUAL\n");
+  printf("2) AUTO\n");
+  scanf("%d",&insertMode);
+
+  switch (insertMode) {
+    case 1: scanPointInsert(node, user -> matrix);
+            printMatrix(user -> matrix);
+            break;
+    case 2: randomInsertMatrix(node, user -> matrix);
+            printMatrix(user -> matrix);
+            break;
+
+    default: printf("Try again \n");
+      scanf("%d", &insertMode);
+      break;
+  }
+
+  }
+
 void choiceShipsAuto(User *user) {
 
     ListNode *node = user -> shipList -> head;
+
+    int size = user -> matrix -> size;
+
+    int agreed;
 
     while(node != NULL) {
       randomTranslation(node);
@@ -222,6 +287,21 @@ void choiceShipsAuto(User *user) {
       node =  node -> next;
 
       printMatrix(user -> matrix);
+
+    }
+
+    printf("Do you accept this matrix?\n");
+    printf("1) YES\n");
+    printf("2) NO \n");
+    scanf("%d",&agreed);
+
+    switch(agreed) {
+      case 1: break;
+      case 2: user -> matrix = initMatrix(size);
+            choiceShipsAuto(user);
+            break;
+      default: printf("Try other number\n");
+            scanf("%d",&agreed);
 
     }
 }
