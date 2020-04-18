@@ -167,6 +167,10 @@ void game(User *start, User *other) {
 
   int x, y = 0;
     while(1) {
+
+    printUsers(start, other);
+    printBothMatrix(start -> matrix, other -> matrix);
+
     printf("%s choose point to hit a ship of %s\n", start -> username, other -> username);
     printf("x: ");
     scanf("%d", &x);
@@ -177,15 +181,15 @@ void game(User *start, User *other) {
     if(sinkBoatMatrix(other -> matrix))
         printSinkShip(other -> matrix, x, y);
 
-    printf("Matrix %s \n", start -> username);
-    printEnemyMatrix(start -> matrix);
-    printf("Matrix %s\n",other -> username);
-    printEnemyMatrix(other -> matrix);
 
     if(allShipsSink(start) || allShipsSink(other)) {
         printf("The player %s win the game! \n", start -> username);
         break;
     }
+
+    printUsers(other, start);
+    printBothMatrix(other -> matrix, start -> matrix);
+
     printf("%s choose point to hit a ship of %s \n", other -> username, start -> username);
     printf("x: ");
     scanf("%d", &x);
@@ -202,11 +206,12 @@ void game(User *start, User *other) {
         break;
     }
 
+    /*
     printf("Matrix %s \n", other -> username);
     printEnemyMatrix(other -> matrix);
     printf("Matrix %s\n",start -> username);
     printEnemyMatrix(start -> matrix);
-
+    */
   }
 }
 
@@ -248,7 +253,20 @@ void printSinkShip(Matrix *matrix, int x, int y) {
 }
 
 
+void printUsers(User *start, User *other) {
+    system("clear");
+    int matrixSize = (start -> matrix -> size)*2;
+    int count = matrixSize / 2 - 7;
 
+   for(int a=0; a < count; a++)
+        printf(" ");
+    printf("Matrix %s", start -> username);
+
+    for(int a=0; a < 10 + count + (matrixSize/2 - 4); a++)
+        printf(" ");
+    printf("Matrix %s", other -> username);
+
+}
 
 /*
 int main() {

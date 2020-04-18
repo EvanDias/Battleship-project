@@ -27,4 +27,5 @@ Matrix *initMatrix(int size);
 bool insertShipInMatrix(Matrix *a, SHIP *ship, int x, int y);
 void printMatrix(Matrix *matrix);
 void printEnemyMatrix(Matrix *matrix);
+void printBothMatrix(Matrix *start, Matrix *other);
 bool canInsert(Matrix *matrix, SHIP *ship, int x, int y);

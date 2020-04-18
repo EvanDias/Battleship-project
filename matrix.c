@@ -123,6 +123,32 @@ void printEnemyMatrix(Matrix *matrix) {
 }
 
 
+void printBothMatrix(Matrix *start, Matrix *other) {
+    printf("\n");
+    int matrixSize = start -> size;
+
+    for(int i=0; i < matrixSize; i++) {
+
+        for(int j = 0; j < matrixSize; j++) {
+            printf("%c ", start -> data[i][j] -> value);
+        }
+
+        for(int z=0; z<10; z++) {
+            printf(" ");
+        }
+
+        for(int j = 0; j < matrixSize; j++) {
+            if(other -> data[i][j] -> value == 'x')
+                printf(". ");
+            else
+                printf("%c ", other -> data[i][j] -> value);
+        }
+
+    printf("\n");
+
+    }
+}
+
 /*
 int main() {
 
