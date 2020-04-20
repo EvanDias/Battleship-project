@@ -165,21 +165,26 @@ void scanPointInsert(ListNode *node, Matrix *matrix) {
   int x,y = 0;
 
   char * kind = nameShip(node -> ship);
+  char ch_x, ch_y;
 
   printf("Choose a point to insert %s in matrix\n",kind );
-  printf("x: ");
-  scanf("%d", &x);
-  printf("\ny: ");
-  scanf("%d",&y);
+      printf("x: ");
+      scanf(" %c", &ch_x);
+      printf("\ny: ");
+      scanf(" %c",&ch_y);
+      x = choiceChar(ch_x);
+      y = choiceChar(ch_y);
 
   bool inserted = insertShipInMatrix(matrix, node -> ship, x, y);
 
   while(inserted == false) {
       printf("Try again !\n");
       printf("x: ");
-      scanf("%d", &x);
+      scanf(" %c", &ch_x);
       printf("\ny: ");
-      scanf("%d",&y);
+      scanf(" %c",&ch_y);
+      x = choiceChar(ch_x);
+      y = choiceChar(ch_y);
       inserted = insertShipInMatrix(matrix, node -> ship, x, y);
   }
 
@@ -323,4 +328,3 @@ void choiceShipsManual(User *user) {
 
       }
   }
-

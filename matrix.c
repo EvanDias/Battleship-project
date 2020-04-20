@@ -179,30 +179,3 @@ void printBothMatrix(Matrix *start, Matrix *other) {
 
     }
 }
-
-/*
-int main() {
-
-  Matrix* x = initMatrix(20);
-
-  SHIP *sh = newShip(3);
-
-  SHIP *sh1 = newShip(3);
-
-  SHIP *sh2 = newShip(4);
-
-  rotation(sh, 270);
-
-  //printBitMap(sh -> bp);
-
-
-  insertShipInMatrix(x,sh,2,3);
-
-  insertShipInMatrix(x,sh1,3,3);
-
-  //insertShipInMatrix(x,sh1,17,2);
-
-  printMatrix(x);
-}
-
-*/

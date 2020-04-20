@@ -16,7 +16,7 @@ struct user_ {
 
 User *initUser(char *username, int sizeMatrix);
 List *listShips(int sizeMatrix);
-void shotInPlayer(Matrix *self, Matrix *other, int x, int y);
+bool shotInPlayer(Matrix *self, Matrix *other, int x, int y);
 bool sinkBoatMatrix(Matrix *x);
 void printList(List *list);
 int chooseMatrixSize();
@@ -30,3 +30,4 @@ void printUsers(User *start, User *other);
 int choiceChar(char c);
 int charToIntUpper(char chInput);
 int charToIntLower(char chInput);
+bool canShot(Matrix *self, int x, int y);
