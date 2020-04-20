@@ -1,6 +1,8 @@
 #include <stdio.h>
+#include<stdlib.h>
+#include <unistd.h>
 #include "gamev2.h"
-
+#include <unistd.h>
 User *initUser(char *username, int sizeMatrix) {
 
   User *newUser = malloc(sizeof(User));
@@ -80,6 +82,7 @@ void shotInPlayer(Matrix *self, Matrix *other, int x, int y) {
         changeValueShotBp(other,x,y,'2');
         //alterar o shot da nossa celula para 2
         self -> data[y][x] -> shot = '2';
+        printf("Your hit a  cell of a ship\n");
     }
     else if(other -> data[y][x] -> value == '.') {
         //o valor do outro passa para +
@@ -163,8 +166,9 @@ void initializedGame(User *usr1, User *usr2) {
 
 }
 
-void game(User *start, User *other) {
 
+void game(User *start, User *other) {
+  char ch_x, ch_y;
   int x, y = 0;
     while(1) {
 
@@ -173,14 +177,21 @@ void game(User *start, User *other) {
 
     printf("%s choose point to hit a ship of %s\n", start -> username, other -> username);
     printf("x: ");
-    scanf("%d", &x);
+    scanf(" %c", &ch_x);
     printf("\ny: ");
-    scanf("%d",&y);
+    scanf(" %c",&ch_y);
+
+    x = choiceChar(ch_x);
+    y = choiceChar(ch_y);
 
     shotInPlayer(start -> matrix,other -> matrix, x,y);
+
+    printUsers(start, other);
+    printBothMatrix(start -> matrix, other -> matrix);
+
     if(sinkBoatMatrix(other -> matrix))
         printSinkShip(other -> matrix, x, y);
-
+    sleep(3);
 
     if(allShipsSink(start) || allShipsSink(other)) {
         printf("The player %s win the game! \n", start -> username);
@@ -192,26 +203,27 @@ void game(User *start, User *other) {
 
     printf("%s choose point to hit a ship of %s \n", other -> username, start -> username);
     printf("x: ");
-    scanf("%d", &x);
+    scanf(" %c", &ch_x);
     printf("\ny: ");
-    scanf("%d",&y);
+    scanf(" %c",&ch_y);
+
+    x = choiceChar(ch_x);
+    y = choiceChar(ch_y);
+
     shotInPlayer(other -> matrix, start -> matrix,x,y);
+
+    printUsers(other, start);
+    printBothMatrix(other -> matrix, start -> matrix);
 
     if(sinkBoatMatrix(start -> matrix))
         printSinkShip(start -> matrix, x, y);
+    sleep(3);
 
     if(allShipsSink(start) || allShipsSink(other)) {
         printf("||     CONGRULATIONS!     \n");
         printf("The player %s win the game! \n", other -> username);
         break;
     }
-
-    /*
-    printf("Matrix %s \n", other -> username);
-    printEnemyMatrix(other -> matrix);
-    printf("Matrix %s\n",start -> username);
-    printEnemyMatrix(start -> matrix);
-    */
   }
 }
 
@@ -267,6 +279,59 @@ void printUsers(User *start, User *other) {
     printf("Matrix %s", other -> username);
 
 }
+
+
+int choiceChar(char c) {
+    int x;
+
+    if(c >= 'A' && c <= 'Z')
+        x = charToIntUpper(c);
+    else
+        x = charToIntLower(c);
+
+    return x;
+}
+
+// convert Character to int. Ex: (A B C D E ...) -> (0 1 2 3 4 ...)
+int charToIntUpper(char chInput) {
+
+    int inc = 0;
+
+    char ch = 'A';
+
+    while(true) {
+
+        if(ch == chInput)
+            return inc;
+
+        ch++;
+        inc++;
+    }
+
+    return inc;
+}
+
+
+// convert Character to int. Ex: (a b c d e ...) -> (0 1 2 3 4 ...)
+int charToIntLower(char chInput) {
+
+    int inc = 26;
+
+    char ch = 'a';
+
+    while(true) {
+
+        if(ch == chInput)
+            return inc;
+
+        ch++;
+        inc++;
+    }
+
+    return inc;
+}
+
+
 
 /*
 int main() {

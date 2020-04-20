@@ -29,3 +29,4 @@ void printMatrix(Matrix *matrix);
 void printEnemyMatrix(Matrix *matrix);
 void printBothMatrix(Matrix *start, Matrix *other);
 bool canInsert(Matrix *matrix, SHIP *ship, int x, int y);
+void letters(int size);

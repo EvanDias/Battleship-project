@@ -27,3 +27,6 @@ void game(User *usr1, User *usr2);
 void modeGame(User *star, User *other, int x, int y);
 void printSinkShip(Matrix *matrix, int x, int y);
 void printUsers(User *start, User *other);
+int choiceChar(char c);
+int charToIntUpper(char chInput);
+int charToIntLower(char chInput);

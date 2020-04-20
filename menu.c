@@ -36,9 +36,9 @@ void choiceOne() {
 
     system("clear");
 
-    int sizerMatrix = chooseMatrixSize();
+    //int sizerMatrix = chooseMatrixSize();
 
-  //  int sizerMatrix = 9;
+    int sizerMatrix = 8;
 
     printf("Create a user 1 \n");
     printf("Your name: ");
@@ -323,3 +323,4 @@ void choiceShipsManual(User *user) {
 
       }
   }
+

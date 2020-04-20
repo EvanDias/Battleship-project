@@ -118,32 +118,63 @@ void printEnemyMatrix(Matrix *matrix) {
                 printf("%c ", matrix -> data[i][j] -> value);
         }
     printf("\n");
+    }
 }
 
+void letters(int size) {
+    char c;
+
+    printf("  A ");
+    while(size != 0) {
+        for(c = 'B'; c <= 'Z'; ++c) {
+            if(size == 0) break;
+            printf("%c ", c);
+            size--;
+        }
+
+        if(size == 0) break;
+
+        for(c = 'a'; c <= 'z'; ++c) {
+            if(size == 0) break;
+            printf("%c ", c);
+            size--;
+        }
+    }
 }
 
 
 void printBothMatrix(Matrix *start, Matrix *other) {
     printf("\n");
     int matrixSize = start -> size;
+    char c1 = 'A';
+    letters(matrixSize-1);
+    for(int i=0; i<10; i++) {
+        printf(" ");
+    }
+    letters(matrixSize-1);
+    printf("\n");
 
     for(int i=0; i < matrixSize; i++) {
 
-        for(int j = 0; j < matrixSize; j++) {
-            printf("%c ", start -> data[i][j] -> value);
-        }
+            printf("%c ", c1);
+            if(c1 == '[') c1 = 'a';
+            for(int j = 0; j < matrixSize; j++) {
+                printf("%c ", start -> data[i][j] -> value);
+            }
 
-        for(int z=0; z<10; z++) {
-            printf(" ");
-        }
+            for(int z=0; z<10; z++) {
+                printf(" ");
+            }
 
-        for(int j = 0; j < matrixSize; j++) {
-            if(other -> data[i][j] -> value == 'x')
-                printf(". ");
-            else
-                printf("%c ", other -> data[i][j] -> value);
-        }
+            printf("%c ", c1);
+            for(int j = 0; j < matrixSize; j++) {
+                if(other -> data[i][j] -> value == 'x')
+                    printf(". ");
+                else
+                    printf("%c ", other -> data[i][j] -> value);
+            }
 
+            c1 += 1;
     printf("\n");
 
     }

@@ -263,26 +263,6 @@ ShipKind whichKind(int flag) {
 }
 
 
-
-// convert Character to int. Ex: (A B C D E ...) -> (0 1 2 3 4 ...)
-int charToInt(char chInput) {
-
-    int inc = 0;
-
-    char ch = 'A';
-
-    while(1) {
-
-        if(ch == chInput)
-            return inc;
-
-        ch++;
-        inc++;
-    }
-}
-
-
-
 int * getNumShips(int matrixSize) {
 
   static int array[5];
