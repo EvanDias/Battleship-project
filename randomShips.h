@@ -1,5 +1,4 @@
-#include <stdio.h>
-#include "gamev2.h"
+#include "game.h"
 
 
 void randomTranslation(ListNode *node);

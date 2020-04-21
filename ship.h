@@ -33,10 +33,8 @@ SHIP *getShipSize(SHIP *sh);
 int numCells(SHIP *sh);
 bool translation(SHIP *sh, int sizeVertical, int sizeHorizontal);
 bool rotation(SHIP *sh, int degrees);
-int numberShips(int sizeMatrix);
 void delete_ship(SHIP *sh);
 SHIP *createShips(int sizeMatrix);
-int numberShips(int sizeMatrix);
 char *nameShip(SHIP *sh);
 
 #endif //RANDOM_SHIP_H

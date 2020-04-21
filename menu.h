@@ -1,5 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include <ctype.h>
 #include "randomShips.h"
 
 #define MAX_BUFFER 1024

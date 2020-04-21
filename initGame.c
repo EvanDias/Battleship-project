@@ -1,0 +1,111 @@
+#include "initGame.h"
+
+
+//Create user with a name, his matrix of game and list with his ships
+User *initUser(char *username, int sizeMatrix) {
+
+  User *newUser = malloc(sizeof(User));
+  Matrix *matrix = initMatrix(sizeMatrix);
+
+  newUser -> username = username;
+
+  newUser -> matrix = matrix;
+
+  newUser -> shipList = listShips(sizeMatrix);
+
+   return newUser;
+}
+
+/*Create a list with ships
+   * Create a ship of different types in each interation(i)
+   * If number of ships to insert is zero, then don't add more ships -> list is complete
+*/
+List *listShips(int sizeMatrix) {
+
+    int number = numberShips(sizeMatrix);
+
+    List *shipList = initList();
+
+    int i = 0;
+
+    while(number != 0) {
+      while(i < 5 && number != 0) {
+        SHIP *ship = newShip(i);
+        headList(shipList,ship);
+        number--;
+        i++;
+      }
+      i = 0;
+    }
+
+    return shipList;
+
+}
+
+
+int chooseMatrixSize() {
+    int size;
+
+    printf("Write the size of the matrix (20 <= x <= 40): ");
+    scanf("%d", &size);
+
+    while(size < 20 || size > 40) {
+        printf("Write the size of the matrix (20 <= x <= 40): ");
+        scanf("%d", &size);
+    }
+
+    return size;
+}
+
+
+//numberShips to create 
+int numberShips(int sizeMatrix) {
+
+  int number = 0;
+
+  number = (sizeMatrix*sizeMatrix)/(5*5);
+
+  return number;
+
+}
+
+//The players choose a number and the greatest number is the start player
+User *whoStartGame(User *usr1, User *usr2) {
+
+  User *started;
+
+  int numberUsr1, numberUsr2;
+
+  printf("User %s choose a number: \n", usr1 -> username);
+  scanf("%d", &numberUsr1);
+  printf("User %s choose a number: \n", usr2 -> username);
+  scanf("%d", &numberUsr2);
+
+  if(numberUsr1 > numberUsr2) started = usr1;
+  else if(numberUsr1 < numberUsr2) started = usr2;
+  else {
+    printf("The numbers are equal, choose other number\n");
+    started = whoStartGame(usr1,usr2);
+  }
+
+  return started;
+
+}
+
+//Comentário 
+void printUsers(User *start, User *other) {
+    system("clear");
+    int matrixSize = (start -> matrix -> size)*2;
+    int count = matrixSize / 2 - 7;
+
+   for(int a=0; a < count; a++)
+        printf(" ");
+    printf("Matrix %s", start -> username);
+
+    for(int a=0; a < 10 + count + (matrixSize/2 - 4); a++)
+        printf(" ");
+    printf("Matrix %s", other -> username);
+
+}
+
+

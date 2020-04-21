@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "randomShips.h"
 
 
@@ -14,6 +13,13 @@
     } \
     degrees; \
 })
+
+/* Functions to random mode
+  * translation
+  * rotation
+  * insertion of a ship
+
+*/
 
 void randomTranslation(ListNode *node) {
 

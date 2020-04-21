@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
 #include "menu.h"
 
 void mainMenu() {
@@ -36,9 +33,9 @@ void choiceOne() {
 
     system("clear");
 
-    //int sizerMatrix = chooseMatrixSize();
+    int sizerMatrix = chooseMatrixSize();
 
-    int sizerMatrix = 8;
+    //int sizerMatrix = 8;
 
     printf("Create a user 1 \n");
     printf("Your name: ");
@@ -107,6 +104,12 @@ void choiceMenu(int numberMenu) {
     }
 }
 
+
+
+/*Scanf of points choosed by user to do translation
+  *
+  * 
+*/
 void scanPointsTranslation(ListNode *node) {
 
   int x, y = 0;
@@ -134,6 +137,11 @@ void scanPointsTranslation(ListNode *node) {
 
 }
 
+
+/*Scanf of points choosed by user to do rotation
+  *
+  * 
+*/
 void scanPointRotation(ListNode *node) {
 
   int degrees = 0;
@@ -150,15 +158,14 @@ void scanPointRotation(ListNode *node) {
 
   bool rotate = rotation(node -> ship, degrees);
 
-   /*
-  while(rotate == false) {
-    printf("Try Again: \n");
-    printf("Degrees: ");
-    scanf("%d", &degrees);
-    rotate = rotation(node -> ship, degrees);
-  }*/
-
+  
 }
+
+
+/*Scanf of points choosed by user to do insert ship in matrix
+  *
+  * 
+*/
 
 void scanPointInsert(ListNode *node, Matrix *matrix) {
 
@@ -217,6 +224,8 @@ void choiceModeGame(User *user) {
 }
 
 
+
+//if user want to manual and random ship 
 void choiceShips(User *user) {
 
     ListNode *node = user -> shipList -> head;
@@ -250,6 +259,8 @@ void choiceShips(User *user) {
     }
 }
 
+
+//function auxiliar
 void insertMode(User *user) {
 
 
@@ -276,6 +287,8 @@ void insertMode(User *user) {
 
   }
 
+
+//choose ships random
 void choiceShipsAuto(User *user) {
 
     ListNode *node = user -> shipList -> head;
@@ -310,6 +323,8 @@ void choiceShipsAuto(User *user) {
 
     }
 }
+
+//choose ships manual
 
 void choiceShipsManual(User *user) {
 

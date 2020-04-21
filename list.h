@@ -27,6 +27,5 @@ ListNode *initNode(SHIP* ship, ListNode* next);
 List *initList();
 void *headList(List *list, SHIP *ship);
 List *removeNode(List *list, SHIP *ship);
-//bool lookUp(List *list, void *point);
-//void printList(List *l);
+void printList(List *l);
 void deleteList(List* list);

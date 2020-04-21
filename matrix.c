@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "matrix.h"
 
 Cell* initCell() {
@@ -13,7 +11,7 @@ Cell* initCell() {
 }
 
 
-//init a matrix with its size and fill with '.'
+//init a matrix with its size
 Matrix* initMatrix(int size) {
 
     Matrix* matrix = malloc(sizeof(Matrix));
@@ -87,7 +85,6 @@ bool canInsert(Matrix *matrix, SHIP *ship, int x, int y) {
           }
       }
       if(broke) {
-      //  fprintf(stderr, "ERROR: you can't insert this ship\n");
         break;
       }
     }
@@ -95,6 +92,15 @@ bool canInsert(Matrix *matrix, SHIP *ship, int x, int y) {
      return insert;
 }
 
+
+//change value of bp in relation with matrix
+void changeValueShotBp(Matrix *matrix, int x, int y, unsigned char ternaryValue) {
+
+    int x_value = matrix -> data[y][x]-> ship -> bp -> refx;
+    int y_value = matrix -> data[y][x]-> ship -> bp -> refy;
+
+    changeCellValue(matrix -> data[y][x] -> ship -> bp, y-y_value, x-x_value, ternaryValue);
+}
 
 
 void printMatrix(Matrix *matrix) {
@@ -108,6 +114,7 @@ void printMatrix(Matrix *matrix) {
 }
 
 
+//Comentário
 void printEnemyMatrix(Matrix *matrix) {
     printf("\n");
     for(int i = 0; i < matrix -> size; i++) {
@@ -121,6 +128,7 @@ void printEnemyMatrix(Matrix *matrix) {
     }
 }
 
+//Comentário
 void letters(int size) {
     char c;
 
@@ -143,6 +151,7 @@ void letters(int size) {
 }
 
 
+//Comentário
 void printBothMatrix(Matrix *start, Matrix *other) {
     printf("\n");
     int matrixSize = start -> size;
@@ -178,4 +187,76 @@ void printBothMatrix(Matrix *start, Matrix *other) {
     printf("\n");
 
     }
+}
+
+
+
+//Comentário
+void printSinkShip(Matrix *matrix, int x, int y) {
+    SHIP *ship = matrix -> data[y][x] -> ship;
+
+    int xref = ship -> bp -> refx;
+    int yref = ship -> bp -> refy;
+
+    printf("KIND: %d\n", ship -> kind);
+
+    for(int i = 0; i < sizeBitMap; i++) {
+      for(int j = 0; j < sizeBitMap; j++) {
+        if (ship -> bp -> data[j][i] == '2') {
+            matrix -> data[j+yref][i+xref]-> value = '#';
+        }
+      }
+    }
+}
+
+
+//Comentário
+int choiceChar(char c) {
+    int x;
+
+    if(c >= 'A' && c <= 'Z')
+        x = charToIntUpper(c);
+    else
+        x = charToIntLower(c);
+
+    return x;
+}
+
+// convert Character to int. Ex: (A B C D E ...) -> (0 1 2 3 4 ...)
+int charToIntUpper(char chInput) {
+
+    int inc = 0;
+
+    char ch = 'A';
+
+    while(true) {
+
+        if(ch == chInput)
+            return inc;
+
+        ch++;
+        inc++;
+    }
+
+    return inc;
+}
+
+
+// convert Character to int. Ex: (a b c d e ...) -> (0 1 2 3 4 ...)
+int charToIntLower(char chInput) {
+
+    int inc = 26;
+
+    char ch = 'a';
+
+    while(true) {
+
+        if(ch == chInput)
+            return inc;
+
+        ch++;
+        inc++;
+    }
+
+    return inc;
 }

@@ -72,7 +72,7 @@ List *removeNode(List *list, SHIP *node) {
 
     while(current != NULL) {
 
-       // printf("current: %d \n", current -> data);
+  
 
         if(current -> next == NULL && current -> ship == node) {
 
@@ -90,53 +90,14 @@ List *removeNode(List *list, SHIP *node) {
         }
 
         temp = current;
-        //printf("temp antes de avançar: %c \n", temp -> data);
+
         current = current -> next;
-        //if(current != NULL) printf("current-> next: %c \n", current -> data);
+
     }
 
 
     return list;
 }
-
-/*
-//look up a specific node's value of list
-bool lookUp(List *list, void *point) {
-
-    ListNode *current = list -> head;
-
-    int aux = 0;
-
-    while(current != NULL) {
-        if(current -> data == point) aux = 1;
-
-        current = current -> next;
-    }
-
-    return aux;
-}
-*/
-
-
-/*
-
-List *removeNode(List *list, void *node) {
-
-    List *newList = initList();
-
-    ListNode* current = list -> head;
-
-    while(current != NULL) {
-     if(current -> data != node) headList(newList,current -> data);
-        current = current -> next;
-    }
-
-    return newList;
-
-}
-
-*/
-
 
 //delete a list
 void deleteList(List* list) {
@@ -145,8 +106,6 @@ void deleteList(List* list) {
 
 }
 
-
-/*
 void printList(List *list) {
 
     ListNode *node = list -> head;
@@ -158,32 +117,3 @@ void printList(List *list) {
     printf("\n");
 
   }
-*/
-
-/*
-int main() {
-
-
-    List *list = initList();
-    SHIP *sh1 = newShip(0);
-    SHIP *sh2 = newShip(1);
-    SHIP *sh3 = newShip(2);
-
-    headList(list,sh1);
-    headList(list,sh2);
-    headList(list,sh3);
-
-
-    printf("Lista: ");
-    printList(list);
-
-/*
-    int encontrei = lookUp(list,2);
-    printf("%d \n ", encontrei);
-
-    list = removeNode(list,8);
-
-    printf("Nova Lista: ");
-    printf("TAMANHO: %d \n", list -> size);
-    printList(list);
-*/
