@@ -1,5 +1,5 @@
-#include <stdio.h>
 #include "bitmap.h"
+
 
 BitMap * initBitMap(int columns, int row) {
 
@@ -8,7 +8,7 @@ BitMap * initBitMap(int columns, int row) {
     bp -> columns = columns;
     bp -> row = row;
 
-    bp -> refx = 0; 
+    bp -> refx = 0;
     bp -> refy = 0;
 
     unsigned char** data = malloc(sizeof(unsigned char*) * 1024);
@@ -49,35 +49,7 @@ void printBitMap(BitMap *x) {
     for(int i = 0; i < x->row; i++) {
         printf("\n");
            for(int j = 0; j< x -> columns; j++) {
-                //if(x->data[i][j]=='1') printf("%c ", x -> data[i][j]);
                 printf("%c ", x -> data[i][j]);
             }
         }
 }
-
-
-
-
-
-
-
-/*
-int main() {
-
-    BitMap* x = initBitMap(7,4);
-
-    printBitMap(x);
-
-    printf("\n\n");
-
-    changeCellValue(x,2,2,'2');
-
-    printBitMap(x);
-
-    printf("\n");
-
-}*/
-
-
-
-

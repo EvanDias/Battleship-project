@@ -73,9 +73,14 @@ void changeValueShotBp(Matrix *matrix, int x, int y, unsigned char ternaryValue)
     matrix -> data[y][x]-> ship -> bp -> data[y-y_value][x -x_value] = ternaryValue;
 }
 
-void shotInPlayer(Matrix *self, Matrix *other, int x, int y) {
+bool shotInPlayer(Matrix *self, Matrix *other, int x, int y) {
 
-    if(other -> data[y][x] -> value == 'x') {
+    bool shot = canShot(other,x,y);
+    bool shotMatrix = false;
+
+
+    if(shot) {
+      if(other -> data[y][x] -> value == 'x') {
         //o que aparece quando é acertado
         other -> data[y][x] -> value = '*';
         other -> data[y][x] -> ship -> shotCount--;
@@ -83,23 +88,35 @@ void shotInPlayer(Matrix *self, Matrix *other, int x, int y) {
         //alterar o shot da nossa celula para 2
         self -> data[y][x] -> shot = '2';
         printf("Your hit a  cell of a ship\n");
-    }
-    else if(other -> data[y][x] -> value == '.') {
+        shotMatrix = true;
+      }
+      else if(other -> data[y][x] -> value == '.') {
         //o valor do outro passa para +
         other -> data[y][x] -> value = '+';
         self -> data[y][x] -> shot = '1';
         printf("You hit a empty cell\n");
-    }
-    else {
-        printf("Your already  hit this positions\n");
-        printf("Choose other position: \n");
-        printf("x: ");
-        scanf("%d",&x);
-        printf("\ny: ");
-        scanf("%d",&y);
-        printf("\n");
-        shotInPlayer(self, other, x, y);
-    }
+        shotMatrix = true;
+      }
+  }
+
+  return shotMatrix;
+}
+
+
+bool canShot(Matrix *matrix, int x, int y) {
+
+  bool shot = true;
+ 
+
+        if(y >= matrix -> size || x >= matrix -> size) {
+          shot = false;
+        
+        }
+        else if(matrix -> data[y][x] -> value == 'x' || matrix -> data[y][x] -> value == '.') 
+                  shot = true;
+                
+
+    return shot;
 }
 
 void printList(List *list) {
@@ -119,7 +136,7 @@ int chooseMatrixSize() {
 
     printf("Write the size of the matrix (20 <= x <= 40): ");
     scanf("%d", &size);
-    
+
     while(size < 20 || size > 40) {
         printf("Write the size of the matrix (20 <= x <= 40): ");
         scanf("%d", &size);
@@ -154,6 +171,7 @@ User *whoStartGame(User *usr1, User *usr2) {
 
 void initializedGame(User *usr1, User *usr2) {
 
+  system("clear");
 
   printf(" -------------START GAME------------- \n");
   User *started = whoStartGame(usr1,usr2);
@@ -170,6 +188,8 @@ void initializedGame(User *usr1, User *usr2) {
 void game(User *start, User *other) {
   char ch_x, ch_y;
   int x, y = 0;
+  bool shotMatrix = false;
+
     while(1) {
 
     printUsers(start, other);
@@ -182,9 +202,26 @@ void game(User *start, User *other) {
     scanf(" %c",&ch_y);
 
     x = choiceChar(ch_x);
+
     y = choiceChar(ch_y);
 
-    shotInPlayer(start -> matrix,other -> matrix, x,y);
+
+    shotMatrix = shotInPlayer(start -> matrix, other -> matrix,x,y);
+
+    while(shotMatrix == false) {
+      printf("Try Again\n");
+      printf("%s choose point to hit a ship of %s\n", start -> username, other -> username);
+      printf("x: ");
+      scanf(" %c", &ch_x);
+      printf("\ny: ");
+      scanf(" %c",&ch_y);
+
+      x = choiceChar(ch_x);
+      y = choiceChar(ch_y);
+
+      shotMatrix = shotInPlayer(start -> matrix, other -> matrix, x,y);
+    }
+
 
     printUsers(start, other);
     printBothMatrix(start -> matrix, other -> matrix);
@@ -210,7 +247,22 @@ void game(User *start, User *other) {
     x = choiceChar(ch_x);
     y = choiceChar(ch_y);
 
-    shotInPlayer(other -> matrix, start -> matrix,x,y);
+    shotMatrix = shotInPlayer(other -> matrix, start -> matrix,x,y);
+
+
+    while(shotMatrix == false) {
+      printf("Try Again\n");
+      printf("%s choose point to hit a ship of %s\n", other -> username, start -> username);
+      printf("x: ");
+      scanf(" %c", &ch_x);
+      printf("\ny: ");
+      scanf(" %c",&ch_y);
+
+      x = choiceChar(ch_x);
+      y = choiceChar(ch_y);
+
+      shotMatrix = shotInPlayer(other -> matrix, start -> matrix,x,y);
+    }
 
     printUsers(other, start);
     printBothMatrix(other -> matrix, start -> matrix);
@@ -330,34 +382,3 @@ int charToIntLower(char chInput) {
 
     return inc;
 }
-
-
-
-/*
-int main() {
-
-      Matrix *matrix = initMatrix(20);
-      Matrix *self = initMatrix(20);
-
-      SHIP *sh = newShip(1);
-      SHIP *sh2 = newShip(3);
-      SHIP *sh1 = newShip(0);
-
-      insertShipInMatrix(matrix, sh,0,0);
-      //insertShipInMatrix(matrix,sh2,2,2);
-      //insertShipInMatrix(matrix,sh1,15,15);
-      //insertShipInMatrix(matrix,sh2,17,17);
-
-      shotInPlayer(self, matrix, 0, 0);
-      shotInPlayer(self, matrix, 1, 0);
-      shotInPlayer(self, matrix, 2, 0);
-
-      printSinkShip(matrix, 2,0);
-
-        printMatrix(matrix);
-      printEnemyMatrix(matrix);
-
-
-}
-
-*/
