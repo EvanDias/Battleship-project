@@ -1,4 +1,4 @@
-OBJS=gamev2.o shipv2.o matrix.o list.o menu.o bitmap.o main.o
+OBJS=bitmap.o gamev2.o list.o matrix.o menu.o randomShips.o shipv2.o main.o
 PROGRAM=./main
 CFLAGS=-g
 
