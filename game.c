@@ -82,7 +82,6 @@ void gameTurn(User *start, User *other) {
     scanf(" %c",&ch_y);
 
     x = choiceChar(ch_x);
-
     y = choiceChar(ch_y);
 
 
@@ -103,12 +102,17 @@ void gameTurn(User *start, User *other) {
     }
 
 
-    printUsers(start, other);
-    printBothMatrix(start -> matrix, other -> matrix);
-    sleep(2);
 
-    if(sinkBoatMatrix(other -> matrix))
+    if(sinkBoatMatrix(other -> matrix)) {
         printSinkShip(other -> matrix, x, y);
+        printUsers(start, other);
+        printBothMatrix(start -> matrix, other -> matrix);
+        sleep(2);
+    } else {
+        printUsers(start, other);
+        printBothMatrix(start -> matrix, other -> matrix);
+        sleep(2);
+    }
  
 
    
@@ -118,7 +122,6 @@ void gameTurn(User *start, User *other) {
 //Game development to the condition allShipsSink(user) == true
 
 void game(User *start, User *other) {
-  
 
     while(1) {
 
