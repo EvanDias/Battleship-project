@@ -7,7 +7,7 @@
           break;\
       case 2: degrees = 270;\
           break;\
-      case 3: degrees = 360;\
+      case 3: degrees = 90;\
           break;\
       default: degrees = 0;\
     } \

@@ -38,6 +38,7 @@ Matrix* initMatrix(int size) {
 
 bool insertShipInMatrix(Matrix *matrix, SHIP *ship, int x, int y) {
 
+
       bool insert = canInsert(matrix,ship,x,y);
       bool insertMatrix = false;
 
@@ -56,6 +57,7 @@ bool insertShipInMatrix(Matrix *matrix, SHIP *ship, int x, int y) {
           }
         }
       }
+
     }
 
     return insertMatrix;
@@ -91,7 +93,7 @@ bool canInsert(Matrix *matrix, SHIP *ship, int x, int y) {
 }
 
 
-// Change value of bp in relation with matrix
+//change value of bp in relation with matrix
 void changeValueShotBp(Matrix *matrix, int x, int y, unsigned char ternaryValue) {
 
     int x_value = matrix -> data[y][x]-> ship -> bp -> refx;
@@ -101,7 +103,6 @@ void changeValueShotBp(Matrix *matrix, int x, int y, unsigned char ternaryValue)
 }
 
 
-// Print the original matrix without hiding the true values
 void printMatrix(Matrix *matrix) {
     printf("\n");
     for(int i = 0; i < matrix -> size; i++) {
@@ -111,6 +112,7 @@ void printMatrix(Matrix *matrix) {
     printf("\n");
     }
 }
+
 
 
 // Print the enemy matrix without showing the position's of the ship's
@@ -126,7 +128,6 @@ void printEnemyMatrix(Matrix *matrix) {
     printf("\n");
     }
 }
-
 
 // Print letters around the game matrix
 void letters(int size) {
@@ -157,7 +158,6 @@ void letters(int size) {
  * Print enemy matrix on right side
 */
 void printBothMatrix(Matrix *start, Matrix *other) {
-
     printf("\n");
     int matrixSize = start -> size;
     char c1 = 'A';
@@ -169,6 +169,7 @@ void printBothMatrix(Matrix *start, Matrix *other) {
     printf("\n");
 
     for(int i=0; i < matrixSize; i++) {
+
             printf("%c ", c1);
             if(c1 == '[') c1 = 'a';
             for(int j = 0; j < matrixSize; j++) {
@@ -186,10 +187,13 @@ void printBothMatrix(Matrix *start, Matrix *other) {
                 else
                     printf("%c ", other -> data[i][j] -> value);
             }
+
             c1 += 1;
     printf("\n");
+
     }
 }
+
 
 
 // Change the value of a recently sunk ship to '#'
@@ -211,9 +215,10 @@ void printSinkShip(Matrix *matrix, int x, int y) {
 }
 
 
-// To know if the position chosen by the user is uppercase or lowercase
+//Comentário
 int choiceChar(char c) {
     int x;
+
     if(c >= 'A' && c <= 'Z')
         x = charToIntUpper(c);
     else
@@ -222,8 +227,7 @@ int choiceChar(char c) {
     return x;
 }
 
-
-// convert Character to int. Ex: (A B C D E ...) -> (0 1 2 3 4 ...)
+// To know if the position chosen by the user is uppercase or lowercase
 int charToIntUpper(char chInput) {
 
     int inc = 0;
@@ -231,6 +235,7 @@ int charToIntUpper(char chInput) {
     char ch = 'A';
 
     while(true) {
+
         if(ch == chInput)
             return inc;
 
@@ -242,7 +247,7 @@ int charToIntUpper(char chInput) {
 }
 
 
-// convert Character to int. Ex: (a b c d e ...) -> (26 27 28 29 30 ...)
+// convert Character to int. Ex: (a b c d e ...) -> (0 1 2 3 4 ...)
 int charToIntLower(char chInput) {
 
     int inc = 26;
@@ -250,6 +255,7 @@ int charToIntLower(char chInput) {
     char ch = 'a';
 
     while(true) {
+
         if(ch == chInput)
             return inc;
 
@@ -259,4 +265,3 @@ int charToIntLower(char chInput) {
 
     return inc;
 }
-

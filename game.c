@@ -2,6 +2,7 @@
 
 
 void initializedGame(User *usr1, User *usr2) {
+
   system("clear");
 
   printf(" -------------START GAME------------- \n");
@@ -9,37 +10,33 @@ void initializedGame(User *usr1, User *usr2) {
 
   printf("User %s - you start a game \n", started -> username);
 
-  if(started == usr1)
-    game(usr1,usr2);
-  else if (started == usr2)
-    game(usr2,usr1);
+  if(started == usr1) game(usr1,usr2);
+  else if (started == usr2) game(usr2,usr1);
+
 
 }
 
-
-// Boolean to know if it's possible to hit some position
 bool canShot(Matrix *matrix, int x, int y) {
 
   bool shot = true;
 
         if(y >= matrix -> size || x >= matrix -> size) {
           shot = false;
-        
         }
-        else if(matrix -> data[y][x] -> value == 'x' || matrix -> data[y][x] -> value == '.') 
+
+        else if(matrix -> data[y][x] -> value == 'x' || matrix -> data[y][x] -> value == '.')
                   shot = true;
+
 
     return shot;
 }
 
 
-// Change the ternary value of bitmap and the icon on the matrix
+
 bool shotInPlayer(Matrix *self, Matrix *other, int x, int y) {
 
-    bool shot = canShot(other,x,y);
     bool shotMatrix = false;
 
-    if(shot) {
       if(other -> data[y][x] -> value == 'x') {
         //value of matrix become *
         other -> data[y][x] -> value = '*';
@@ -54,23 +51,24 @@ bool shotInPlayer(Matrix *self, Matrix *other, int x, int y) {
       else if(other -> data[y][x] -> value == '.') {
         //o value of matrix become +
         other -> data[y][x] -> value = '+';
-        //shot of self matrix become 2
+        //shot of self matrix become 1
         self -> data[y][x] -> shot = '1';
         printf("You hit a empty cell\n");
-        shotMatrix = true;
+        shotMatrix = false;
       }
-  }
 
-  return shotMatrix;
+      return shotMatrix;
+
 }
 
-
-// User's turn
-void gameTurn(User *start, User *other) {
+//user move
+bool gameTurn(User *start, User *other) {
 
   char ch_x, ch_y;
   int x, y = 0;
-  bool shotMatrix = false;
+  bool shotCan = false;
+
+  bool playAgain = false;
 
     printUsers(start, other);
     printBothMatrix(start -> matrix, other -> matrix);
@@ -82,11 +80,17 @@ void gameTurn(User *start, User *other) {
     scanf(" %c",&ch_y);
 
     x = choiceChar(ch_x);
+
     y = choiceChar(ch_y);
 
-    shotMatrix = shotInPlayer(start -> matrix, other -> matrix,x,y);
+    shotCan = canShot(other -> matrix, x,y);
 
-    while(shotMatrix == false) {
+    if(shotCan) {
+      playAgain = shotInPlayer(start -> matrix, other -> matrix, x,y);
+    }
+
+    else {
+    while(shotCan == false) {
       printf("Try Again\n");
       printf("%s choose point to hit a ship of %s\n", start -> username, other -> username);
       printf("x: ");
@@ -97,41 +101,63 @@ void gameTurn(User *start, User *other) {
       x = choiceChar(ch_x);
       y = choiceChar(ch_y);
 
-      shotMatrix = shotInPlayer(start -> matrix, other -> matrix, x,y);
+        if(shotCan) playAgain = shotInPlayer(start -> matrix, other -> matrix, x,y);
+        else shotCan = canShot(other -> matrix, x,y);
     }
+  }
 
-    if(sinkBoatMatrix(other -> matrix)) {
+    printUsers(start, other);
+    printBothMatrix(start -> matrix, other -> matrix);
+
+    if(sinkBoatMatrix(other -> matrix))
         printSinkShip(other -> matrix, x, y);
-        printUsers(start, other);
-        printBothMatrix(start -> matrix, other -> matrix);
-        sleep(2);
-    } else {
-        printUsers(start, other);
-        printBothMatrix(start -> matrix, other -> matrix);
-        sleep(2);
-    }
+
+    sleep(2);
+
+    return playAgain;
 }
 
 
-// Game development to the condition of allShipsSink(user) == true
+
+bool playAgain(User *start, User *other) {
+
+  bool gameTurnVar = gameTurn(start,other);
+  bool broke = false;
+  while(gameTurnVar) {
+    gameTurnVar = gameTurn(start,other);
+    if(allShipsSink(start) || allShipsSink(other)) {
+      broke = true;
+      break;
+    }
+
+  }
+  return broke;
+
+}
+
+
+//Game development to the condition allShipsSink(user) == true
+
 void game(User *start, User *other) {
 
+
+    bool playAgainVar = false;
+
     while(1) {
-
-    gameTurn(start, other); 
-     if(allShipsSink(start) || allShipsSink(other)) {
+      playAgainVar = playAgain(start, other);
+      if(playAgainVar) {
         printf("||     CONGRULATIONS!     ||\n");
         printf("The player %s win the game! \n", start -> username);
         break;
-    }
-    gameTurn(other,start);
-
-     if(allShipsSink(start) || allShipsSink(other)) {
+      }
+      playAgainVar= playAgain(other,start);
+      if(playAgainVar) {
         printf("||     CONGRULATIONS!     ||\n");
         printf("The player %s win the game! \n", start -> username);
         break;
-    }
-    }
+      }
+  }
+
 }
 
 
@@ -143,7 +169,6 @@ bool sinkBoat(SHIP *ship) {
 
     return sinkBoatV;
 }
-
 
 bool sinkBoatMatrix(Matrix *x) {
     for(int i = 0; i < x -> size; i++) {
@@ -158,7 +183,6 @@ bool sinkBoatMatrix(Matrix *x) {
   }
   return false;
 }
-
 
 bool allShipsSink(User *usr) {
 
@@ -178,4 +202,3 @@ bool allShipsSink(User *usr) {
   else
     return false;
 }
-

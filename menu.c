@@ -33,9 +33,9 @@ void choiceOne() {
 
     system("clear");
 
-    int sizerMatrix = chooseMatrixSize();
+    //int sizerMatrix = chooseMatrixSize();
 
-    //int sizerMatrix = 8;
+    int sizerMatrix = 8;
 
     printf("Create a user 1 \n");
     printf("Your name: ");
@@ -108,7 +108,7 @@ void choiceMenu(int numberMenu) {
 
 /*Scanf of points choosed by user to do translation
   *
-  * 
+  *
 */
 void scanPointsTranslation(ListNode *node) {
 
@@ -140,7 +140,7 @@ void scanPointsTranslation(ListNode *node) {
 
 /*Scanf of points choosed by user to do rotation
   *
-  * 
+  *
 */
 void scanPointRotation(ListNode *node) {
 
@@ -158,13 +158,13 @@ void scanPointRotation(ListNode *node) {
 
   bool rotate = rotation(node -> ship, degrees);
 
-  
+
 }
 
 
 /*Scanf of points choosed by user to do insert ship in matrix
   *
-  * 
+  *
 */
 
 void scanPointInsert(ListNode *node, Matrix *matrix) {
@@ -225,7 +225,7 @@ void choiceModeGame(User *user) {
 
 
 
-//if user want to manual and random ship 
+//if user want to manual and random ship
 void choiceShips(User *user) {
 
     ListNode *node = user -> shipList -> head;
