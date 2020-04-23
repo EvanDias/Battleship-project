@@ -259,3 +259,4 @@ int charToIntLower(char chInput) {
 
     return inc;
 }
+
