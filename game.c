@@ -2,7 +2,6 @@
 
 
 void initializedGame(User *usr1, User *usr2) {
-
   system("clear");
 
   printf(" -------------START GAME------------- \n");
@@ -10,16 +9,18 @@ void initializedGame(User *usr1, User *usr2) {
 
   printf("User %s - you start a game \n", started -> username);
 
-  if(started == usr1) game(usr1,usr2);
-  else if (started == usr2) game(usr2,usr1);
-
+  if(started == usr1)
+    game(usr1,usr2);
+  else if (started == usr2)
+    game(usr2,usr1);
 
 }
 
+
+// Boolean to know if it's possible to hit some position
 bool canShot(Matrix *matrix, int x, int y) {
 
   bool shot = true;
- 
 
         if(y >= matrix -> size || x >= matrix -> size) {
           shot = false;
@@ -27,18 +28,16 @@ bool canShot(Matrix *matrix, int x, int y) {
         }
         else if(matrix -> data[y][x] -> value == 'x' || matrix -> data[y][x] -> value == '.') 
                   shot = true;
-                
 
     return shot;
 }
 
 
-
+// Change the ternary value of bitmap and the icon on the matrix
 bool shotInPlayer(Matrix *self, Matrix *other, int x, int y) {
 
     bool shot = canShot(other,x,y);
     bool shotMatrix = false;
-
 
     if(shot) {
       if(other -> data[y][x] -> value == 'x') {
@@ -65,7 +64,8 @@ bool shotInPlayer(Matrix *self, Matrix *other, int x, int y) {
   return shotMatrix;
 }
 
-//user move
+
+// User's turn
 void gameTurn(User *start, User *other) {
 
   char ch_x, ch_y;
@@ -84,7 +84,6 @@ void gameTurn(User *start, User *other) {
     x = choiceChar(ch_x);
     y = choiceChar(ch_y);
 
-
     shotMatrix = shotInPlayer(start -> matrix, other -> matrix,x,y);
 
     while(shotMatrix == false) {
@@ -101,8 +100,6 @@ void gameTurn(User *start, User *other) {
       shotMatrix = shotInPlayer(start -> matrix, other -> matrix, x,y);
     }
 
-
-
     if(sinkBoatMatrix(other -> matrix)) {
         printSinkShip(other -> matrix, x, y);
         printUsers(start, other);
@@ -113,14 +110,10 @@ void gameTurn(User *start, User *other) {
         printBothMatrix(start -> matrix, other -> matrix);
         sleep(2);
     }
- 
-
-   
-
 }
 
-//Game development to the condition allShipsSink(user) == true
 
+// Game development to the condition of allShipsSink(user) == true
 void game(User *start, User *other) {
 
     while(1) {
@@ -151,6 +144,7 @@ bool sinkBoat(SHIP *ship) {
     return sinkBoatV;
 }
 
+
 bool sinkBoatMatrix(Matrix *x) {
     for(int i = 0; i < x -> size; i++) {
       for(int j = 0; j < x -> size; j++) {
@@ -164,6 +158,7 @@ bool sinkBoatMatrix(Matrix *x) {
   }
   return false;
 }
+
 
 bool allShipsSink(User *usr) {
 
