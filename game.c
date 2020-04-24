@@ -61,6 +61,17 @@ bool shotInPlayer(Matrix *self, Matrix *other, int x, int y) {
 
 }
 
+
+
+
+
+
+
+
+
+
+
+
 //user move
 bool gameTurn(User *start, User *other) {
 
@@ -106,13 +117,16 @@ bool gameTurn(User *start, User *other) {
     }
   }
 
-    printUsers(start, other);
-    printBothMatrix(start -> matrix, other -> matrix);
-
-    if(sinkBoatMatrix(other -> matrix))
+    if(sinkBoatMatrix(other -> matrix)) {
         printSinkShip(other -> matrix, x, y);
-
-    sleep(2);
+        printUsers(start, other);
+        printBothMatrix(start -> matrix, other -> matrix);
+        sleep(2);
+    } else {
+        printUsers(start, other);
+        printBothMatrix(start -> matrix, other -> matrix);
+        sleep(2);
+     }
 
     return playAgain;
 }
@@ -153,7 +167,7 @@ void game(User *start, User *other) {
       playAgainVar= playAgain(other,start);
       if(playAgainVar) {
         printf("||     CONGRULATIONS!     ||\n");
-        printf("The player %s win the game! \n", start -> username);
+        printf("The player %s win the game! \n", other -> username);
         break;
       }
   }
