@@ -1,3 +1,5 @@
+#ifndef RANDOM_LIST_H
+#define RANDOM_LIST_H
 #include <stdio.h>
 #include <stdlib.h>
 #include "ship.h"
@@ -29,3 +31,5 @@ void *headList(List *list, SHIP *ship);
 List *removeNode(List *list, SHIP *ship);
 void printList(List *l);
 void deleteList(List* list);
+
+#endif //RANDOM_LIST_H

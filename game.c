@@ -1,6 +1,5 @@
 #include "game.h"
 
-
 void initializedGame(User *usr1, User *usr2) {
 
   system("clear");
@@ -32,7 +31,6 @@ bool canShot(Matrix *matrix, int x, int y) {
 }
 
 
-
 bool shotInPlayer(Matrix *self, Matrix *other, int x, int y) {
 
     bool shotMatrix = false;
@@ -60,16 +58,6 @@ bool shotInPlayer(Matrix *self, Matrix *other, int x, int y) {
       return shotMatrix;
 
 }
-
-
-
-
-
-
-
-
-
-
 
 
 //user move
@@ -130,7 +118,6 @@ bool gameTurn(User *start, User *other) {
 
     return playAgain;
 }
-
 
 
 bool playAgain(User *start, User *other) {
@@ -197,6 +184,7 @@ bool sinkBoatMatrix(Matrix *x) {
   }
   return false;
 }
+
 
 bool allShipsSink(User *usr) {
 

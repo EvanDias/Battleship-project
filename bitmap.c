@@ -1,26 +1,25 @@
 #include "bitmap.h"
 
-
-BitMap * initBitMap(int columns, int row) {
+BitMap * initBitMap() {
 
     BitMap *bp = malloc(sizeof(BitMap));
 
-    bp -> columns = columns;
-    bp -> row = row;
+    bp -> columns = sizeBitMap;
+    bp -> row = sizeBitMap;
 
     bp -> refx = 0;
     bp -> refy = 0;
 
     unsigned char** data = malloc(sizeof(unsigned char*) * 1024);
 
-    for(int i = 0; i < columns; i++)
-        data[i] = malloc(columns * sizeof(unsigned char));
+    for(int i = 0; i < sizeBitMap; i++)
+        data[i] = malloc(sizeBitMap * sizeof(unsigned char));
 
-    for(int i = 0; i < row; i++)
-            data[i] = malloc(row * sizeof(unsigned char));
+    for(int i = 0; i < sizeBitMap; i++)
+            data[i] = malloc(sizeBitMap * sizeof(unsigned char));
 
-    for(int i = 0; i < row; i++) {
-           for(int j = 0; j< columns; j++) {
+    for(int i = 0; i < sizeBitMap; i++) {
+           for(int j = 0; j < sizeBitMap; j++) {
                 data[i][j] = '0';
             }
         }
@@ -31,16 +30,12 @@ BitMap * initBitMap(int columns, int row) {
 }
 
 
-
-
-
 // Modify the ternary value contained in the BitMap
 void changeCellValue(BitMap *bp, int x, int y, unsigned char ternaryValue) {
 
     bp -> data[x][y] = ternaryValue;
     
 }
-
 
 
 // Print the BitMap
@@ -50,5 +45,5 @@ void printBitMap(BitMap *x) {
            for(int j = 0; j< x -> columns; j++) {
                 printf("%c ", x -> data[i][j]);
             }
-        }
+    }
 }

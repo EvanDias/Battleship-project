@@ -1,3 +1,5 @@
+#ifndef RANDOM_BITMAP_H
+#define RANDOM_BITMAP_H
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -16,6 +18,8 @@ struct bitmap_ {
 
 };
 
-BitMap *initBitMap(int columns, int row);
+BitMap *initBitMap();
 void printBitMap(BitMap *x);
 void changeCellValue(BitMap *bp, int x, int y, unsigned char ternaryValue);
+
+#endif //RANDOM_BITMAP_H

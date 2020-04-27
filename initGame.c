@@ -76,8 +76,10 @@ User *whoStartGame(User *usr1, User *usr2) {
 
   int numberUsr1, numberUsr2;
 
+  system("clear");
   printf("User %s choose a number: \n", usr1 -> username);
   scanf("%d", &numberUsr1);
+  system("clear");
   printf("User %s choose a number: \n", usr2 -> username);
   scanf("%d", &numberUsr2);
 

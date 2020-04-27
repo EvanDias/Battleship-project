@@ -1,4 +1,3 @@
-#include <math.h>
 #include "ship.h"
 
 #define PXREF 2
@@ -34,7 +33,7 @@ SHIP *newShip(ShipKind kind) {
 
     ship -> shotCount = numCells(ship); 
 
-    BitMap *bp = initBitMap(5, 5);
+    BitMap *bp = initBitMap();
 
     ship = getShipSize(ship);
 
@@ -155,7 +154,7 @@ char *nameShip(SHIP *sh) {
 //translation of ship in bitmap 
 bool translation(SHIP *sh, int sizeVertical, int sizeHorizontal) {
 
-  BitMap *bitaux = initBitMap(5,5);
+  BitMap *bitaux = initBitMap();
 
   bool translate = false;
   int broke = 0;
@@ -197,7 +196,7 @@ bool translation(SHIP *sh, int sizeVertical, int sizeHorizontal) {
 
 bool rotation(SHIP *sh, int degrees) {
 
-  BitMap *bitFinal = initBitMap(5,5);
+  BitMap *bitFinal = initBitMap();
 
   int x_line, y_line = 0;
 

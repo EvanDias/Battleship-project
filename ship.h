@@ -2,8 +2,6 @@
 #define RANDOM_SHIP_H
 #include "bitmap.h"
 
-
-
 typedef enum {SOLO, TRIAL, SMALL_QUAD, BIGGEST_QUAD, L_GUY} ShipKind;
 typedef enum {false, true} bool;
 

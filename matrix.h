@@ -1,3 +1,5 @@
+#ifndef RANDOM_MATRIX_H
+#define RANDOM_MATRIX_H
 #include "list.h"
 
 typedef struct matrix_ Matrix;
@@ -33,3 +35,5 @@ void letters(int size);
 int choiceChar(char c);
 int charToIntUpper(char chInput);
 int charToIntLower(char chInput);
+
+#endif //RANDOM_MATRIX_H

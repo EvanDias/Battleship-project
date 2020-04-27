@@ -2,7 +2,7 @@
 
 void mainMenu() {
 
-    //system("clear");
+    system("clear");
 
     printf("------------------------------------------------ \n");
     printf("            WELCOME TO BATTLESHIP                \n");
@@ -33,9 +33,9 @@ void choiceOne() {
 
     system("clear");
 
-    //int sizerMatrix = chooseMatrixSize();
+    int sizerMatrix = chooseMatrixSize();
 
-    int sizerMatrix = 8;
+    //int sizerMatrix = 8;
 
     printf("Create a user 1 \n");
     printf("Your name: ");
@@ -199,6 +199,7 @@ void scanPointInsert(ListNode *node, Matrix *matrix) {
 
 
 void choiceModeGame(User *user) {
+      system("clear");
 
       int numberChoice = 0;
       printf("%s choose a mode game\n", user -> username);
@@ -206,7 +207,9 @@ void choiceModeGame(User *user) {
       printf("2 - Randomize Setup\n");
       printf("3 - Manual/Randomize Setup \n");
       printf("4 - Return principal menu\n");
+      printf("Option: ");
       scanf("%d", &numberChoice);
+      printf("\n");
 
       switch (numberChoice) {
         case 1: choiceShipsManual(user);
@@ -220,7 +223,6 @@ void choiceModeGame(User *user) {
         default: choiceModeGame(user);
               break;
       }
-
 }
 
 
