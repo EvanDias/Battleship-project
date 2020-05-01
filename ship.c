@@ -72,6 +72,17 @@ void *shipToOne(SHIP *sh) {
             changeCellValue(sh -> bp, j, 0, ternaryValue);
     }
 
+    else if(sh -> kind == T_GUY) {
+        for(int i = 0; i < sh -> columns; i++) changeCellValue(sh -> bp, i,1,ternaryValue);
+        for(int j = 0; j < sh -> rows; j++) changeCellValue(sh -> bp, 0,j, ternaryValue);
+    }
+
+    else if(sh -> kind == S_GUY) {
+        for(int i = 0; i < 3; i++) changeCellValue(sh -> bp, 4,i,ternaryValue);
+        for(int j = 0; j < sh -> rows; j++) changeCellValue(sh -> bp, j, 2, ternaryValue);
+        for(int k = sh -> columns; k >= 3; k--) changeCellValue(sh -> bp, 0,k,ternaryValue);
+    }
+
 }
 
 
@@ -96,6 +107,15 @@ SHIP *getShipSize(SHIP *sh) {
         columns = 5;
         rows = 5;
     }
+      else if(sh -> kind == T_GUY) {
+          columns = 3;
+          rows = 3; 
+      }
+
+      else if(sh -> kind == S_GUY) {
+          columns = 5;
+          rows = 5;
+      }
 
     sh -> columns = columns;
     sh -> rows = rows;
@@ -118,6 +138,10 @@ int numCells(SHIP *sh) {
         case BIGGEST_QUAD:
             return 16;
         case L_GUY:
+            return 9;
+        case T_GUY:
+            return 6;
+        case S_GUY: 
             return 9;
          default:
             return 0;
@@ -142,6 +166,10 @@ char *nameShip(SHIP *sh) {
             break;
     case 4: kind = "L_GUY";
             break;
+    case 5: kind = "T_GUY";
+            break;
+    case 6: kind = "S_GUY";
+            break;
     default : kind = "";
             break;
 
@@ -159,7 +187,7 @@ bool translation(SHIP *sh, int sizeVertical, int sizeHorizontal) {
   bool translate = false;
   int broke = 0;
 
-  if(sh -> kind != L_GUY) {
+  if(sh -> kind != L_GUY && sh -> kind != T_GUY && sh -> kind != S_GUY) {
     for(int i=0; i < sh -> columns; i++) {
       for(int j=0; j < sh -> rows; j++) {
         if((j+sizeVertical) >= 5 ||(i+sizeHorizontal) >= 5) {
@@ -178,7 +206,28 @@ bool translation(SHIP *sh, int sizeVertical, int sizeHorizontal) {
       }
   }
 }
-    else {
+    else if(sh -> kind == T_GUY) {
+        for(int i = 0; i < sh -> columns;i++)  {
+          for(int j = 0; j < sh -> rows; j++) {
+          if((sizeVertical) >= 3 ||(sizeHorizontal) >= 3) {
+          broke = 1;
+          break;
+        }
+          sh -> bp = bitaux;
+          changeCellValue(sh -> bp, sizeVertical, i + sizeHorizontal, '1');
+          changeCellValue(sh -> bp, j + sizeVertical, 1 + sizeHorizontal, '1' );
+          translate = true;
+      }
+
+        if(broke) {
+            //  printf("Can't this values to translate! \n");
+            translate = false;
+            break;
+            }
+        }
+      }
+    
+    else if(sh -> kind == L_GUY || sh -> kind == S_GUY) {
       char *kind = nameShip(sh);
       printf("Ship of %s' type can't translate! \n", kind);
       translate = true;
@@ -229,7 +278,29 @@ bool rotation(SHIP *sh, int degrees) {
     return rotate;
 }
 
-void delete_ship(SHIP *sh) {
-  free(sh -> bp);
-  free(sh);
+
+/*
+
+void main() {
+
+    SHIP *newT = newShip(5);
+    printBitMap(newT -> bp); 
+    printf("\n");
+    
+    SHIP *newS = newShip(6);
+    printBitMap(newS -> bp); 
+    printf("\n");
+    
+
+    bool translationT = translation(newT, 2,1); 
+    printBitMap(newT -> bp); 
+    printf("\n");
+
+    bool rotationT = rotation(newT,180);
+     printBitMap(newT -> bp); 
+    printf("\n");
+
 }
+
+
+*/

@@ -26,17 +26,35 @@ List *listShips(int sizeMatrix) {
 
     List *shipList = initList();
 
-    int i = 0;
+    int numberSmall = number * 0.20;
+    int numberBig = number * 0.10;
 
-    while(number != 0) {
-      while(i < 5 && number != 0) {
-        SHIP *ship = newShip(i);
-        headList(shipList,ship);
-        number--;
-        i++;
-      }
-      i = 0;
+    while(numberSmall!= 0) {
+
+      SHIP *new = newShip(0);
+      headList(shipList,new);
+      SHIP *new1 = newShip(1);
+      headList(shipList,new1);
+      SHIP *new2 = newShip(2);
+      headList(shipList, new2);
+      SHIP *new3 = newShip(5);
+      headList(shipList, new3);
+      numberSmall--;
+
     }
+
+    while(numberBig!= 0) {
+
+      SHIP *new = newShip(6);
+      headList(shipList,new);
+      SHIP *new1 = newShip(4);
+      headList(shipList,new1);
+      SHIP *new2 = newShip(3);
+      headList(shipList, new2);
+      numberBig--;
+
+    }
+
 
     return shipList;
 
@@ -110,4 +128,15 @@ void printUsers(User *start, User *other) {
 
 }
 
+/*
 
+void main() {
+
+  List *list = listShips(20);
+
+  printf("%d\n", list -> size);
+
+  printList(list);
+}
+
+*/

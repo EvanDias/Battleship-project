@@ -11,23 +11,40 @@ RULES:
 SHIPS'S TYPE: 
 
 
-1) x
+1) SOLO:
+         x
 
-2) x x x  
+2) TRIAL: 
+         x x x  
 
-3) x x
-   x x
+3) SMALL_QUAD:
+         x x
+         x x
 
-4) x x x x
-   x x x x
-   x x x x
-   x x x x
+4) BIGGEST_QUAD:
+         x x x x
+         x x x x
+         x x x x
+         x x x x
 
-5) x
-   x
-   x
-   x
-   x x x x x
+5) L_GUY:
+         x
+         x
+         x
+         x
+         x x x x x
+
+6) T_GUY:
+         x x x
+           x
+           x 
+
+7) S_GUY:
+             x x x
+             x
+             x
+             x
+         x x x
 
 
 

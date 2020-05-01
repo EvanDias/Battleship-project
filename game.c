@@ -1,19 +1,6 @@
 #include "game.h"
 
-void initializedGame(User *usr1, User *usr2) {
 
-  system("clear");
-
-  printf(" -------------START GAME------------- \n");
-  User *started = whoStartGame(usr1,usr2);
-
-  printf("User %s - you start a game \n", started -> username);
-
-  if(started == usr1) game(usr1,usr2);
-  else if (started == usr2) game(usr2,usr1);
-
-
-}
 
 bool canShot(Matrix *matrix, int x, int y) {
 
@@ -204,3 +191,5 @@ bool allShipsSink(User *usr) {
   else
     return false;
 }
+
+

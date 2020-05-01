@@ -55,6 +55,102 @@ void choiceOne() {
     initializedGame(user1, user2);
 }
 
+
+void initializedGame(User *usr1, User *usr2) {
+
+  system("clear");
+
+  //aqui
+  printMatrix(usr1 -> matrix);
+  printf("User %s do you would like delete some ship?\n",usr1 -> username);
+  printf("1)YES\n");
+  printf("2)NO \n");
+  int choose;
+  scanf("%d", &choose);
+  
+  int x,y = 0;
+  char ch_x, ch_y;
+  while(choose == 1) {
+    printf("Choose the coordenate's ship to delete\n");
+    printf("x: ");
+    scanf(" %c", &ch_x);
+    printf("\ny: ");
+    scanf(" %c",&ch_y);
+    x = choiceChar(ch_x);
+    y = choiceChar(ch_y);
+    bool deleted = deleteShipMatrix(usr1, x, y);
+    
+    while(deleted == false) {
+      printf("Don't exist a ship in this point. Choose other\n");
+      printf("x: ");
+      scanf(" %c", &ch_x);
+      printf("\ny: ");
+      scanf(" %c",&ch_y);
+      x = choiceChar(ch_x);
+      y = choiceChar(ch_y);
+      deleted = deleteShipMatrix(usr1, x, y);
+    }
+
+    printf("Do you want delete any ship?\n");
+    printf("1)YES\n");
+    printf("2)NO \n");
+    scanf("%d", &choose);
+  }
+int chooseother;
+if (choose == 2) {
+  //aqui
+  printMatrix(usr2 -> matrix);
+  printf("User %s do you would like delete some ship?\n",usr2 -> username);
+  printf("1)YES\n");
+  printf("2)NO \n");
+  
+  scanf("%d", &chooseother);
+  
+ int x,y = 0;
+ char ch_x, ch_y;
+  while(chooseother == 1) {
+    printf("Choose the coordenate's ship to delete\n");
+    printf("x: ");
+    scanf(" %c", &ch_x);
+    printf("\ny: ");
+    scanf(" %c",&ch_y);
+    x = choiceChar(ch_x);
+    y = choiceChar(ch_y);
+    bool deleted = deleteShipMatrix(usr2, x, y);
+    
+    while(deleted == false) {
+      printf("Don't exist a ship in this point. Choose other\n");
+      printf("x: ");
+      scanf(" %c", &ch_x);
+      printf("\ny: ");
+      scanf(" %c",&ch_y);
+      x = choiceChar(ch_x);
+      y = choiceChar(ch_y);
+      deleted = deleteShipMatrix(usr2, x, y);
+    }
+
+    printf("Do you want delete any ship?\n");
+    printf("1)YES\n");
+    printf("2)NO \n");
+    scanf("%d", &chooseother);
+  } 
+}
+
+  if (chooseother == 2) {
+
+    system("clear");
+    printf(" -------------START GAME------------- \n");
+    User *started = whoStartGame(usr1,usr2);
+
+    printf("User %s - you start a game \n", started -> username);
+
+    if(started == usr1) game(usr1,usr2);
+    else if (started == usr2) game(usr2,usr1);
+
+  }
+
+}
+
 // See rules of the game
 void choiceTwo() {
 
@@ -114,7 +210,7 @@ void scanPointsTranslation(ListNode *node) {
 
   int x, y = 0;
   char *kind = "";
-  if(node -> ship -> kind != 4) {
+  if(node -> ship -> kind != 4 && node -> ship -> kind != 6) {
     kind = nameShip(node -> ship);
     printf("Choose the points to do translation of %s \n", kind);
     printf("x: ");
@@ -306,6 +402,7 @@ void choiceShipsAuto(User *user) {
 
       node =  node -> next;
 
+      //aqui
       printMatrix(user -> matrix);
 
     }
@@ -341,7 +438,34 @@ void choiceShipsManual(User *user) {
 
         node =  node -> next;
 
+        //aqui
         printMatrix(user -> matrix);
 
       }
   }
+
+bool deleteShipMatrix(User *usr, int x, int y) {
+
+    bool deleted = false;
+    ShipKind kind;
+    if(usr -> matrix -> data[y][x] -> ship != NULL) {
+        kind = usr -> matrix -> data[y][x] -> ship -> kind;
+        removeNode(usr -> shipList, usr -> matrix -> data[y][x] -> ship);
+        free(usr -> matrix -> data[y][x] -> ship -> bp);
+        free(usr -> matrix -> data[y][x] -> ship);
+        deleted = true;
+    }
+    else deleted = false; 
+
+    if(deleted) {
+
+      SHIP *new = newShip(kind);
+      headList(usr -> shipList, new);
+      ListNode *node = usr -> shipList -> head;
+      scanPointsTranslation(node);
+      scanPointRotation(node);
+      scanPointInsert(node, usr -> matrix);
+    }
+
+    return deleted;
+}

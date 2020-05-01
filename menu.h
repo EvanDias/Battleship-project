@@ -13,5 +13,6 @@ void choiceShips();
 void choiceShipsAuto(User *user);
 void choiceShipsManual(User *user);
 void insertMode(User *user);
+void initializedGame(User *usr1, User *usr2);
 
 #endif //RANDOM_MENU_H

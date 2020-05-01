@@ -64,6 +64,7 @@ bool insertShipInMatrix(Matrix *matrix, SHIP *ship, int x, int y) {
 }
 
 
+
 bool canInsert(Matrix *matrix, SHIP *ship, int x, int y) {
 
     bool insert = true;
@@ -83,6 +84,13 @@ bool canInsert(Matrix *matrix, SHIP *ship, int x, int y) {
             broke = 1;
             break;
           }
+          else if(j+y-1 > 0 && j+y+1 < matrix -> size && i+x-1 > 0 && i+x+1 < matrix -> size) {
+                 if((matrix -> data[j+y][i+x-1] -> value == 'x' && ship -> bp -> data[j][i]=='1')|| (matrix -> data[j+y][i+x+1] -> value == 'x' && ship -> bp -> data[j][i] == '1')|| (matrix -> data[j+y-1][i+x] -> value == 'x' && ship -> bp -> data[j][i] == '1')|| (matrix -> data[j+y+1][i+x] -> value == 'x'&& ship -> bp -> data[j][i] == '1')) {
+                     insert = false; 
+                     broke = 1; 
+                     break;
+                 }
+                }
       }
       if(broke) {
         break;
@@ -101,6 +109,7 @@ void changeValueShotBp(Matrix *matrix, int x, int y, unsigned char ternaryValue)
 
     changeCellValue(matrix -> data[y][x] -> ship -> bp, y-y_value, x-x_value, ternaryValue);
 }
+
 
 
 void printMatrix(Matrix *matrix) {
@@ -152,6 +161,7 @@ void letters(int size) {
 }
 
 
+
 /*
  * User interface
  * Print current player matrix on left side
@@ -193,6 +203,9 @@ void printBothMatrix(Matrix *start, Matrix *other) {
 
     }
 }
+
+
+
 
 
 
