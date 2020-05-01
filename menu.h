@@ -14,5 +14,6 @@ void choiceShipsAuto(User *user);
 void choiceShipsManual(User *user);
 void insertMode(User *user);
 void initializedGame(User *usr1, User *usr2);
+bool deleteListMatrix(User *usr, int x, int y);
 
 #endif //RANDOM_MENU_H

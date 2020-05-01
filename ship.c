@@ -277,30 +277,3 @@ bool rotation(SHIP *sh, int degrees) {
 
     return rotate;
 }
-
-
-/*
-
-void main() {
-
-    SHIP *newT = newShip(5);
-    printBitMap(newT -> bp); 
-    printf("\n");
-    
-    SHIP *newS = newShip(6);
-    printBitMap(newS -> bp); 
-    printf("\n");
-    
-
-    bool translationT = translation(newT, 2,1); 
-    printBitMap(newT -> bp); 
-    printf("\n");
-
-    bool rotationT = rotation(newT,180);
-     printBitMap(newT -> bp); 
-    printf("\n");
-
-}
-
-
-*/

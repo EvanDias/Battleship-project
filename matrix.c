@@ -110,6 +110,17 @@ void changeValueShotBp(Matrix *matrix, int x, int y, unsigned char ternaryValue)
     changeCellValue(matrix -> data[y][x] -> ship -> bp, y-y_value, x-x_value, ternaryValue);
 }
 
+void deleteShipMatrix(Matrix *ma, SHIP *sh, int x, int y) {
+
+   free(ma -> data[y][x] -> ship -> bp); 
+    free(ma -> data[y][x] -> ship);
+     for(int i = 0; i < sizeBitMap; i++) {
+        for(int j = 0; j < sizeBitMap; j++) {   
+                ma -> data[j+y][i+x] = initCell(); 
+        }
+     }
+
+}
 
 
 void printMatrix(Matrix *matrix) {

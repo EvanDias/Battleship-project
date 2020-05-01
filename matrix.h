@@ -27,6 +27,7 @@ Cell* initCell();
 Matrix *initMatrix(int size);
 bool insertShipInMatrix(Matrix *a, SHIP *ship, int x, int y);
 void changeValueShotBp(Matrix *matrix, int x, int y, unsigned char ternaryValue);
+void deleteShipMatrix(Matrix *ma, SHIP *sh, int x, int y);
 void printMatrix(Matrix *matrix);
 void printEnemyMatrix(Matrix *matrix);
 void printBothMatrix(Matrix *start, Matrix *other);

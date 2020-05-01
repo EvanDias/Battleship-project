@@ -33,9 +33,9 @@ void choiceOne() {
 
     system("clear");
 
-    int sizerMatrix = chooseMatrixSize();
+    //int sizerMatrix = chooseMatrixSize();
 
-    //int sizerMatrix = 8;
+    int sizerMatrix = 16;
 
     printf("Create a user 1 \n");
     printf("Your name: ");
@@ -78,7 +78,7 @@ void initializedGame(User *usr1, User *usr2) {
     scanf(" %c",&ch_y);
     x = choiceChar(ch_x);
     y = choiceChar(ch_y);
-    bool deleted = deleteShipMatrix(usr1, x, y);
+    bool deleted = deleteListMatrix(usr1, x, y);
     
     while(deleted == false) {
       printf("Don't exist a ship in this point. Choose other\n");
@@ -88,7 +88,7 @@ void initializedGame(User *usr1, User *usr2) {
       scanf(" %c",&ch_y);
       x = choiceChar(ch_x);
       y = choiceChar(ch_y);
-      deleted = deleteShipMatrix(usr1, x, y);
+      deleted = deleteListMatrix(usr1, x, y);
     }
 
     printf("Do you want delete any ship?\n");
@@ -116,7 +116,7 @@ if (choose == 2) {
     scanf(" %c",&ch_y);
     x = choiceChar(ch_x);
     y = choiceChar(ch_y);
-    bool deleted = deleteShipMatrix(usr2, x, y);
+    bool deleted = deleteListMatrix(usr2, x, y);
     
     while(deleted == false) {
       printf("Don't exist a ship in this point. Choose other\n");
@@ -126,7 +126,7 @@ if (choose == 2) {
       scanf(" %c",&ch_y);
       x = choiceChar(ch_x);
       y = choiceChar(ch_y);
-      deleted = deleteShipMatrix(usr2, x, y);
+      deleted = deleteListMatrix(usr2, x, y);
     }
 
     printf("Do you want delete any ship?\n");
@@ -444,15 +444,14 @@ void choiceShipsManual(User *user) {
       }
   }
 
-bool deleteShipMatrix(User *usr, int x, int y) {
+bool deleteListMatrix(User *usr, int x, int y) {
 
     bool deleted = false;
     ShipKind kind;
     if(usr -> matrix -> data[y][x] -> ship != NULL) {
         kind = usr -> matrix -> data[y][x] -> ship -> kind;
         removeNode(usr -> shipList, usr -> matrix -> data[y][x] -> ship);
-        free(usr -> matrix -> data[y][x] -> ship -> bp);
-        free(usr -> matrix -> data[y][x] -> ship);
+        deleteShipMatrix(usr -> matrix, usr -> matrix -> data[y][x] -> ship , x, y);
         deleted = true;
     }
     else deleted = false; 
