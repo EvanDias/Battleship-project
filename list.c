@@ -12,7 +12,6 @@ ListNode *initNode(SHIP *ship, ListNode* next) {
         newNode -> next = next;
 
     return newNode;
-
 }
 
 
@@ -33,7 +32,8 @@ List *initList() {
 //add node a head list
 void *headList(List* list, SHIP *elem) {
 
-    ListNode* newNode = malloc(sizeof(ListNode));
+    //ListNode* newNode = malloc(sizeof(ListNode));
+    ListNode* newNode = initNode(elem, NULL);
 
     newNode -> ship = elem;
 
@@ -99,12 +99,6 @@ List *removeNode(List *list, SHIP *node) {
     return list;
 }
 
-//delete a list
-void deleteList(List* list) {
-
-    free(list);
-
-}
 
 void printList(List *list) {
 
@@ -116,4 +110,64 @@ void printList(List *list) {
     }
     printf("\n");
 
-  }
+}
+
+/*
+void freeList(List* list) {
+
+    ListNode *node = list -> head;
+
+    while(node != NULL) {
+        freeNode(node);
+        node = node -> next;
+    }
+
+
+    free(list);
+}
+
+
+void freeNode(ListNode *node) {
+    freeShip(node -> ship);
+    if(node -> next == NULL) {
+        free(node);
+    } else {
+        free(node -> next);
+    }
+}*/
+
+void freeList(List* list) {
+
+    ListNode *node = list -> head;
+    ListNode *aux;
+
+    while(node != NULL) {
+        aux = node -> next;
+        freeShip(node -> ship);
+        free(node);
+        node = aux;
+    }
+
+    if(node == NULL) {
+        free(node);
+        free(aux);
+    }
+
+    free(list);
+}
+
+
+/*
+void main() {
+    List *list = initList();
+    SHIP* S_SHIP = newShip(6);
+
+    changeCellValue(S_SHIP -> bp, 0, 2, '4');
+    printf("\n");
+    printBitMap(S_SHIP -> bp);
+
+    headList(list, S_SHIP);
+
+    printBitMap(S_SHIP -> bp);
+
+}*/

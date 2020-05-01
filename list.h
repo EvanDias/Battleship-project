@@ -31,5 +31,7 @@ void *headList(List *list, SHIP *ship);
 List *removeNode(List *list, SHIP *ship);
 void printList(List *l);
 void deleteList(List* list);
+void freeList(List* list);
+void freeNode(ListNode *node);
 
 #endif //RANDOM_LIST_H

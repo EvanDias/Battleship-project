@@ -1,7 +1,5 @@
 #include "game.h"
 
-
-
 bool canShot(Matrix *matrix, int x, int y) {
 
   bool shot = true;
@@ -59,6 +57,7 @@ bool gameTurn(User *start, User *other) {
     printUsers(start, other);
     printBothMatrix(start -> matrix, other -> matrix);
 
+    /*
     printf("%s choose point to hit a ship of %s\n", start -> username, other -> username);
     printf("x: ");
     scanf(" %c", &ch_x);
@@ -66,8 +65,11 @@ bool gameTurn(User *start, User *other) {
     scanf(" %c",&ch_y);
 
     x = choiceChar(ch_x);
-
     y = choiceChar(ch_y);
+    */;
+
+    x = randomShoot(start -> matrix -> size);
+    y = randomShoot(start -> matrix -> size);
 
     shotCan = canShot(other -> matrix, x,y);
 
@@ -77,6 +79,7 @@ bool gameTurn(User *start, User *other) {
 
     else {
     while(shotCan == false) {
+      /*
       printf("Try Again\n");
       printf("%s choose point to hit a ship of %s\n", start -> username, other -> username);
       printf("x: ");
@@ -86,6 +89,9 @@ bool gameTurn(User *start, User *other) {
 
       x = choiceChar(ch_x);
       y = choiceChar(ch_y);
+        */
+        x = randomShoot(start -> matrix -> size);
+        y = randomShoot(start -> matrix -> size);
 
         if(shotCan) playAgain = shotInPlayer(start -> matrix, other -> matrix, x,y);
         else shotCan = canShot(other -> matrix, x,y);
@@ -96,11 +102,11 @@ bool gameTurn(User *start, User *other) {
         printSinkShip(other -> matrix, x, y);
         printUsers(start, other);
         printBothMatrix(start -> matrix, other -> matrix);
-        sleep(2);
+        //sleep(2);
     } else {
         printUsers(start, other);
         printBothMatrix(start -> matrix, other -> matrix);
-        sleep(2);
+        //sleep(2);
      }
 
     return playAgain;
@@ -128,7 +134,6 @@ bool playAgain(User *start, User *other) {
 
 void game(User *start, User *other) {
 
-
     bool playAgainVar = false;
 
     while(1) {
@@ -144,8 +149,12 @@ void game(User *start, User *other) {
         printf("The player %s win the game! \n", other -> username);
         break;
       }
-  }
+    }
 
+    freeUser(start);
+    freeUser(other);
+
+    exit(0);
 }
 
 
@@ -192,4 +201,13 @@ bool allShipsSink(User *usr) {
     return false;
 }
 
+
+int randomShoot(int matrixSize) {
+
+    int x = rand() % matrixSize;
+
+    printf("x: %d", x);
+
+    return x;
+}
 

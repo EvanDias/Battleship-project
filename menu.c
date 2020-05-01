@@ -33,9 +33,9 @@ void choiceOne() {
 
     system("clear");
 
-    //int sizerMatrix = chooseMatrixSize();
+    int sizerMatrix = chooseMatrixSize();
 
-    int sizerMatrix = 16;
+    //int sizerMatrix = 8;
 
     printf("Create a user 1 \n");
     printf("Your name: ");
@@ -411,6 +411,8 @@ void choiceShipsAuto(User *user) {
     printf("1) YES\n");
     printf("2) NO \n");
     scanf("%d",&agreed);
+
+    //deleteShip(user);
 
     switch(agreed) {
       case 1: break;

@@ -21,5 +21,6 @@ int chooseMatrixSize();
 int numberShips(int sizeMatrix);
 User *whoStartGame(User *usr1, User *usr2);
 void printUsers(User *start, User *other);
+void freeUser(User *usr);
 
 #endif //RANDOM_INITgAME_H

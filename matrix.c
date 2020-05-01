@@ -86,8 +86,8 @@ bool canInsert(Matrix *matrix, SHIP *ship, int x, int y) {
           }
           else if(j+y-1 > 0 && j+y+1 < matrix -> size && i+x-1 > 0 && i+x+1 < matrix -> size) {
                  if((matrix -> data[j+y][i+x-1] -> value == 'x' && ship -> bp -> data[j][i]=='1')|| (matrix -> data[j+y][i+x+1] -> value == 'x' && ship -> bp -> data[j][i] == '1')|| (matrix -> data[j+y-1][i+x] -> value == 'x' && ship -> bp -> data[j][i] == '1')|| (matrix -> data[j+y+1][i+x] -> value == 'x'&& ship -> bp -> data[j][i] == '1')) {
-                     insert = false; 
-                     broke = 1; 
+                     insert = false;
+                     broke = 1;
                      break;
                  }
                 }
@@ -112,15 +112,15 @@ void changeValueShotBp(Matrix *matrix, int x, int y, unsigned char ternaryValue)
 
 void deleteShipMatrix(Matrix *ma, SHIP *sh, int x, int y) {
 
-   free(ma -> data[y][x] -> ship -> bp); 
-    free(ma -> data[y][x] -> ship);
      for(int i = 0; i < sizeBitMap; i++) {
-        for(int j = 0; j < sizeBitMap; j++) {   
-                ma -> data[j+y][i+x] = initCell(); 
+        for(int j = 0; j < sizeBitMap; j++) {
+               if (sh -> bp -> data[j][i] == '1') {
+                   ma -> data[j+y][i+x] = initCell();
+        }
         }
      }
-
 }
+
 
 
 void printMatrix(Matrix *matrix) {
@@ -289,3 +289,33 @@ int charToIntLower(char chInput) {
 
     return inc;
 }
+
+
+void freeMatrix(Matrix *matrix) {
+
+     for(int i=0; i< matrix -> size; i++) {
+        for(int j=0; j < matrix -> size; j++) {
+            freeCell(matrix -> data[i][j]);
+        }
+        free(matrix -> data[i]);
+     }
+
+    free(matrix -> data);
+    free(matrix);
+}
+
+
+void freeCell(Cell *cell) {
+    //if(cell -> ship != NULL)
+        //freeShip(cell -> ship);
+
+    free(cell);
+}
+
+/*
+void main() {
+
+    Matrix *matrix = initMatrix(25);
+    freeMatrix(matrix);
+
+}*/

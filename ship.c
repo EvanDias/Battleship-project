@@ -79,8 +79,8 @@ void *shipToOne(SHIP *sh) {
 
     else if(sh -> kind == S_GUY) {
         for(int i = 0; i < 3; i++) changeCellValue(sh -> bp, 4,i,ternaryValue);
-        for(int j = 0; j < sh -> rows; j++) changeCellValue(sh -> bp, j, 2, ternaryValue);
-        for(int k = sh -> columns; k >= 3; k--) changeCellValue(sh -> bp, 0,k,ternaryValue);
+        for(int j = 0; j < 5; j++) changeCellValue(sh -> bp, j, 2, ternaryValue);
+        for(int k = 3; k <= 4; k++) changeCellValue(sh -> bp, 0,k,ternaryValue);
     }
 
 }
@@ -140,7 +140,7 @@ int numCells(SHIP *sh) {
         case L_GUY:
             return 9;
         case T_GUY:
-            return 6;
+            return 5;
         case S_GUY: 
             return 9;
          default:
@@ -182,19 +182,18 @@ char *nameShip(SHIP *sh) {
 //translation of ship in bitmap 
 bool translation(SHIP *sh, int sizeVertical, int sizeHorizontal) {
 
-  BitMap *bitaux = initBitMap();
-
   bool translate = false;
   int broke = 0;
 
   if(sh -> kind != L_GUY && sh -> kind != T_GUY && sh -> kind != S_GUY) {
+    allZero(sh -> bp, '0');
     for(int i=0; i < sh -> columns; i++) {
       for(int j=0; j < sh -> rows; j++) {
-        if((j+sizeVertical) >= 5 ||(i+sizeHorizontal) >= 5) {
+        if((j+sizeVertical) >= 5 || (i+sizeHorizontal) >= 5) {
           broke = 1;
           break;
         }
-        sh -> bp = bitaux;
+
         changeCellValue(sh -> bp, j + sizeVertical, i + sizeHorizontal, '1');
         translate = true;
       }
@@ -207,13 +206,13 @@ bool translation(SHIP *sh, int sizeVertical, int sizeHorizontal) {
   }
 }
     else if(sh -> kind == T_GUY) {
+        allZero(sh -> bp, '0');
         for(int i = 0; i < sh -> columns;i++)  {
           for(int j = 0; j < sh -> rows; j++) {
           if((sizeVertical) >= 3 ||(sizeHorizontal) >= 3) {
           broke = 1;
           break;
         }
-          sh -> bp = bitaux;
           changeCellValue(sh -> bp, sizeVertical, i + sizeHorizontal, '1');
           changeCellValue(sh -> bp, j + sizeVertical, 1 + sizeHorizontal, '1' );
           translate = true;
@@ -237,16 +236,14 @@ bool translation(SHIP *sh, int sizeVertical, int sizeHorizontal) {
     sh -> translationx = sizeHorizontal;
 
     return translate;
-
 }
 
 
-//rotation of ship in bitmap 
-
+//rotation of ship in bitmap
 bool rotation(SHIP *sh, int degrees) {
 
   BitMap *bitFinal = initBitMap();
-
+    printBitMap(sh->bp);
   int x_line, y_line = 0;
 
   int broke = 0;
@@ -255,7 +252,7 @@ bool rotation(SHIP *sh, int degrees) {
 
   for(int i = 0; i < 5; i++) {
     for(int j = 0; j < 5; j++) {
-      if(sh->bp -> data[i][j]=='1') {
+      if(sh -> bp -> data[i][j]=='1') {
         x_line = cos_int(degrees)*(j-PXREF) - sin_int(degrees)*(i-PYREF) + PXREF;
         y_line = sin_int(degrees)*(j-PXREF) + cos_int(degrees)*(i-PYREF) + PYREF;
         if(x_line >= 5 || x_line < 0 || y_line >= 5 || y_line < 0) {
@@ -272,8 +269,19 @@ bool rotation(SHIP *sh, int degrees) {
       }
      }
 
-    sh -> bp = bitFinal;
+    copyBitMaps(bitFinal, sh -> bp);
+
     sh -> rotation = degrees;
+
+    //freeBitMap(bitFinal);
 
     return rotate;
 }
+
+
+void freeShip(SHIP *sh) {
+    freeBitMap(sh -> bp);
+    free(sh);
+}
+
+

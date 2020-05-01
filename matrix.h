@@ -29,12 +29,13 @@ bool insertShipInMatrix(Matrix *a, SHIP *ship, int x, int y);
 void changeValueShotBp(Matrix *matrix, int x, int y, unsigned char ternaryValue);
 void deleteShipMatrix(Matrix *ma, SHIP *sh, int x, int y);
 void printMatrix(Matrix *matrix);
-void printEnemyMatrix(Matrix *matrix);
 void printBothMatrix(Matrix *start, Matrix *other);
 bool canInsert(Matrix *matrix, SHIP *ship, int x, int y);
 void letters(int size);
 int choiceChar(char c);
 int charToIntUpper(char chInput);
 int charToIntLower(char chInput);
+void freeMatrix(Matrix *matrix);
+void freeCell(Cell *cell);
 
 #endif //RANDOM_MATRIX_H

@@ -20,6 +20,9 @@ struct bitmap_ {
 
 BitMap *initBitMap();
 void printBitMap(BitMap *x);
+void allZero(BitMap *bp, unsigned char ternaryValue);
+void copyBitMaps(BitMap *bp1, BitMap *bp2);
 void changeCellValue(BitMap *bp, int x, int y, unsigned char ternaryValue);
+void freeBitMap(BitMap *bp);
 
 #endif //RANDOM_BITMAP_H
