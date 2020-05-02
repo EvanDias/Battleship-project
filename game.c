@@ -22,17 +22,15 @@ bool shotInPlayer(Matrix *self, Matrix *other, int x, int y) {
 
     bool shotMatrix = false;
 
-      if(other -> data[y][x] -> value == 'x') {
+      if(other -> data[y][x] -> value == 'x' || other -> data[y][x] -> value == '#') {
 
         //value of matrix become *
         other -> data[y][x] -> value = '*';
         other -> data[y][x] -> ship -> shotCount--;
-        printf("ShotCount = %d of %d", other -> data[y][x] -> ship -> shotCount, other -> data[y][x] -> ship -> kind);
         //change value bitmap to ship 2
         changeValueShotBp(other,x,y,'2');
         //shot of self matrix become 2
         self -> data[y][x] -> shot = '2';
-        printf("Your hit a  cell of a ship\n");
         shotMatrix = true;
       }
       else if(other -> data[y][x] -> value == '.') {
@@ -40,7 +38,7 @@ bool shotInPlayer(Matrix *self, Matrix *other, int x, int y) {
         other -> data[y][x] -> value = '+';
         //shot of self matrix become 1
         self -> data[y][x] -> shot = '1';
-        printf("You hit a empty cell\n");
+        if(other -> data[y][x] -> ship != NULL) changeValueShotBp(other,x,y,'3');
         shotMatrix = false;
       }
 
@@ -73,7 +71,7 @@ bool gameTurn(User *start, User *other) {
     shotCan = canShot(other -> matrix, x,y);
 
     if(shotCan) {
-      playAgain = shotInPlayer(start -> matrix, other -> matrix, x,y);
+        playAgain = shotInPlayer(start -> matrix, other -> matrix, x,y);
     }
     else {
         while(shotCan == false) {
@@ -99,12 +97,18 @@ bool gameTurn(User *start, User *other) {
         printSinkShip(other -> matrix, x, y);
         printUsers(start, other);
         printBothMatrix(start -> matrix, other -> matrix);
-        sleep(2);
+        printf("You sank the ship!\n");
     } else {
         printUsers(start, other);
         printBothMatrix(start -> matrix, other -> matrix);
-        sleep(2);
+
+        if(other -> matrix -> data[y][x] -> value == '*')
+            printf("You hit a ship!\n");
+        else if(other -> matrix -> data[y][x] -> value == '+')
+            printf("You hit a empty cell!\n");
      }
+
+    sleep(2);
 
     return playAgain;
 }

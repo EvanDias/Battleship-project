@@ -11,7 +11,7 @@ void choiceModeGame(User *user);
 void choiceShips();
 void choiceShipsAuto(User *user);
 void choiceShipsManual(User *user);
-void insertMode(User *user);
+void insertMode(User *user, ListNode *node);
 void initializedGame(User *usr1, User *usr2);
 bool deleteListMatrix(User *usr, int x, int y);
 

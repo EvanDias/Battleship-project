@@ -47,7 +47,6 @@ List *listShips(int sizeMatrix) {
     }
 
     while(numberBig!= 0) {
-
       SHIP *new = newShip(6);
       headList(shipList,new);
       SHIP *new1 = newShip(4);
@@ -86,8 +85,8 @@ int numberShips(int sizeMatrix) {
   number = (sizeMatrix*sizeMatrix)/(5*5);
 
   return number;
-
 }
+
 
 //The players choose a number and the greatest number is the start player
 User *whoStartGame(User *usr1, User *usr2) {

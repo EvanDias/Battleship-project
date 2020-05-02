@@ -39,7 +39,7 @@
 *.hex
 # Debug files
 *.dSYM/
-*.su
+*.suK
 *.idb
 *.pdb
 

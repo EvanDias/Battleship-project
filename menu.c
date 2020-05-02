@@ -329,18 +329,19 @@ void choiceShips(User *user) {
       printf("1) MANUAL\n");
       printf("2) AUTO \n");
       scanf("%d", &choice);
+
       switch(choice) {
         case 1: scanPointsTranslation(node);
           scanPointRotation(node);
           printBitMap(node -> ship -> bp);
           printf("\n");
-          insertMode(user);
+          insertMode(user, node);
           break;
         case 2: randomTranslation(node);
           randomRotation(node);
           printBitMap(node -> ship -> bp);
           printf("\n");
-          insertMode(user);
+          insertMode(user, node);
           break;
 
         default: printf("Try again \n");
@@ -354,10 +355,8 @@ void choiceShips(User *user) {
 
 
 // Auxiliar function
-void insertMode(User *user) {
+void insertMode(User *user, ListNode *node) {
 
-
-  ListNode *node = user -> shipList -> head;
   int insertMode;
 
   printf("How %s want to insert ship? \n", user -> username);
@@ -439,6 +438,7 @@ void choiceShipsManual(User *user) {
 
       }
   }
+
 
 
 bool deleteListMatrix(User *usr, int x, int y) {

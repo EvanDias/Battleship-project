@@ -109,11 +109,12 @@ void changeValueShotBp(Matrix *matrix, int x, int y, unsigned char ternaryValue)
 
 
 void deleteShipMatrix(Matrix *ma, SHIP *sh, int x, int y) {
-
+     int xx = ma -> data[y][x] -> ship -> bp -> refx;
+     int yy = ma -> data[y][x] -> ship -> bp -> refy;
      for(int i = 0; i < sizeBitMap; i++) {
         for(int j = 0; j < sizeBitMap; j++) {
             if (sh -> bp -> data[j][i] == '1') {
-                ma -> data[j+y][i+x] = initCell();
+                ma -> data[j+yy][i+xx] = initCell();
             }
         }
      }
@@ -300,3 +301,25 @@ void freeMatrix(Matrix *matrix) {
 void freeCell(Cell *cell) {
     free(cell);
 }
+
+/*
+void main() {
+    Matrix *matrix = initMatrix(10);
+
+    SHIP *sh1 = newShip(3);
+    SHIP *sh2 = newShip(1);
+
+    bool rotation1 = rotation(sh1, 90);
+
+    insertShipInMatrix(matrix, sh1, 2, 3);
+    insertShipInMatrix(matrix, sh2, 0, 0);
+
+    printMatrix(matrix);
+
+    deleteShipMatrix(matrix, sh2, 1, 0);
+
+    printf("\n\n");
+
+    printMatrix(matrix);
+
+}*/
