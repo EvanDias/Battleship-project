@@ -1,7 +1,7 @@
 #include "game.h"
 
+// Verify if it's possible make the shot
 bool canShot(Matrix *matrix, int x, int y) {
-
   bool shot = true;
 
         if(y >= matrix -> size || x >= matrix -> size) {
@@ -10,19 +10,20 @@ bool canShot(Matrix *matrix, int x, int y) {
 
         else if(matrix -> data[y][x] -> value == 'x' || matrix -> data[y][x] -> value == '.')
                   shot = true;
-                  
+
         else if(matrix -> data[y][x] -> value == '*' || matrix -> data[y][x] -> value == '#')
                   shot = false;
     return shot;
 }
 
 
+// Update values after the shot
 bool shotInPlayer(Matrix *self, Matrix *other, int x, int y) {
 
     bool shotMatrix = false;
-      
+
       if(other -> data[y][x] -> value == 'x') {
-        
+
         //value of matrix become *
         other -> data[y][x] -> value = '*';
         other -> data[y][x] -> ship -> shotCount--;
@@ -44,8 +45,9 @@ bool shotInPlayer(Matrix *self, Matrix *other, int x, int y) {
       }
 
       return shotMatrix;
-
 }
+
+// Each player's turn
 bool gameTurn(User *start, User *other) {
 
   char ch_x, ch_y;
@@ -57,7 +59,6 @@ bool gameTurn(User *start, User *other) {
     printUsers(start, other);
     printBothMatrix(start -> matrix, other -> matrix);
 
-    
     printf("%s choose point to hit a ship of %s\n", start -> username, other -> username);
     printf("x: ");
     scanf(" %c", &ch_x);
@@ -65,7 +66,6 @@ bool gameTurn(User *start, User *other) {
     scanf(" %c",&ch_y);
     x = choiceChar(ch_x);
     y = choiceChar(ch_y);
-    
 
     //x = randomShoot(start -> matrix -> size);
     //y = randomShoot(start -> matrix -> size);
@@ -75,26 +75,25 @@ bool gameTurn(User *start, User *other) {
     if(shotCan) {
       playAgain = shotInPlayer(start -> matrix, other -> matrix, x,y);
     }
-
     else {
-    while(shotCan == false) {
-      
-      printf("Try Again\n");
-      printf("%s choose point to hit a ship of %s\n", start -> username, other -> username);
-      printf("x: ");
-      scanf(" %c", &ch_x);
-      printf("\ny: ");
-      scanf(" %c",&ch_y);
-      x = choiceChar(ch_x);
-      y = choiceChar(ch_y);
-        
-     //   x = randomShoot(start -> matrix -> size);
-       // y = randomShoot(start -> matrix -> size);
+        while(shotCan == false) {
 
-        if(shotCan) playAgain = shotInPlayer(start -> matrix, other -> matrix, x,y);
-        else shotCan = canShot(other -> matrix, x,y);
+          printf("Try Again\n");
+          printf("%s choose point to hit a ship of %s\n", start -> username, other -> username);
+          printf("x: ");
+          scanf(" %c", &ch_x);
+          printf("\ny: ");
+          scanf(" %c",&ch_y);
+          x = choiceChar(ch_x);
+          y = choiceChar(ch_y);
+
+          //x = randomShoot(start -> matrix -> size);
+          //y = randomShoot(start -> matrix -> size);
+
+          if(shotCan) playAgain = shotInPlayer(start -> matrix, other -> matrix, x,y);
+          else shotCan = canShot(other -> matrix, x,y);
+        }
     }
-  }
 
     if(sinkBoatMatrix(other -> matrix)) {
         printSinkShip(other -> matrix, x, y);
@@ -111,6 +110,7 @@ bool gameTurn(User *start, User *other) {
 }
 
 
+// Play again after hit a ship
 bool playAgain(User *start, User *other) {
 
   bool gameTurnVar = gameTurn(start,other);
@@ -123,13 +123,12 @@ bool playAgain(User *start, User *other) {
     }
 
   }
-  return broke;
 
+  return broke;
 }
 
 
 //Game development to the condition allShipsSink(user) == true
-
 void game(User *start, User *other) {
 
     bool playAgainVar = false;
@@ -148,20 +147,20 @@ void game(User *start, User *other) {
         break;
       }
     }
-
+    // Free all allocated memory used on the game
     freeUser(start);
     freeUser(other);
 }
 
 
 bool sinkBoat(SHIP *ship) {
-
     bool sinkBoatV = false;
 
     if(ship -> shotCount == 0) sinkBoatV = true;
 
     return sinkBoatV;
 }
+
 
 bool sinkBoatMatrix(Matrix *x) {
     for(int i = 0; i < x -> size; i++) {
@@ -197,7 +196,7 @@ bool allShipsSink(User *usr) {
     return false;
 }
 
-
+// random number between 0 and matrix size to hit a cell
 int randomShoot(int matrixSize) {
 
     int x = rand() % matrixSize;

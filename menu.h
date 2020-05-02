@@ -1,7 +1,6 @@
 #ifndef RANDOM_MENU_H
 #define RANDOM_MENU_H
 #include "randomShips.h"
-
 #define MAX_BUFFER 1024
 
 void mainMenu();

@@ -73,11 +73,12 @@ int chooseMatrixSize() {
         scanf("%d", &size);
     }
 
+    system("clear");
     return size;
 }
 
 
-//numberShips to create 
+//numberShips to create
 int numberShips(int sizeMatrix) {
 
   int number = 0;
@@ -110,10 +111,10 @@ User *whoStartGame(User *usr1, User *usr2) {
   }
 
   return started;
-
 }
 
-//Comentário 
+
+// Print name's header's on top of each matrix
 void printUsers(User *start, User *other) {
     system("clear");
     int matrixSize = (start -> matrix -> size)*2;
@@ -130,6 +131,7 @@ void printUsers(User *start, User *other) {
 }
 
 
+// Free allocated memory
 void freeUser(User *usr) {
     freeList(usr -> shipList);
     freeMatrix(usr -> matrix);
@@ -137,10 +139,3 @@ void freeUser(User *usr) {
     free(usr);
 }
 
-/*
-void main() {
-    User *user = initUser("a", 5);
-
-    freeUser(user);
-
-}*/

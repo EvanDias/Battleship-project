@@ -300,4 +300,3 @@ void freeMatrix(Matrix *matrix) {
 void freeCell(Cell *cell) {
     free(cell);
 }
-

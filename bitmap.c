@@ -1,7 +1,6 @@
 #include "bitmap.h"
 
 BitMap * initBitMap() {
-
     BitMap *bp = malloc(sizeof(BitMap));
 
     bp -> columns = sizeBitMap;
@@ -21,8 +20,8 @@ BitMap * initBitMap() {
     for(int i = 0; i < sizeBitMap; i++) {
            for(int j = 0; j < sizeBitMap; j++) {
                 data[i][j] = '0';
-            }
-        }
+           }
+    }
 
     bp -> data = data;
 
@@ -47,6 +46,7 @@ void allZero(BitMap *bp, unsigned char ternaryValue) {
     }
 }
 
+
 // Modify the ternary value contained in the BitMap
 void copyBitMaps(BitMap *bp1, BitMap *bp2) {
     for(int i=0; i < 5; i++) {
@@ -63,11 +63,12 @@ void printBitMap(BitMap *x) {
         printf("\n");
            for(int j = 0; j< x -> columns; j++) {
                 printf("%c ", x -> data[i][j]);
-            }
+           }
     }
 }
 
 
+// Free allocated memory
 void freeBitMap(BitMap *bp) {
 
      for(int i=0; i<5;i++) {
@@ -78,12 +79,3 @@ void freeBitMap(BitMap *bp) {
 
      free(bp);
 }
-
-/*
-void main()  {
-    BitMap *bp = initBitMap();
-
-    freeBitMap(bp);
-
-
-}*/

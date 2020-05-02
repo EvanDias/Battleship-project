@@ -3,7 +3,6 @@
 #include <unistd.h>
 #include "initGame.h"
 
-
 bool shotInPlayer(Matrix *self, Matrix *other, int x, int y);
 bool sinkBoatMatrix(Matrix *x);
 bool allShipsSink(User *usr);
