@@ -29,7 +29,7 @@ List *listShips(int sizeMatrix) {
 
     List *shipList = initList();
 
-    int numberSmall = number * 0.20;
+    int numberSmall = number * 0.15;
     int numberBig = number * 0.10;
 
     while(numberSmall!= 0) {
