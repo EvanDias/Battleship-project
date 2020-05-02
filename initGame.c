@@ -17,35 +17,12 @@ User *initUser(char *username, int sizeMatrix) {
 }
 
 
-List *listShips(int sizeMatrix) {
-
-    int number = numberShips(sizeMatrix);
-
-    List *shipList = initList();
-
-    int i = 0;
-
-    while(number != 0) {
-      while(i < 5 && number != 0) {
-        SHIP *ship = newShip(i);
-        headList(shipList,ship);
-        number--;
-        i++;
-      }
-      i = 0;
-    }
-
-    return shipList;
-
-}
-
-
 
 /*Create a list with ships
    * Create a ship of different types in each interation(i)
    * If number of ships to insert is zero, then don't add more ships -> list is complete
 */
-/*
+
 List *listShips(int sizeMatrix) {
 
     int number = numberShips(sizeMatrix);
@@ -80,9 +57,9 @@ List *listShips(int sizeMatrix) {
       numberBig--;
 
     }
-
+    
     return shipList;
-}*/
+}
 
 
 int chooseMatrixSize() {

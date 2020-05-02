@@ -243,7 +243,7 @@ bool translation(SHIP *sh, int sizeVertical, int sizeHorizontal) {
 bool rotation(SHIP *sh, int degrees) {
 
   BitMap *bitFinal = initBitMap();
-    printBitMap(sh->bp);
+
   int x_line, y_line = 0;
 
   int broke = 0;
@@ -273,7 +273,7 @@ bool rotation(SHIP *sh, int degrees) {
 
     sh -> rotation = degrees;
 
-    //freeBitMap(bitFinal);
+    freeBitMap(bitFinal);
 
     return rotate;
 }

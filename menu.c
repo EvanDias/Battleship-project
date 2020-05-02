@@ -35,7 +35,7 @@ void choiceOne() {
 
     int sizerMatrix = chooseMatrixSize();
 
-    //int sizerMatrix = 8;
+    //int sizerMatrix = 12;
 
     printf("Create a user 1 \n");
     printf("Your name: ");

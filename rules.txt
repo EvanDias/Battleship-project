@@ -11,43 +11,27 @@ RULES:
 SHIPS'S TYPE: 
 
 
-1) SOLO:
-         x
-
-2) TRIAL: 
-         x x x  
-
-3) SMALL_QUAD:
-         x x
-         x x
-
-4) BIGGEST_QUAD:
-         x x x x
-         x x x x
-         x x x x
-         x x x x
-
-5) L_GUY:
-         x
-         x
-         x
-         x
-         x x x x x
-
-6) T_GUY:
-         x x x
-           x
-           x 
-
-7) S_GUY:
-             x x x
-             x
-             x
-             x
-         x x x
+1) x    2) x x x    3) x x    4) x x x x    5) x           6) x x x    7)     x x x  
+                       x x       x x x x       x                x             x
+                                 x x x x       x                x             x 
+                                 x x x x       x                              x
+                                               x x x x x                  x x x
 
 
 
+BITMAP SHIP (default):
+
+SOLO: 1 0 0 0 0  TRIAL: 1 1 1 0 0  SMALL_QUAD: 1 1 0 0 0  BIGGEST_QUAD: 1 1 1 1 0
+      0 0 0 0 0         0 0 0 0 0              1 1 0 0 0                1 1 1 1 0
+      0 0 0 0 0         0 0 0 0 0              0 0 0 0 0                1 1 1 1 0
+      0 0 0 0 0         0 0 0 0 0              0 0 0 0 0                1 1 1 1 0
+      0 0 0 0 0         0 0 0 0 0              0 0 0 0 0                0 0 0 0 0
+
+            L_GUY: 1 0 0 0 0    T_GUY: 1 1 1 0 0    S_GUY: 0 0 1 1 1  
+                   1 0 0 0 0           0 1 0 0 0           0 0 1 0 0
+                   1 0 0 0 0           0 1 0 0 0           0 0 1 0 0
+                   1 0 0 0 0           0 0 0 0 0           0 0 1 0 0
+                   1 1 1 1 1           0 0 0 0 0           1 1 1 0 0
 STARTGAME: 
 
 1) One user choose a board size;
