@@ -7,7 +7,6 @@
 typedef struct listNode_ ListNode;
 typedef struct list_ List;
 
-
 //struct to create a list's node. Node save a point and a next node
 struct listNode_ {
 

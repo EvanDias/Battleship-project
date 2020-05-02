@@ -14,8 +14,6 @@ struct bitmap_ {
     unsigned char** data;
     int refx; 
     int refy;
-
-
 };
 
 BitMap *initBitMap();
