@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #include "list.h"
 
-// Create a node
+
+//create a node
 ListNode *initNode(SHIP *ship, ListNode* next) {
 
     ListNode* newNode = malloc(sizeof(ListNode));
@@ -14,8 +15,9 @@ ListNode *initNode(SHIP *ship, ListNode* next) {
 }
 
 
-// Init a list
+//init a list
 List *initList() {
+
     List* newList = malloc(sizeof(List));
 
     newList -> head = NULL;
@@ -26,7 +28,8 @@ List *initList() {
 }
 
 
-// Add node at the head of the list
+
+//add node a head list
 void *headList(List* list, SHIP *elem) {
 
     //ListNode* newNode = malloc(sizeof(ListNode));
@@ -46,13 +49,15 @@ void *headList(List* list, SHIP *elem) {
     }
 
     list -> size++;
+
+
 }
 
-
-// Remove a specific node from the list
+//remove a specific node of list
 List *removeNode(List *list, SHIP *node) {
 
     ListNode *current = list -> head;
+    //printf("current: %d \n", current -> data);
 
     ListNode *temp = malloc(sizeof(ListNode));
 
@@ -67,29 +72,36 @@ List *removeNode(List *list, SHIP *node) {
 
     while(current != NULL) {
 
+  
+
         if(current -> next == NULL && current -> ship == node) {
 
             temp -> next = NULL;
             current  -> ship = NULL;
             list -> size--;
+
         }
 
         else if(current -> next != NULL && current -> ship == node) {
 
             temp -> next = current -> next;
             list -> size --;
+
         }
 
         temp = current;
 
         current = current -> next;
+
     }
+
 
     return list;
 }
 
 
 void printList(List *list) {
+
     ListNode *node = list -> head;
 
     while( node != NULL) {
@@ -97,10 +109,33 @@ void printList(List *list) {
         node = node -> next;
     }
     printf("\n");
+
+}
+
+/*
+void freeList(List* list) {
+
+    ListNode *node = list -> head;
+
+    while(node != NULL) {
+        freeNode(node);
+        node = node -> next;
+    }
+
+
+    free(list);
 }
 
 
-// Free allocated memory
+void freeNode(ListNode *node) {
+    freeShip(node -> ship);
+    if(node -> next == NULL) {
+        free(node);
+    } else {
+        free(node -> next);
+    }
+}*/
+
 void freeList(List* list) {
 
     ListNode *node = list -> head;
@@ -120,3 +155,19 @@ void freeList(List* list) {
 
     free(list);
 }
+
+
+/*
+void main() {
+    List *list = initList();
+    SHIP* S_SHIP = newShip(6);
+
+    changeCellValue(S_SHIP -> bp, 0, 2, '4');
+    printf("\n");
+    printBitMap(S_SHIP -> bp);
+
+    headList(list, S_SHIP);
+
+    printBitMap(S_SHIP -> bp);
+
+}*/

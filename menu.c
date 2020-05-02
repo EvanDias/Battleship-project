@@ -27,6 +27,7 @@ void mainMenu() {
 }
 
 
+
 // Start game
 void choiceOne() {
 
@@ -56,13 +57,14 @@ void choiceOne() {
 
 
 void initializedGame(User *usr1, User *usr2) {
+
   system("clear");
 
+  //aqui
   printMatrix(usr1 -> matrix);
   printf("User %s do you would like delete some ship?\n",usr1 -> username);
   printf("1)YES\n");
   printf("2)NO \n");
-  printf("Option: ");
   int choose;
   scanf("%d", &choose);
   
@@ -89,28 +91,23 @@ void initializedGame(User *usr1, User *usr2) {
       deleted = deleteListMatrix(usr1, x, y);
     }
 
-    system("clear");
-    printMatrix(usr1 -> matrix);
-
     printf("Do you want delete any ship?\n");
     printf("1)YES\n");
     printf("2)NO \n");
     scanf("%d", &choose);
   }
-  int chooseother;
-
-  if (choose == 2) {
-    system("clear");
-    printMatrix(usr2 -> matrix);
-    printf("User %s do you would like delete some ship?\n",usr2 -> username);
-    printf("1)YES\n");
-    printf("2)NO \n");
-    printf("Option: ");
-    scanf("%d", &chooseother);
+int chooseother;
+if (choose == 2) {
+  //aqui
+  printMatrix(usr2 -> matrix);
+  printf("User %s do you would like delete some ship?\n",usr2 -> username);
+  printf("1)YES\n");
+  printf("2)NO \n");
   
-  int x,y = 0;
-  char ch_x, ch_y;
-
+  scanf("%d", &chooseother);
+  
+ int x,y = 0;
+ char ch_x, ch_y;
   while(chooseother == 1) {
     printf("Choose the coordenate's ship to delete\n");
     printf("x: ");
@@ -131,9 +128,6 @@ void initializedGame(User *usr1, User *usr2) {
       y = choiceChar(ch_y);
       deleted = deleteListMatrix(usr2, x, y);
     }
-
-    system("clear");
-    printMatrix(usr2 -> matrix);
 
     printf("Do you want delete any ship?\n");
     printf("1)YES\n");
@@ -157,9 +151,9 @@ void initializedGame(User *usr1, User *usr2) {
 
 }
 
-
-// See the rules of the game
+// See rules of the game
 void choiceTwo() {
+
     char buffer[MAX_BUFFER];
     int c;
 
@@ -185,6 +179,7 @@ void choiceTwo() {
 }
 
 
+
 // Chosen option of the mainMenu()
 void choiceMenu(int numberMenu) {
 
@@ -207,7 +202,10 @@ void choiceMenu(int numberMenu) {
 
 
 
-// Scanf of points choosed by user to do translation
+/*Scanf of points choosed by user to do translation
+  *
+  *
+*/
 void scanPointsTranslation(ListNode *node) {
 
   int x, y = 0;
@@ -236,7 +234,10 @@ void scanPointsTranslation(ListNode *node) {
 }
 
 
-// Scanf of points choosed by user to do rotation
+/*Scanf of points choosed by user to do rotation
+  *
+  *
+*/
 void scanPointRotation(ListNode *node) {
 
   int degrees = 0;
@@ -257,7 +258,11 @@ void scanPointRotation(ListNode *node) {
 }
 
 
-// Scanf of points choosed by user to do insert ship in matrix
+/*Scanf of points choosed by user to do insert ship in matrix
+  *
+  *
+*/
+
 void scanPointInsert(ListNode *node, Matrix *matrix) {
 
   int x,y = 0;
@@ -318,7 +323,7 @@ void choiceModeGame(User *user) {
 
 
 
-// If user want to chose manual and random ship
+//if user want to manual and random ship
 void choiceShips(User *user) {
 
     ListNode *node = user -> shipList -> head;
@@ -353,7 +358,7 @@ void choiceShips(User *user) {
 }
 
 
-// Auxiliar function
+//function auxiliar
 void insertMode(User *user) {
 
 
@@ -377,10 +382,11 @@ void insertMode(User *user) {
       scanf("%d", &insertMode);
       break;
   }
-}
+
+  }
 
 
-// Choose ships random
+//choose ships random
 void choiceShipsAuto(User *user) {
 
     ListNode *node = user -> shipList -> head;
@@ -395,14 +401,15 @@ void choiceShipsAuto(User *user) {
       randomInsertMatrix(node, user -> matrix);
 
       node =  node -> next;
+
+      //aqui
+      printMatrix(user -> matrix);
+
     }
-    system("clear");
-    printMatrix(user -> matrix);
 
     printf("Do you accept this matrix?\n");
     printf("1) YES\n");
     printf("2) NO \n");
-    printf("Option: ");
     scanf("%d",&agreed);
 
     //deleteShip(user);
@@ -413,14 +420,13 @@ void choiceShipsAuto(User *user) {
             choiceShipsAuto(user);
             break;
       default: printf("Try other number\n");
-            printf("Option: ");
             scanf("%d",&agreed);
 
     }
 }
 
+//choose ships manual
 
-// Choose ships manual
 void choiceShipsManual(User *user) {
 
     ListNode *node = user -> shipList -> head;
@@ -439,7 +445,6 @@ void choiceShipsManual(User *user) {
 
       }
   }
-
 
 bool deleteListMatrix(User *usr, int x, int y) {
 

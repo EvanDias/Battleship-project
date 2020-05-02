@@ -18,8 +18,11 @@
   * translation
   * rotation
   * insertion of a ship
+
 */
+
 void randomTranslation(ListNode *node) {
+
   int x = 0;
   int y = 0;
   char *kind = "";
@@ -29,7 +32,9 @@ void randomTranslation(ListNode *node) {
     y = rand()%sizeBitMap;
 
   }
+
     bool translate = translation(node -> ship, y, x);
+
 
     while(translate == false) {
       x = rand()%sizeBitMap;
@@ -41,6 +46,7 @@ void randomTranslation(ListNode *node) {
       printf("Os valores são x: %d, y: %d\n",x,y);
 
     }
+
 }
 
 
@@ -50,10 +56,11 @@ void randomRotation(ListNode *node) {
   bool rotate = rotation(node -> ship, rotationNumber(numberRandom));
 
   printf("O valor da rotação: %d\n",rotationNumber(numberRandom));
+
 }
 
-
 void randomInsertMatrix(ListNode *node, Matrix *matrix) {
+
 
   int x = random()%(matrix -> size);
   int y = random()%(matrix -> size);
@@ -71,4 +78,6 @@ void randomInsertMatrix(ListNode *node, Matrix *matrix) {
     printf("Os valores de x: %d e de y: %d\n",x,y);
 
   }
+
+
 }

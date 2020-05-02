@@ -24,6 +24,7 @@ struct ship_ {
     int shotCount;
 };
 
+
 SHIP *newShip(ShipKind kind);
 void *shipToOne(SHIP *sh);
 SHIP *getShipSize(SHIP *sh);

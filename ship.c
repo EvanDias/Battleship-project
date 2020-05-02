@@ -16,12 +16,15 @@
 })
 
 
+
 /*Create a ship with :
   * kind
   * shotCount
   * bitmap
   * size
 */
+
+
 SHIP *newShip(ShipKind kind) {
 
     SHIP *ship = malloc(sizeof(SHIP));
@@ -39,8 +42,8 @@ SHIP *newShip(ShipKind kind) {
     shipToOne(ship);
 
     return ship;
-}
 
+}
 
 //Change value of bitmap's cell, according ship kind
 void *shipToOne(SHIP *sh) {
@@ -143,10 +146,11 @@ int numCells(SHIP *sh) {
          default:
             return 0;
     }
+
 }
 
 
-// Auxiliar function to print the name of a Ship
+//function auxiliar to print a name of Ship
 char *nameShip(SHIP *sh) {
 
   char *kind = "";
@@ -175,8 +179,7 @@ char *nameShip(SHIP *sh) {
 
 }
 
-
-// Translation of ship in bitmap
+//translation of ship in bitmap 
 bool translation(SHIP *sh, int sizeVertical, int sizeHorizontal) {
 
   bool translate = false;
@@ -200,8 +203,8 @@ bool translation(SHIP *sh, int sizeVertical, int sizeHorizontal) {
         translate = false;
         break;
       }
-    }
   }
+}
     else if(sh -> kind == T_GUY) {
         allZero(sh -> bp, '0');
         for(int i = 0; i < sh -> columns;i++)  {
@@ -236,7 +239,7 @@ bool translation(SHIP *sh, int sizeVertical, int sizeHorizontal) {
 }
 
 
-// Rotation of ship in bitmap
+//rotation of ship in bitmap
 bool rotation(SHIP *sh, int degrees) {
 
   BitMap *bitFinal = initBitMap();
@@ -245,6 +248,7 @@ bool rotation(SHIP *sh, int degrees) {
 
   int broke = 0;
   bool rotate = false;
+
 
   for(int i = 0; i < 5; i++) {
     for(int j = 0; j < 5; j++) {
@@ -274,7 +278,7 @@ bool rotation(SHIP *sh, int degrees) {
     return rotate;
 }
 
-// Free allocated memory
+
 void freeShip(SHIP *sh) {
     freeBitMap(sh -> bp);
     free(sh);

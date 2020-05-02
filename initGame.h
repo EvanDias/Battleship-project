@@ -2,7 +2,9 @@
 #define RANDOM_INITgAME_H
 #include "matrix.h"
 
+
 typedef struct user_ User;
+
 
 struct user_ {
 
@@ -11,6 +13,7 @@ struct user_ {
   Matrix *matrix;
 
 };
+
 
 User *initUser(char *username, int sizeMatrix);
 List *listShips(int sizeMatrix);

@@ -4,6 +4,7 @@
 
 typedef struct matrix_ Matrix;
 typedef struct cell_ Cell;
+//typedef struct Cell** pCell;
 
 struct cell_ {
 
@@ -13,7 +14,8 @@ struct cell_ {
 };
 
 
-// Struct to create a matrix with its size and data
+
+//struct to create a matrix with its size and data
 struct matrix_
 {
     int size;
