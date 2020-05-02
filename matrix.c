@@ -11,7 +11,7 @@ Cell* initCell() {
 }
 
 
-//init a matrix with its size
+// Init a matrix with its size
 Matrix* initMatrix(int size) {
 
     Matrix* matrix = malloc(sizeof(Matrix));
@@ -27,7 +27,7 @@ Matrix* initMatrix(int size) {
        for(int j = 0; j < size; j++) {
          data[i][j] = initCell();
 
-        }
+       }
     }
 
     matrix -> data = data;
@@ -38,7 +38,6 @@ Matrix* initMatrix(int size) {
 
 bool insertShipInMatrix(Matrix *matrix, SHIP *ship, int x, int y) {
 
-
       bool insert = canInsert(matrix,ship,x,y);
       bool insertMatrix = false;
 
@@ -46,23 +45,21 @@ bool insertShipInMatrix(Matrix *matrix, SHIP *ship, int x, int y) {
       ship -> bp -> refy = y;
 
       if(insert) {
-      for(int i = 0; i < sizeBitMap; i++) {
-        for(int j = 0; j < sizeBitMap; j++) {
-          if (ship -> bp -> data[j][i] == '1') {
-            ship -> bp -> refx = x;
-            ship -> bp -> refy = y;
-            matrix -> data[j+y][i+x]-> ship = ship;
-            matrix -> data[j+y][i+x]-> value = 'x';
-            insertMatrix = true;
-          }
+        for(int i = 0; i < sizeBitMap; i++) {
+            for(int j = 0; j < sizeBitMap; j++) {
+                if (ship -> bp -> data[j][i] == '1') {
+                    ship -> bp -> refx = x;
+                    ship -> bp -> refy = y;
+                    matrix -> data[j+y][i+x]-> ship = ship;
+                    matrix -> data[j+y][i+x]-> value = 'x';
+                    insertMatrix = true;
+                }
+            }
         }
       }
 
-    }
-
     return insertMatrix;
 }
-
 
 
 bool canInsert(Matrix *matrix, SHIP *ship, int x, int y) {
@@ -101,7 +98,7 @@ bool canInsert(Matrix *matrix, SHIP *ship, int x, int y) {
 }
 
 
-//change value of bp in relation with matrix
+// Change value of bitmap in relation with matrix
 void changeValueShotBp(Matrix *matrix, int x, int y, unsigned char ternaryValue) {
 
     int x_value = matrix -> data[y][x]-> ship -> bp -> refx;
@@ -110,44 +107,42 @@ void changeValueShotBp(Matrix *matrix, int x, int y, unsigned char ternaryValue)
     changeCellValue(matrix -> data[y][x] -> ship -> bp, y-y_value, x-x_value, ternaryValue);
 }
 
+
 void deleteShipMatrix(Matrix *ma, SHIP *sh, int x, int y) {
 
      for(int i = 0; i < sizeBitMap; i++) {
         for(int j = 0; j < sizeBitMap; j++) {
-               if (sh -> bp -> data[j][i] == '1') {
-                   ma -> data[j+y][i+x] = initCell();
-        }
+            if (sh -> bp -> data[j][i] == '1') {
+                ma -> data[j+y][i+x] = initCell();
+            }
         }
      }
 }
 
 
-
 void printMatrix(Matrix *matrix) {
     printf("\n");
+    printf("  A ");
+
+    char c1 = 'B';
+    for(int i=1; i < matrix -> size; i++) {
+        printf("%c ", c1);
+        c1++;
+        if(c1 == '[') c1 = 'a';
+    }
+    printf("\n");
+    c1 = 'A';
     for(int i = 0; i < matrix -> size; i++) {
+        printf("%c ", c1);
+        c1++;
+        if(c1 == '[') c1 = 'a';
       for(int j = 0; j < matrix -> size; j++) {
         printf("%c ", matrix -> data[i][j] -> value);
-    }
+      }
     printf("\n");
     }
 }
 
-
-
-// Print the enemy matrix without showing the position's of the ship's
-void printEnemyMatrix(Matrix *matrix) {
-    printf("\n");
-    for(int i = 0; i < matrix -> size; i++) {
-        for(int j = 0; j < matrix -> size; j++) {
-            if(matrix -> data[i][j] -> value == 'x')
-                printf(". ");
-            else
-                printf("%c ", matrix -> data[i][j] -> value);
-        }
-    printf("\n");
-    }
-}
 
 // Print letters around the game matrix
 void letters(int size) {
@@ -170,7 +165,6 @@ void letters(int size) {
         }
     }
 }
-
 
 
 /*
@@ -211,13 +205,8 @@ void printBothMatrix(Matrix *start, Matrix *other) {
 
             c1 += 1;
     printf("\n");
-
     }
 }
-
-
-
-
 
 
 // Change the value of a recently sunk ship to '#'
@@ -239,7 +228,7 @@ void printSinkShip(Matrix *matrix, int x, int y) {
 }
 
 
-//Comentário
+// Know if the chosen char is a Upper or Lower case
 int choiceChar(char c) {
     int x;
 
@@ -250,6 +239,7 @@ int choiceChar(char c) {
 
     return x;
 }
+
 
 // To know if the position chosen by the user is uppercase or lowercase
 int charToIntUpper(char chInput) {
@@ -291,6 +281,7 @@ int charToIntLower(char chInput) {
 }
 
 
+// Free allocated memory
 void freeMatrix(Matrix *matrix) {
 
      for(int i=0; i< matrix -> size; i++) {
@@ -305,17 +296,8 @@ void freeMatrix(Matrix *matrix) {
 }
 
 
+// Free allocated memory
 void freeCell(Cell *cell) {
-    //if(cell -> ship != NULL)
-        //freeShip(cell -> ship);
-
     free(cell);
 }
 
-/*
-void main() {
-
-    Matrix *matrix = initMatrix(25);
-    freeMatrix(matrix);
-
-}*/
