@@ -80,6 +80,8 @@ void *shipToOne(SHIP *sh) {
         for(int k = 3; k <= 4; k++) changeCellValue(sh -> bp, 0,k,ternaryValue);
     }
 
+    return NULL;
+
 }
 
 
@@ -237,14 +239,14 @@ bool translation(SHIP *sh, int sizeVertical, int sizeHorizontal) {
 
 
 // Rotation of ship in bitmap
-bool rotation(SHIP *sh, int degrees) {
+void rotation(SHIP *sh, int degrees) {
 
   BitMap *bitFinal = initBitMap();
 
   int x_line, y_line = 0;
 
   int broke = 0;
-  bool rotate = false;
+
 
   for(int i = 0; i < 5; i++) {
     for(int j = 0; j < 5; j++) {
@@ -256,7 +258,7 @@ bool rotation(SHIP *sh, int degrees) {
           break;
         }
        changeCellValue(bitFinal,y_line,x_line,'1');
-        rotate = true;
+
       }
       }
       if(broke) {
@@ -271,7 +273,6 @@ bool rotation(SHIP *sh, int degrees) {
 
     freeBitMap(bitFinal);
 
-    return rotate;
 }
 
 // Free allocated memory
@@ -279,5 +280,3 @@ void freeShip(SHIP *sh) {
     freeBitMap(sh -> bp);
     free(sh);
 }
-
-

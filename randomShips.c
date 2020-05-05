@@ -22,9 +22,8 @@
 void randomTranslation(ListNode *node) {
   int x = 0;
   int y = 0;
-  char *kind = "";
-  if(node -> ship -> kind != 4) {
-    kind = nameShip(node -> ship);
+
+  if(node -> ship -> kind != 4 || node -> ship -> kind != 6) {
     x = rand()%sizeBitMap;
     y = rand()%sizeBitMap;
 
@@ -47,7 +46,7 @@ void randomTranslation(ListNode *node) {
 void randomRotation(ListNode *node) {
 
   int numberRandom = rand()%4;
-  bool rotate = rotation(node -> ship, rotationNumber(numberRandom));
+  rotation(node -> ship, rotationNumber(numberRandom));
 
   printf("O valor da rotação: %d\n",rotationNumber(numberRandom));
 }

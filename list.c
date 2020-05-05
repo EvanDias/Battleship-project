@@ -29,7 +29,6 @@ List *initList() {
 // Add node at the head of the list
 void *headList(List* list, SHIP *elem) {
 
-    //ListNode* newNode = malloc(sizeof(ListNode));
     ListNode* newNode = initNode(elem, NULL);
 
     newNode -> ship = elem;
@@ -46,6 +45,8 @@ void *headList(List* list, SHIP *elem) {
     }
 
     list -> size++;
+
+    return NULL;
 }
 
 

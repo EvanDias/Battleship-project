@@ -29,7 +29,7 @@ void *shipToOne(SHIP *sh);
 SHIP *getShipSize(SHIP *sh);
 int numCells(SHIP *sh);
 bool translation(SHIP *sh, int sizeVertical, int sizeHorizontal);
-bool rotation(SHIP *sh, int degrees);
+void rotation(SHIP *sh, int degrees);
 void delete_ship(SHIP *sh);
 SHIP *createShips(int sizeMatrix);
 char *nameShip(SHIP *sh);

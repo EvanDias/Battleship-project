@@ -160,7 +160,6 @@ void initializedGame(User *usr1, User *usr2) {
 
 // See the rules of the game
 void choiceTwo() {
-    char buffer[MAX_BUFFER];
     int c;
 
     FILE *file;
@@ -187,8 +186,6 @@ void choiceTwo() {
 
 // Chosen option of the mainMenu()
 void choiceMenu(int numberMenu) {
-
-    int numberMatrix;
 
     if(numberMenu == 1) {
        choiceOne();
@@ -251,7 +248,7 @@ void scanPointRotation(ListNode *node) {
     scanf("%d", &degrees);
   }
 
-  bool rotate = rotation(node -> ship, degrees);
+  rotation(node -> ship, degrees);
 
 
 }
@@ -451,7 +448,7 @@ bool deleteListMatrix(User *usr, int x, int y) {
         deleteShipMatrix(usr -> matrix, usr -> matrix -> data[y][x] -> ship , x, y);
         deleted = true;
     }
-    else deleted = false; 
+    else deleted = false;
 
     if(deleted) {
 
