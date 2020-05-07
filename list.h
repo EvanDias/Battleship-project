@@ -2,15 +2,16 @@
 #define RANDOM_LIST_H
 #include <stdio.h>
 #include <stdlib.h>
-#include "ship.h"
+//#include "ship.h"
 
 typedef struct listNode_ ListNode;
 typedef struct list_ List;
 
+
 //struct to create a list's node. Node save a point and a next node
 struct listNode_ {
 
-    SHIP *ship;
+    void *data;
     ListNode *next;
 
 };
@@ -24,13 +25,11 @@ struct list_ {
 };
 
 
-ListNode *initNode(SHIP* ship, ListNode* next);
+ListNode *initNode(void* data, ListNode* next);
 List *initList();
-void *headList(List *list, SHIP *ship);
-List *removeNode(List *list, SHIP *ship);
+void headList(List *list, void *data);
+List *removeNode(List *list, void *data);
 void printList(List *l);
 void deleteList(List* list);
-void freeList(List* list);
-void freeNode(ListNode *node);
 
 #endif //RANDOM_LIST_H
