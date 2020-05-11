@@ -29,7 +29,7 @@ ListNode *initNode(void* data, ListNode* next);
 List *initList();
 void headList(List *list, void *data);
 List *removeNode(List *list, void *data);
-void printList(List *l);
+//void printList(List *l);
 void deleteList(List* list);
 
 #endif //RANDOM_LIST_H

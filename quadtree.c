@@ -5,8 +5,8 @@
 PointQuad *initPointQuad(Point *p, void *value) {
 
     PointQuad *new = malloc(sizeof(PointQuad));
-    
-    new -> pos = p; 
+
+    new -> position = p;
     new -> data = value;
 
     return new;
@@ -39,11 +39,11 @@ QuadTree *initQuad(Point *bottonLeft, Point *topRight, nodetype kind) {
     QuadTree *new = malloc(sizeof(QuadTree));
 
     new -> bottonLeft = bottonLeft;
-    new -> topRight = topRight; 
-    
+    new -> topRight = topRight;
+
     new -> node = kind;
 
-    if(kind == NODELEAF) new -> type.nodeleaf = initNodeLeaf(); 
+    if(kind == NODELEAF) new -> type.nodeleaf = initNodeLeaf();
 
     else new -> type.nodefather = initNodeFather();
 
@@ -53,68 +53,196 @@ QuadTree *initQuad(Point *bottonLeft, Point *topRight, nodetype kind) {
 
 void insertQuad(QuadTree *quad, PointQuad *p) {
 
+    Point *bottonLeft = quad -> bottonLeft;
+    Point *topRight = quad -> topRight;
+
+    QuadTree *firstQuad = NULL;
+    QuadTree *secondQuad = NULL;
+    QuadTree *thirdQuad = NULL;
+    QuadTree *fourthQuad = NULL;
+
+
+    if(p == NULL) return;
+
+    if(canInsertQuad(quad, p) == 0) {
+      return;
+    }
+
+
+    //sem subdividir
+    if (abs(bottonLeft -> x - topRight -> x) <= BOUNDARY &&
+        abs(bottonLeft -> y - topRight -> y) <= BOUNDARY)
+    {
+        PointQuad *point = NULL;
+        if (point == NULL) {
+            point = p;
+            printf("INSERIU SEM SUBDIVIDIR\n");
+          }
+          return;
+    }
+    //left side
+    if((bottonLeft -> x + topRight -> x)/2 >= p -> position -> x) {
+
+        //Indicates secondQuad
+        if((bottonLeft -> y + topRight -> y)/2 >= p -> position -> y) {
+          if(secondQuad == NULL) {
+            Point *nwL = newPoint((bottonLeft -> x), (bottonLeft -> y + topRight -> y)/2);
+            Point *nwR = newPoint((bottonLeft->x + topRight -> x)/2, (topRight -> y));
+            secondQuad = initQuad(nwL,nwR, NODELEAF);
+            printf("inseriu no 2 quadrante\n");
+          }
+          insertQuad(secondQuad,p);
+        }
+
+        //indicates thirdQuad
+        else {
+          if(thirdQuad == NULL) {
+            Point *swL = bottonLeft;
+            Point *swR = newPoint((bottonLeft -> x + topRight -> x)/2, (bottonLeft -> y + topRight -> y)/2);
+            thirdQuad = initQuad(swL,swR,NODELEAF);
+            printf("inseriu no 3 quadrante\n");
+
+          }
+          insertQuad(thirdQuad, p);
+        }
+    }
+
+    //right side
+    else {
+
+      //indicates firstQuad
+      if((bottonLeft -> y + topRight -> y)/2 >= p -> position -> y) {
+        if(firstQuad == NULL) {
+          Point *neL = newPoint((bottonLeft -> x + topRight -> x)/2, (bottonLeft -> y + topRight -> y)/2);
+          Point *neR = topRight;
+          firstQuad = initQuad(neL,neR,NODELEAF);
+          printf("inseriu no 1 quadrante\n");
+
+        }
+        insertQuad(firstQuad,p);
+      }
+
+      else {
+        if(fourthQuad == NULL) {
+          Point *seL = newPoint((bottonLeft -> x + topRight -> x)/2, bottonLeft -> y);
+          Point *seR = newPoint((topRight -> x), (bottonLeft -> y + topRight -> y)/2);
+          fourthQuad = initQuad(seL,seR,NODELEAF);
+          printf("inseriu no 4 quadrante\n");
+
+        }
+        insertQuad(fourthQuad,p);
+      }
+
+    }
+}
+
+/*
+void insertQuad(QuadTree *quad, PointQuad *p) {
+
     int insert = canInsertQuad(quad,p);
-    
+
     if(insert == 0) {
         printf("Can't insert point\n");
+        printf("point: x %d e y %d \n", p -> position -> x, p -> position ->y);
+      //  printf("%d\n",quad);
+
     }
 
     else if(quad -> node == NODELEAF) {
 
-        if(quad -> type.nodeleaf -> points -> size == 0 || quad -> type.nodeleaf -> points -> size <= BOUNDARY) headList(quad -> type.nodeleaf -> points,p);
-
-        else {
-            subdive(quad);
-            goThroughFatherInsert(quad,p);
-            
+        if(quad -> type.nodeleaf -> points -> size == 0 || quad -> type.nodeleaf -> points -> size < BOUNDARY) {
+          headList(quad -> type.nodeleaf -> points,p);
+          printf("inseriu\n");
+          printf("size: %d\n", quad -> type.nodeleaf -> points -> size);
         }
+        else {
+            printf("quad, before: %d\n", quad -> node);
+            subdive(&quad);
+            //insertQuad(quad,p);
+            insertQuad(quad,p);
+            printf("quad, after: %d\n", quad -> node);
+
+
+        }
+
+        printf("TYPE FORA DO IF %d\n", quad -> node);
     }
 
-    else {
-        goThroughFatherInsert(quad,p);
+    else if(quad -> node == NODEFATHER) {
+       goThroughFatherInsert(quad,p);
     }
-    
+
 }
 
-
-//retornar bool 
+*/
+//retornar bool
 
 int canInsertQuad(QuadTree *quad, PointQuad *p) {
 
-    if(p -> pos -> x <= quad -> bottonLeft -> x && 
-    p -> pos -> y >= quad -> bottonLeft -> y &&
-    p -> pos -> x >= quad -> topRight -> x &&
-    p -> pos -> y <= quad -> topRight -> y) return 0;
-    
-    else return 1;
+    if(p -> position -> x >= quad -> bottonLeft -> x &&
+    p -> position -> y >= quad -> bottonLeft -> y &&
+    p -> position -> x <= quad -> topRight -> x &&
+    p -> position -> y <= quad -> topRight -> y) return 1;
+
+    else return 0;
 
 }
 
-void subdive(QuadTree *quad){
+/*
+List *pointsFather(QuadTree *quad) {
 
-    QuadTree *new = initQuad(quad -> bottonLeft, quad -> topRight, NODEFATHER);
+    List *list = initList();
 
-    Point *bottonLeft = quad -> bottonLeft; 
-    Point *topRight = quad -> topRight;
+    ListNode *nodeAux = quad -> type.nodeleaf -> points -> head;
 
-    Point *neL = newPoint(2*(bottonLeft->x),2*(bottonLeft -> y));
-    Point *neR = newPoint(topRight -> x, topRight->y);
-    QuadTree *firstQuad = initQuad(neL, neR, NODELEAF); 
-    Point *nwL = newPoint(bottonLeft->x,2*(bottonLeft -> y));
-    Point *nwR = newPoint((topRight -> x)/2, topRight->y);
-    NodeLeaf *secondQuad = initQuad(nwL,nwR,NODELEAF);
-    Point *swL = newPoint(bottonLeft->x,bottonLeft -> y);
-    Point *swR = newPoint((topRight -> x)/2, (topRight->y)/2); 
-    NodeLeaf *thirdQuad = initQuad(swL,swR,NODELEAF); 
-    Point *seL = newPoint((bottonLeft->x)*2,bottonLeft -> y);
-    Point *seR = newPoint(topRight -> x, (topRight->y)/2); 
-    NodeLeaf *fourthQuad = initQuad(seL,seR,NODELEAF);
+       while( nodeAux != NULL) {
+            printf("x: %d\n",nodeAux);
+            headList(list,nodeAux);
+            nodeAux =  nodeAux -> next;
+        }
 
-    headList(new -> type.nodefather -> child, firstQuad);
-    headList(new -> type.nodefather -> child, secondQuad);
-    headList(new -> type.nodefather -> child, thirdQuad);
-    headList(new -> type.nodefather -> child, fourthQuad);
+    return list;
+}
 
+void subdive(QuadTree **quad){
+
+    printf("SUBDIVIDI\n");
+    List *pointsInserted = pointsFather(*quad);
+
+    deleteNodeLeaf((*quad) -> type.nodeleaf);
+    (*quad) = initQuad((*quad) -> bottonLeft, (*quad) -> topRight, NODEFATHER);
+
+
+    Point *bottonLeft = (*quad) -> bottonLeft;
+    Point *topRight = (*quad) -> topRight;
+
+    Point *neL = newPoint((bottonLeft -> x + topRight -> x)/2, (bottonLeft -> y + topRight -> y)/2);
+    Point *neR = topRight;
+    QuadTree *firstQuad = initQuad(neL,neR,NODELEAF);
+
+    Point *nwL = newPoint((bottonLeft -> x), (bottonLeft -> y + topRight -> y)/2);
+    Point *nwR = newPoint((bottonLeft->x + topRight -> x)/2, (topRight -> y));
+    QuadTree *secondQuad = initQuad(nwL,nwR, NODELEAF);
+
+    Point *seL = bottonLeft;
+    Point *seR = newPoint((bottonLeft -> x + topRight -> x)/2, (bottonLeft -> y + topRight -> y)/2);
+    QuadTree *thirdQuad = initQuad(seL,seR,NODELEAF);
+
+    Point *swL = newPoint((bottonLeft -> x + topRight -> x)/2, bottonLeft -> y);
+    Point *swR = newPoint((topRight -> x), (bottonLeft -> y + topRight -> y)/2);
+    QuadTree *fourthQuad = initQuad(swL,swR, NODELEAF);
+
+    headList((*quad) -> type.nodefather -> child, firstQuad);
+    headList((*quad) -> type.nodefather -> child, secondQuad);
+    headList((*quad) -> type.nodefather -> child, thirdQuad);
+    headList((*quad) -> type.nodefather -> child, fourthQuad);
+
+    ListNode *aux = pointsInserted -> head;
+
+    while(aux != NULL) {
+        insertQuad(*quad,aux);
+        aux = aux -> next;
+    }
 }
 
 
@@ -128,9 +256,17 @@ void goThroughFatherInsert(QuadTree *quad, PointQuad *p) {
         }
 }
 
+*/
+
+void deleteNodeLeaf(NodeLeaf *node) {
+
+    free(node ->points);
+    free(node);
+}
 
 /*
-void main(){
+
+int main(){
 
 
     Point *bottonLeft = newPoint(0,0);
@@ -143,20 +279,28 @@ void main(){
     Point *p3 = newPoint(7,7);
     Point *p4 = newPoint(9,9);
     Point *p5 = newPoint(6,6);
-    PointQuad *pq1 = initPointQuad(p1,0);
-    PointQuad *pq2 = initPointQuad(p2,1);
-    PointQuad *pq3 = initPointQuad(p3,1);
-    PointQuad *pq4 = initPointQuad(p4,5);
-    PointQuad *pq5 = initPointQuad(p5,1);
+    Point *p6 = newPoint(1,1);
+    Point *p8 = newPoint(1,8);
+    PointQuad *pq1 = initPointQuad(p1,"ola");
+    PointQuad *pq2 = initPointQuad(p2,"ola");
+    PointQuad *pq3 = initPointQuad(p3,"ola");
+    PointQuad *pq4 = initPointQuad(p4,"ola");
+    PointQuad *pq5 = initPointQuad(p5,"ola");
+    PointQuad *pq6 = initPointQuad(p6,"ola");
+    PointQuad *pq8 = initPointQuad(p8,"ola");
+
 
     insertQuad(center,pq1);
     insertQuad(center,pq2);
     insertQuad(center,pq3);
     insertQuad(center,pq4);
     insertQuad(center,pq5);
+    insertQuad(center, pq6);
+    //insertQuad(center, pq7);
+    insertQuad(center, pq8);
+    //insertQuad(center, pq9);
 
-
+    return 0;
 }
-
 
 */

@@ -71,7 +71,7 @@ List *removeNode(List *list, void *node) {
 
     while(current != NULL) {
 
-  
+
 
         if(current -> next == NULL && current -> data == node) {
 
@@ -105,6 +105,7 @@ void deleteList(List* list) {
 
 }
 
+/*
 void printList(List *list) {
 
     if(list -> size = 0) printf("List is empty \n");
@@ -113,9 +114,11 @@ void printList(List *list) {
     ListNode *node = list -> head;
 
     while( node != NULL) {
-
+        printf("Olá\n");
         node = node -> next;
     }
     printf("\n");
     }
   }
+
+  */
