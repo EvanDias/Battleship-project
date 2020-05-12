@@ -54,5 +54,6 @@ NodeFather *initNodeFather();
 QuadTree *initQuad(Point *buttonLeft, Point *topRight, nodetype kind);
 void insertQuad(QuadTree *quad, PointQuad *p);
 int canInsertQuad(QuadTree *quad, PointQuad *p);
-void subdive(QuadTree **quad);
+void subdive(QuadTree *quad);
 void goThroughFatherInsert(QuadTree *quad, PointQuad *p);
+void deleteQuadNodeLeaf(QuadTree *quad);
