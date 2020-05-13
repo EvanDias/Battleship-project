@@ -193,9 +193,10 @@ void searchFather(QuadTree *quad, Point *p) {
 
     while(aux != NULL) {
 
-      searchQuadTree(aux -> data,p);
-      aux = aux -> next;
+      PointQuad * searched = searchQuadTree(aux -> data,p); 
 
+      if(searched == NULL) aux = aux -> next;
+      else break;
     }
 
 }
@@ -206,9 +207,11 @@ PointQuad *searchQuadTree(QuadTree *quad, Point *point) {
 
     PointQuad *new = NULL;
 
+    int broke = 0;
 
     if(searched == 0) {
-      printf("Não contém\n");
+      printf("Não contém\n"); 
+      return new; 
   
     }
 
@@ -216,16 +219,18 @@ PointQuad *searchQuadTree(QuadTree *quad, Point *point) {
       ListNode *aux = quad -> type.nodeleaf -> points -> head;
 
       while(aux != NULL) {
-        if(((PointQuad*)aux -> data )-> position -> x == point -> x && ((PointQuad*)aux -> data )-> position -> y == point -> y) {
-          printf("Encontrei\n");
-          new = initPointQuad(point,((PointQuad*)aux -> data) -> data);
-          return new;
-        }
 
-        else {
-          printf("Não encontrei\n");
-  
-        }
+          if(((PointQuad*)aux -> data )-> position -> x == point -> x && ((PointQuad*)aux -> data )-> position -> y == point -> y) {
+            printf("Encontrei\n");
+            new = ((PointQuad*)aux -> data);
+            printf("%d %d\n", new ->position ->x, new ->position ->y);
+            return new;
+
+      }
+
+          else {
+            printf("Não encontrei \n");
+          }
 
         aux = aux -> next; 
       }
@@ -237,10 +242,10 @@ PointQuad *searchQuadTree(QuadTree *quad, Point *point) {
      printf("entrei\n");
      searchFather(quad,point);
       
-   }
+   } 
 
-   //ver como fazer este retorno
-  
+    //return new;
+
 }
 
 void deleteQuadNodeLeaf(QuadTree *quad) {
@@ -249,22 +254,6 @@ void deleteQuadNodeLeaf(QuadTree *quad) {
     free(quad -> type.nodeleaf);
     free(quad);
 }
-
-
-void printList(QuadTree *quad) {
-
-    List *list = quad -> type.nodeleaf -> points; 
-    if(list -> size = 0) printf("List is empty \n");
-
-    else {
-    ListNode *node = list -> head;
-    while( node != NULL) {
-        printf("ponto: x -> %d e y -> %d \n", ((PointQuad*)node -> data )-> position -> x, ((PointQuad*)node -> data )-> position -> y);
-        node = node -> next;
-    }
-    printf("\n");
-    }
-  }
 
 int main(){
 
@@ -284,6 +273,7 @@ int main(){
     Point *p8 = newPoint(8,9);
     Point *p9 = newPoint(3,4);
 
+    Point *p10 = newPoint(5,5);
 
     PointQuad *pq1 = initPointQuad(p1, "ola");
     PointQuad *pq2 = initPointQuad(p2, "ola"); 
@@ -294,21 +284,24 @@ int main(){
     PointQuad *pq7 = initPointQuad(p7, "ola");
     PointQuad *pq8 = initPointQuad(p8, "ola");
 
+    PointQuad *pq10 = initPointQuad(p10, "ola");
+
     insertQuad(center, pq1);
     insertQuad(center, pq2); 
     insertQuad(center, pq3); 
     insertQuad(center, pq4);
-    insertQuad(center, pq5);
-    insertQuad(center, pq6);
-    insertQuad(center, pq7);
     insertQuad(center, pq8);
+    insertQuad(center, pq6);
+    //insertQuad(center, pq7);
+   // insertQuad(center, pq8);
 
     printf("%d\n", center ->node);
 
-    PointQuad *ponto = searchQuadTree(center, p2);
+    PointQuad *ponto = searchQuadTree(center, p3);
 
-    printf("ponto: x -> %d\n", ponto);
-
+    if(ponto == NULL) printf("ola\n");
+    
+    else printf("YESSSSSSSSSSSSSSSSSSSSSSs\n");
 
     return 0;
 }
