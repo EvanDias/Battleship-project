@@ -231,9 +231,6 @@ bool translation(SHIP *sh, int sizeVertical, int sizeHorizontal) {
       translate = true;
     }
 
-    sh -> translationy = sizeVertical;
-    sh -> translationx = sizeHorizontal;
-
     return translate;
 }
 
@@ -269,10 +266,16 @@ void rotation(SHIP *sh, int degrees) {
 
     copyBitMaps(bitFinal, sh -> bp);
 
-    sh -> rotation = degrees;
-
     freeBitMap(bitFinal);
 
+}
+
+bool sinkBoat(SHIP *ship) {
+    bool sinkBoatV = false;
+
+    if(ship -> shotCount == 0) sinkBoatV = true;
+
+    return sinkBoatV;
 }
 
 // Free allocated memory
