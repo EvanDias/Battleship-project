@@ -275,6 +275,14 @@ void rotation(SHIP *sh, int degrees) {
 
 }
 
+bool sinkBoat(SHIP *ship) {
+    bool sinkBoatV = false;
+
+    if(ship -> shotCount == 0) sinkBoatV = true;
+
+    return sinkBoatV;
+}
+
 // Free allocated memory
 void freeShip(SHIP *sh) {
     freeBitMap(sh -> bp);

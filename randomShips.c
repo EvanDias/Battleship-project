@@ -23,17 +23,18 @@ void randomTranslation(ListNode *node) {
   int x = 0;
   int y = 0;
 
-  if(node -> ship -> kind != 4 || node -> ship -> kind != 6) {
+  char *kind = nameShip((SHIP*)(node -> data)); 
+  if(kind != "L_GUY" && kind != "S_GUY") {
     x = rand()%sizeBitMap;
     y = rand()%sizeBitMap;
 
   }
-    bool translate = translation(node -> ship, y, x);
+    bool translate = translation((SHIP*)node -> data, y, x);
 
     while(translate == false) {
       x = rand()%sizeBitMap;
       y = rand()%sizeBitMap;
-      translate = translation(node -> ship, y, x);
+      translate = translation((SHIP*)node -> data, y, x);
     }
 
     if(translate==true) {
@@ -46,7 +47,7 @@ void randomTranslation(ListNode *node) {
 void randomRotation(ListNode *node) {
 
   int numberRandom = rand()%4;
-  rotation(node -> ship, rotationNumber(numberRandom));
+  rotation((SHIP*)node -> data, rotationNumber(numberRandom));
 
   printf("O valor da rotação: %d\n",rotationNumber(numberRandom));
 }
@@ -57,12 +58,12 @@ void randomInsertMatrix(ListNode *node, Matrix *matrix) {
   int x = random()%(matrix -> size);
   int y = random()%(matrix -> size);
 
-  bool inserted = insertShipInMatrix(matrix, node -> ship, x, y);
+  bool inserted = insertShipInMatrix(matrix, (SHIP*)node -> data, x, y);
 
   while(inserted == false) {
       x = random()%(matrix -> size);
       y = random()%(matrix -> size);
-      inserted = insertShipInMatrix(matrix, node -> ship, x, y);
+      inserted = insertShipInMatrix(matrix, (SHIP*)node -> data, x, y);
   }
 
   if(inserted==true) {

@@ -156,31 +156,6 @@ void game(User *start, User *other) {
     freeUser(other);
 }
 
-
-bool sinkBoat(SHIP *ship) {
-    bool sinkBoatV = false;
-
-    if(ship -> shotCount == 0) sinkBoatV = true;
-
-    return sinkBoatV;
-}
-
-
-bool sinkBoatMatrix(Matrix *x) {
-    for(int i = 0; i < x -> size; i++) {
-      for(int j = 0; j < x -> size; j++) {
-        if(x -> data[j][i] -> value == '*') {
-          if(sinkBoat(x -> data[j][i] -> ship)==true) {
-            printf("Sink a boat with coordenates (%d,%d) \n", j,i);
-            return true;
-        }
-      }
-    }
-  }
-  return false;
-}
-
-
 bool allShipsSink(User *usr) {
 
   ListNode *node = usr -> shipList -> head;
@@ -189,7 +164,7 @@ bool allShipsSink(User *usr) {
   bool sink = false;
 
   while(node != NULL) {
-    sink = sinkBoat(node -> ship);
+    sink = sinkBoat((SHIP*)node -> data);
     if(sink) countShips--;
     node = node -> next;
   }

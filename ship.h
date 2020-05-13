@@ -33,6 +33,7 @@ void rotation(SHIP *sh, int degrees);
 void delete_ship(SHIP *sh);
 SHIP *createShips(int sizeMatrix);
 char *nameShip(SHIP *sh);
+bool sinkBoat(SHIP *sh);
 void freeShip(SHIP *sh);
 
 #endif //RANDOM_SHIP_H

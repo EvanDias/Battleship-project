@@ -107,6 +107,20 @@ void changeValueShotBp(Matrix *matrix, int x, int y, unsigned char ternaryValue)
     changeCellValue(matrix -> data[y][x] -> ship -> bp, y-y_value, x-x_value, ternaryValue);
 }
 
+bool sinkBoatMatrix(Matrix *x) {
+    for(int i = 0; i < x -> size; i++) {
+      for(int j = 0; j < x -> size; j++) {
+        if(x -> data[j][i] -> value == '*') {
+          if(sinkBoat(x -> data[j][i] -> ship)==true) {
+            printf("Sink a boat with coordenates (%d,%d) \n", j,i);
+            return true;
+        }
+      }
+    }
+  }
+  return false;
+}
+
 
 void deleteShipMatrix(Matrix *ma, SHIP *sh, int x, int y) {
      int xx = ma -> data[y][x] -> ship -> bp -> refx;

@@ -208,9 +208,8 @@ void choiceMenu(int numberMenu) {
 void scanPointsTranslation(ListNode *node) {
 
   int x, y = 0;
-  char *kind = "";
-  if(node -> ship -> kind != 4 && node -> ship -> kind != 6) {
-    kind = nameShip(node -> ship);
+  char *kind = nameShip((SHIP*)node -> data);
+  if(kind != "L_GUY" && kind != "S_GUY") {
     printf("Choose the points to do translation of %s \n", kind);
     printf("x: ");
     scanf("%d", &x);
@@ -219,7 +218,7 @@ void scanPointsTranslation(ListNode *node) {
 
   }
 
-    bool translate = translation(node -> ship, y, x);
+    bool translate = translation((SHIP*)node -> data, y, x);
 
     while(translate == false) {
       printf("Try Again: \n");
@@ -227,7 +226,7 @@ void scanPointsTranslation(ListNode *node) {
       scanf("%d", &x);
       printf("\ny: ");
       scanf("%d",&y);
-      translate = translation(node -> ship, y, x);
+      translate = translation((SHIP*)node -> data, y, x);
     }
 
 }
@@ -238,7 +237,7 @@ void scanPointRotation(ListNode *node) {
 
   int degrees = 0;
 
-  char * kind = nameShip(node -> ship);
+  char * kind = nameShip((SHIP*)node -> data);
   printf("Choose the angle to do rotation of %s \n", kind);
   printf("Degrees: ");
   scanf("%d", &degrees);
@@ -248,7 +247,7 @@ void scanPointRotation(ListNode *node) {
     scanf("%d", &degrees);
   }
 
-  rotation(node -> ship, degrees);
+  rotation((SHIP*)node -> data, degrees);
 
 
 }
@@ -259,7 +258,7 @@ void scanPointInsert(ListNode *node, Matrix *matrix) {
 
   int x,y = 0;
 
-  char * kind = nameShip(node -> ship);
+  char * kind = nameShip((SHIP*)node -> data);
   char ch_x, ch_y;
 
   printf("Choose a point to insert %s in matrix\n",kind );
@@ -270,7 +269,7 @@ void scanPointInsert(ListNode *node, Matrix *matrix) {
       x = choiceChar(ch_x);
       y = choiceChar(ch_y);
 
-  bool inserted = insertShipInMatrix(matrix, node -> ship, x, y);
+  bool inserted = insertShipInMatrix(matrix, (SHIP*)node -> data, x, y);
 
   while(inserted == false) {
       printf("Try again !\n");
@@ -280,7 +279,7 @@ void scanPointInsert(ListNode *node, Matrix *matrix) {
       scanf(" %c",&ch_y);
       x = choiceChar(ch_x);
       y = choiceChar(ch_y);
-      inserted = insertShipInMatrix(matrix, node -> ship, x, y);
+      inserted = insertShipInMatrix(matrix,(SHIP*)node -> data, x, y);
   }
 
 }
@@ -330,13 +329,13 @@ void choiceShips(User *user) {
       switch(choice) {
         case 1: scanPointsTranslation(node);
           scanPointRotation(node);
-          printBitMap(node -> ship -> bp);
+         // printBitMap(node -> ship -> bp);
           printf("\n");
           insertMode(user, node);
           break;
         case 2: randomTranslation(node);
           randomRotation(node);
-          printBitMap(node -> ship -> bp);
+         // printBitMap((SHIP*)(node -> data) -> bp);
           printf("\n");
           insertMode(user, node);
           break;
@@ -424,7 +423,7 @@ void choiceShipsManual(User *user) {
       while(node != NULL) {
         scanPointsTranslation(node);
         scanPointRotation(node);
-        printBitMap(node -> ship -> bp);
+        //printBitMap(node -> ship -> bp);
         printf("\n");
         scanPointInsert(node, user -> matrix);
 
@@ -441,6 +440,7 @@ void choiceShipsManual(User *user) {
 bool deleteListMatrix(User *usr, int x, int y) {
 
     bool deleted = false;
+   
     ShipKind kind;
     if(usr -> matrix -> data[y][x] -> ship != NULL) {
         kind = usr -> matrix -> data[y][x] -> ship -> kind;
