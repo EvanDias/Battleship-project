@@ -1,5 +1,6 @@
 #ifndef RANDOM_MATRIX_H
 #define RANDOM_MATRIX_H
+#include "ship.h"
 #include "list.h"
 
 typedef struct matrix_ Matrix;
@@ -26,6 +27,7 @@ Matrix *initMatrix(int size);
 bool insertShipInMatrix(Matrix *a, SHIP *ship, int x, int y);
 void changeValueShotBp(Matrix *matrix, int x, int y, unsigned char ternaryValue);
 void deleteShipMatrix(Matrix *ma, SHIP *sh, int x, int y);
+bool sinkBoatMatrix(Matrix *x);
 void printMatrix(Matrix *matrix);
 void printBothMatrix(Matrix *start, Matrix *other);
 bool canInsert(Matrix *matrix, SHIP *ship, int x, int y);

@@ -4,7 +4,6 @@
 #include "initGame.h"
 
 bool shotInPlayer(Matrix *self, Matrix *other, int x, int y);
-bool sinkBoatMatrix(Matrix *x);
 bool allShipsSink(User *usr);
 bool gameTurn(User *start, User *other);
 void game(User *usr1, User *usr2);
