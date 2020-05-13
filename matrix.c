@@ -36,6 +36,28 @@ Matrix* initMatrix(int size) {
 }
 
 
+// Return's the icone value
+unsigned char CellValue(Matrix *m, int x, int y) {
+    return m -> data[y][x] -> value;
+}
+
+
+// Return's the shot value
+unsigned char CellShot(Matrix *m, int x, int y) {
+    return m -> data[y][x] -> shot;
+}
+
+
+void modifyCellValue(Matrix *m, int x, int y, unsigned char ch) {
+    m -> data[y][x] -> value = ch;
+}
+
+
+void modifyCellShot(Matrix *m, int x, int y, unsigned char ch) {
+    m -> data[y][x] -> shot = ch;
+}
+
+
 bool insertShipInMatrix(Matrix *matrix, SHIP *ship, int x, int y) {
 
       bool insert = canInsert(matrix,ship,x,y);
@@ -51,7 +73,7 @@ bool insertShipInMatrix(Matrix *matrix, SHIP *ship, int x, int y) {
                     ship -> bp -> refx = x;
                     ship -> bp -> refy = y;
                     matrix -> data[j+y][i+x]-> ship = ship;
-                    matrix -> data[j+y][i+x]-> value = 'x';
+                    modifyCellValue(matrix,i+x,j+y,'x');
                     insertMatrix = true;
                 }
             }
@@ -110,7 +132,7 @@ void changeValueShotBp(Matrix *matrix, int x, int y, unsigned char ternaryValue)
 bool sinkBoatMatrix(Matrix *x) {
     for(int i = 0; i < x -> size; i++) {
       for(int j = 0; j < x -> size; j++) {
-        if(x -> data[j][i] -> value == '*') {
+        if(CellValue(x,i,j) == '*') {
           if(sinkBoat(x -> data[j][i] -> ship)==true) {
             printf("Sink a boat with coordenates (%d,%d) \n", j,i);
             return true;
@@ -296,9 +318,56 @@ int charToIntLower(char chInput) {
 }
 
 
+// Verify if it's possible make the shot
+bool canShot(Matrix *matrix, int x, int y) {
+    bool shot = true;
+
+    if(y >= matrix -> size || x >= matrix -> size)
+        shot = false;
+
+    else if(CellValue(matrix,x,y) == 'x' || CellValue(matrix,x,y) == '.')
+        shot = true;
+
+    else if(CellValue(matrix,x,y) == '*' || CellValue(matrix,x,y) == '#')
+        shot = false;
+
+    return shot;
+}
+
+
+// Update values after the shot
+bool modifyValues(Matrix *other, int x, int y) {
+
+    bool shotMatrix = false;
+
+      if(CellValue(other,x,y) == 'x' || CellValue(other,x,y) == '#') {
+
+        //value of matrix become *
+        modifyCellValue(other,x,y,'*');
+        other -> data[y][x] -> ship -> shotCount--;
+        //change value bitmap to ship 2
+        changeValueShotBp(other,x,y,'2');
+        shotMatrix = true;
+      }
+      else if(other -> data[y][x] -> value == '.') {
+        //o value of matrix become +
+        modifyCellValue(other,x,y,'+');
+        if(other -> data[y][x] -> ship != NULL) changeValueShotBp(other,x,y,'3');
+        shotMatrix = false;
+      }
+      return shotMatrix;
+}
+
+void modifyShot(Matrix *m, int x, int y, bool b) {
+    if(b == true)
+        modifyCellShot(m,x,y,'2');
+    else
+        modifyCellShot(m,x,y,'1');
+}
+
+
 // Free allocated memory
 void freeMatrix(Matrix *matrix) {
-
      for(int i=0; i< matrix -> size; i++) {
         for(int j=0; j < matrix -> size; j++) {
             freeCell(matrix -> data[i][j]);
@@ -316,24 +385,3 @@ void freeCell(Cell *cell) {
     free(cell);
 }
 
-/*
-void main() {
-    Matrix *matrix = initMatrix(10);
-
-    SHIP *sh1 = newShip(3);
-    SHIP *sh2 = newShip(1);
-
-    bool rotation1 = rotation(sh1, 90);
-
-    insertShipInMatrix(matrix, sh1, 2, 3);
-    insertShipInMatrix(matrix, sh2, 0, 0);
-
-    printMatrix(matrix);
-
-    deleteShipMatrix(matrix, sh2, 1, 0);
-
-    printf("\n\n");
-
-    printMatrix(matrix);
-
-}*/

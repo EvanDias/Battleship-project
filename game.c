@@ -1,50 +1,5 @@
 #include "game.h"
 
-// Verify if it's possible make the shot
-bool canShot(Matrix *matrix, int x, int y) {
-  bool shot = true;
-
-        if(y >= matrix -> size || x >= matrix -> size) {
-          shot = false;
-        }
-
-        else if(matrix -> data[y][x] -> value == 'x' || matrix -> data[y][x] -> value == '.')
-                  shot = true;
-
-        else if(matrix -> data[y][x] -> value == '*' || matrix -> data[y][x] -> value == '#')
-                  shot = false;
-    return shot;
-}
-
-
-// Update values after the shot
-bool shotInPlayer(Matrix *self, Matrix *other, int x, int y) {
-
-    bool shotMatrix = false;
-
-      if(other -> data[y][x] -> value == 'x' || other -> data[y][x] -> value == '#') {
-
-        //value of matrix become *
-        other -> data[y][x] -> value = '*';
-        other -> data[y][x] -> ship -> shotCount--;
-        //change value bitmap to ship 2
-        changeValueShotBp(other,x,y,'2');
-        //shot of self matrix become 2
-        self -> data[y][x] -> shot = '2';
-        shotMatrix = true;
-      }
-      else if(other -> data[y][x] -> value == '.') {
-        //o value of matrix become +
-        other -> data[y][x] -> value = '+';
-        //shot of self matrix become 1
-        self -> data[y][x] -> shot = '1';
-        if(other -> data[y][x] -> ship != NULL) changeValueShotBp(other,x,y,'3');
-        shotMatrix = false;
-      }
-
-      return shotMatrix;
-}
-
 // Each player's turn
 bool gameTurn(User *start, User *other) {
 
@@ -56,7 +11,7 @@ bool gameTurn(User *start, User *other) {
 
     printUsers(start, other);
     printBothMatrix(start -> matrix, other -> matrix);
-
+    /*
     printf("%s choose point to hit a ship of %s\n", start -> username, other -> username);
     printf("x: ");
     scanf(" %c", &ch_x);
@@ -64,18 +19,18 @@ bool gameTurn(User *start, User *other) {
     scanf(" %c",&ch_y);
     x = choiceChar(ch_x);
     y = choiceChar(ch_y);
-
-    //x = randomShoot(start -> matrix -> size);
-    //y = randomShoot(start -> matrix -> size);
+    */
+    x = randomShoot(start -> matrix -> size);
+    y = randomShoot(start -> matrix -> size);
 
     shotCan = canShot(other -> matrix, x,y);
 
     if(shotCan) {
-        playAgain = shotInPlayer(start -> matrix, other -> matrix, x,y);
+        playAgain = shotInPlayer(start, other, x,y);
     }
     else {
         while(shotCan == false) {
-
+        /*
           printf("Try Again\n");
           printf("%s choose point to hit a ship of %s\n", start -> username, other -> username);
           printf("x: ");
@@ -84,11 +39,11 @@ bool gameTurn(User *start, User *other) {
           scanf(" %c",&ch_y);
           x = choiceChar(ch_x);
           y = choiceChar(ch_y);
+          */
+          x = randomShoot(start -> matrix -> size);
+          y = randomShoot(start -> matrix -> size);
 
-          //x = randomShoot(start -> matrix -> size);
-          //y = randomShoot(start -> matrix -> size);
-
-          if(shotCan) playAgain = shotInPlayer(start -> matrix, other -> matrix, x,y);
+          if(shotCan) playAgain = shotInPlayer(start, other, x,y);
           else shotCan = canShot(other -> matrix, x,y);
         }
     }
@@ -108,7 +63,7 @@ bool gameTurn(User *start, User *other) {
             printf("You hit a empty cell!\n");
      }
 
-    sleep(2);
+    //sleep(2);
 
     return playAgain;
 }
@@ -129,6 +84,15 @@ bool playAgain(User *start, User *other) {
   }
 
   return broke;
+}
+
+bool shotInPlayer(User* self, User* other, int x, int y) {
+
+    bool shot = modifyValues(other -> matrix, x, y);
+
+    modifyShot(self -> matrix, x, y, shot);
+
+    return shot;
 }
 
 
