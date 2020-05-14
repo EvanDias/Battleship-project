@@ -37,6 +37,7 @@ struct Quad_ {
 struct NodeLeaf_ {
 
     List *points;
+    QuadTree *father;
 
 };
 
@@ -60,3 +61,5 @@ PointQuad *searchQuadTree(QuadTree *quad, Point *point);
 void deleteQuadNodeLeaf(QuadTree *quad);
 void printList(QuadTree *quad);
 Point** getRefQuad(QuadTree *quad, Point *point);
+int sumListsSize(QuadTree *quad);
+void deleteFather(QuadTree *quad, Point *p);

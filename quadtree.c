@@ -11,7 +11,6 @@ PointQuad *initPointQuad(Point *p, void *value) {
     new -> data = value;
 
     return new;
-
 }
 
 NodeLeaf *initNodeLeaf() {
@@ -131,18 +130,22 @@ QuadTree *subdive(QuadTree *quad) {
     Point *neL = newPoint((bottonLeft -> x + topRight -> x)/2, (bottonLeft -> y + topRight -> y)/2);
     Point *neR = topRight;
     QuadTree *firstQuad = initQuad(neL,neR,NODELEAF);
+    firstQuad -> type.nodeleaf -> father = new;
 
     Point *nwL = newPoint((bottonLeft -> x), (bottonLeft -> y + topRight -> y)/2);
     Point *nwR = newPoint((bottonLeft->x + topRight -> x)/2, (topRight -> y));
     QuadTree *secondQuad = initQuad(nwL,nwR, NODELEAF);
+    secondQuad -> type.nodeleaf -> father = new;
 
     Point *seL = bottonLeft;
     Point *seR = newPoint((bottonLeft -> x + topRight -> x)/2, (bottonLeft -> y + topRight -> y)/2);
     QuadTree *thirdQuad = initQuad(seL,seR,NODELEAF);
+    thirdQuad -> type.nodeleaf -> father = new;
 
     Point *swL = newPoint((bottonLeft -> x + topRight -> x)/2, bottonLeft -> y);
     Point *swR = newPoint((topRight -> x), (bottonLeft -> y + topRight -> y)/2);
     QuadTree *fourthQuad = initQuad(swL,swR, NODELEAF);
+    fourthQuad -> type.nodeleaf -> father = new;
 
     headList(new -> type.nodefather -> child, firstQuad);
     headList(new -> type.nodefather -> child, secondQuad);
@@ -323,6 +326,60 @@ void whichQuadrant(QuadTree *quad, Point *p) {
 }
 
 
+void deleteQuadPoint(QuadTree *quad, Point *p) {
+    PointQuad *pq = searchQuadTree(quad, p);
+
+
+    if(quad -> node == NODELEAF) {
+        if(quad -> type.nodeleaf -> points -> size != 0)
+            removeNode(quad -> type.nodeleaf -> points, pq);
+
+    }
+
+    else if(quad -> node == NODEFATHER) {
+        deleteFather(quad, p);
+    }
+
+}
+
+void deleteFather(QuadTree *quad, Point *p) {
+    int sum = 0;
+    sum = sumListsSize(quad);
+
+    if(sum <= 4) {
+        printf("hello");
+    }
+    else {
+        ListNode *aux = quad -> type.nodeleaf -> points -> head;
+
+        while(aux != NULL) {
+            deleteQuadPoint(aux -> data, p);
+
+            aux = aux -> next;
+        }
+
+    }
+
+}
+
+
+int sumListsSize(QuadTree *quad) {
+    int sum = 0;
+
+    ListNode *aux = quad -> type.nodeleaf -> points -> head;
+
+    while(aux != NULL) {
+        QuadTree *aux2 = (QuadTree*)(aux -> data);
+        sum += aux2 -> type.nodeleaf -> points -> size;
+
+        aux = aux -> next;
+        //free(aux2);
+    }
+
+    //free(aux);
+    return sum;
+}
+
 void deleteQuadNodeLeaf(QuadTree *quad) {
 
     freeList(quad -> type.nodeleaf->points);
@@ -359,12 +416,12 @@ int main(){
 
     PointQuad *pq10 = initPointQuad(p10, "ola");
 
-    insertQuad(center, pq1);
+    //insertQuad(center, pq1);
     insertQuad(center, pq2); 
-    insertQuad(center, pq3); 
-    insertQuad(center, pq4);
-    insertQuad(center, pq7);
-    insertQuad(center, pq8);
+    //insertQuad(center, pq3);
+    //insertQuad(center, pq4);
+    //insertQuad(center, pq7);
+    //insertQuad(center, pq8);
 
     //insertQuad(center, pq7);
    // insertQuad(center, pq8);
@@ -380,11 +437,22 @@ int main(){
 
     //printf("x: %d  || y: %d \n", ponto[0] -> x, ponto[0] -> y);
     //printf("x: %d  || y: %d \n", ponto[1] -> x, ponto[1] -> y);
+
+
+
     whichQuadrant(center,p1);
     whichQuadrant(center,p2);
     whichQuadrant(center,p7);
     whichQuadrant(center,p4);
     whichQuadrant(center,p2);
+
+
+    deleteQuadPoint(center, p2);
+
+    PointQuad *ponto = searchQuadTree(center, p2);
+        if(ponto == NULL) printf("ola\n");
+
+            else printf("YESSSSSSSSSSSSSSSSSSSSSSs\n");
     return 0;
 }
 
