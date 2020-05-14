@@ -99,11 +99,26 @@ List *removeNode(List *list, void *node) {
 }
 
 //delete a list
-void deleteList(List* list) {
+// Free allocated memory
+void freeList(List* list) {
 
-    free(list);
+    ListNode *node = list -> head;
+    ListNode *aux = NULL;
 
+    while(node != NULL) {
+        aux = node -> next;
+        free(node);
+        node = aux;
+    }
+
+    if(node == NULL) {
+    free(node);
+    free(aux);
+    }
+
+free(list);
 }
+
 
 /*
 void printList(List *list) {

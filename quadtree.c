@@ -123,7 +123,7 @@ QuadTree *subdive(QuadTree *quad){
     Point *bottonLeft = quad -> bottonLeft;
     Point *topRight = quad -> topRight;
  
-    deleteQuadNodeLeaf(quad);
+   // deleteQuadNodeLeaf(quad);
     QuadTree *new = initQuad(bottonLeft, topRight, NODEFATHER);
 
     Point *neL = newPoint((bottonLeft -> x + topRight -> x)/2, (bottonLeft -> y + topRight -> y)/2);
@@ -251,7 +251,7 @@ void deleteQuadNodeLeaf(QuadTree *quad) {
 
     free(quad -> type.nodeleaf->points);
     free(quad -> type.nodeleaf);
-
+    free(quad);
 }
 
 int main(){
@@ -296,7 +296,7 @@ int main(){
 
     printf("%d\n", center ->node);
 
-    PointQuad *ponto = searchQuadTree(center, p7);
+    PointQuad *ponto = searchQuadTree(center, p2);
 
     if(ponto == NULL) printf("ola\n");
     
