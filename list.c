@@ -52,6 +52,7 @@ void headList(List* list, void *elem) {
 
 }
 
+/*
 //remove a specific node of list
 List *removeNode(List *list, void *node) {
 
@@ -68,10 +69,7 @@ List *removeNode(List *list, void *node) {
 
     }
 
-
     while(current != NULL) {
-
-
 
         if(current -> next == NULL && current -> data == node) {
 
@@ -97,6 +95,40 @@ List *removeNode(List *list, void *node) {
 
     return list;
 }
+*/
+
+void removeNode(List *list, void *node)
+{
+    ListNode *current = list -> head;
+    ListNode *temp = current;
+    ListNode *prev = NULL;
+
+    // If head node itself holds the key to be deleted
+    if (temp != NULL && temp->data == node)
+    {
+        current = temp->next;   // Changed head
+        free(temp);               // free old head
+        return;
+    }
+
+    // Search for the key to be deleted, keep track of the
+    // previous node as we need to change 'prev->next'
+    while (temp != NULL && temp->data != node)
+    {
+        prev = temp;
+        temp = temp->next;
+    }
+
+    // If key was not present in linked list
+    if (temp == NULL) return;
+
+    // Unlink the node from linked list
+    prev->next = temp->next;
+
+    free(temp);  // Free memory
+}
+
+
 
 //delete a list
 // Free allocated memory

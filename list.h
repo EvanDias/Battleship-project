@@ -28,8 +28,9 @@ struct list_ {
 ListNode *initNode(void* data, ListNode* next);
 List *initList();
 void headList(List *list, void *data);
-List *removeNode(List *list, void *data);
+//List *removeNode(List *list, void *data);
+void removeNode(List *list, void *node);
 //void printList(List *l);
-void deleteList(List* list);
+void freeList(List* list);
 
 #endif //RANDOM_LIST_H
