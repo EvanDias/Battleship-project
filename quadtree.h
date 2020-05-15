@@ -63,3 +63,7 @@ void printList(QuadTree *quad);
 Point** getRefQuad(QuadTree *quad, Point *point);
 int sumListsSize(QuadTree *quad);
 void deleteFather(QuadTree *quad, Point *p);
+QuadTree *deleteFatherAux(QuadTree *quad, Point *p);
+List *listFather(QuadTree *quad);
+void deleteQuadNodeFather(QuadTree *quad);
+void printMe(List *list);

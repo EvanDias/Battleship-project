@@ -32,5 +32,8 @@ void headList(List *list, void *data);
 void removeNode(List *list, void *node);
 //void printList(List *l);
 void freeList(List* list);
+//List *concatenateList(List *l1, List *l2);
+List *concatenateList(List *l1, List *l2);
+//void print(List *list);
 
 #endif //RANDOM_LIST_H
