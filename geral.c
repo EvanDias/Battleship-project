@@ -1,8 +1,5 @@
 #include "geral.h" 
 
-
-#define QUADTREE 
-
 #ifdef MATRIX
 #include "matrix.h"
 

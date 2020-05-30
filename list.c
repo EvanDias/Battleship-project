@@ -15,14 +15,11 @@ ListNode *initNode(void *data, ListNode* next) {
 
 }
 
-<<<<<<< HEAD
 int getSizeList(List *list) {
 
     return list -> size;
 }
 
-=======
->>>>>>> cbd23d760ba442cfba24e30ad87653966d59f18b
 
 //init a list
 List *initList() {

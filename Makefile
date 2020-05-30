@@ -1,10 +1,8 @@
-OBJS=bitmap.o game.o list.o matrix.o menu.o randomShips.o ship.o initGame.o main.o
-PROGRAM=./main
-CFLAGS=-g
+quad: quadtreev2.c geral.c bitmap.c board.c cell.c game.c initGame.c list.c menu.c point.c randomShips.c ship.c main.c
+	gcc -D QUADTREE -o main *.c
 
-all: $(PROGRAM)
+matrix: 
+	gcc -D MATRIX -o main *.c
 
-$(PROGRAM): $(OBJS)
-	$(CC) -o $(PROGRAM) $(OBJS)
 clean:
-	rm -f $(PROGRAM) $(OBJS)
+	rm -f ./main

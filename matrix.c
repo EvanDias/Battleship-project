@@ -1,7 +1,6 @@
 #include "matrix.h"
 
 
-
 // Init a matrix with its size
 Matrix* initMatrix(int size) {
 

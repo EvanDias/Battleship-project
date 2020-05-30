@@ -28,10 +28,7 @@ struct list_ {
 ListNode *initNode(void* data, ListNode* next);
 List *initList();
 void headList(List *list, void *data);
-<<<<<<< HEAD
 int getSizeList(List *list);
-=======
->>>>>>> cbd23d760ba442cfba24e30ad87653966d59f18b
 //List *removeNode(List *list, void *data);
 void removeNode(List *list, void *node);
 //void printList(List *l);
