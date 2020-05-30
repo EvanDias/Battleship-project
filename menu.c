@@ -72,7 +72,6 @@ void initializedGame(User *usr1, User *usr2, int boardSize) {
   int choose;
   scanf("%d", &choose);
 
-
   while(choose == 1) {
     printf("Choose the coordenate's ship to delete\n");
     printf("x: ");

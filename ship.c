@@ -1,6 +1,5 @@
 #include "ship.h"
 
-
 #define PXREF 2
 #define PYREF 2
 #define sin_int(degrees)({int res=0; \
