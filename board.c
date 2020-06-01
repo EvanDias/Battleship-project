@@ -27,9 +27,6 @@ void printBoard(User *usr, int boardSize) {
             Point *a = newPoint(i,j);
             void *aux = searchPoint(usr -> dataStructs, a);
             if(aux != NULL) {
-                
-              // printf("entrei aqui\n");
-                //printf("pois\n");
                 printf("%c ", CellValue((Cell*)aux));                            
             }
             else {

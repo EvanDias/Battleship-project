@@ -5,6 +5,13 @@
 #include "point.h"
 
 #define sizeBitMap 5
+#define BP(B) (B)
+#define BPX(B) (B -> x)
+#define BPY(B) (B -> Y)
+#define SETBPX(B,x) (B -> x = x)
+#define SETBPY(B,y) (B -> y = y)
+#define CELLBP(B,x,y) (B -> data[x][y])
+#define SETCELLBP(B,x,y,v) (B -> data[x][y] = v)
 
 typedef struct bitmap_ BitMap;
 
@@ -18,14 +25,7 @@ struct bitmap_ {
 };
 
 BitMap *initBitMap();
-BitMap *getBitMap(BitMap *bp);
-unsigned char getCellBitMap(BitMap *bp, int x, int y);
-int getXandY(BitMap *bp, char ch);
-void setXAndY(BitMap *bp, int ref, char c);
 void printBitMap(BitMap *x);
-void allZero(BitMap *bp, unsigned char ternaryValue);
-void copyBitMaps(BitMap *bp1, BitMap *bp2);
-void changeCellValue(BitMap *bp, int x, int y, unsigned char ternaryValue);
 void freeBitMap(BitMap *bp);
 
 #endif //RANDOM_BITMAP_H

@@ -2,13 +2,10 @@
 #include <math.h>
 #include <unistd.h>
 
-#define maxArray(array) ({int max = -1; \
-    for(int i = 0; i < 4; i++) {   \
-        if(max < array[i]) max = array[i];}\
-     max;\
-})
 
-static int count = 0;
+int count = 0;
+
+int gameSize = 0;
 
 
 QuadPoint *initQuadPoint(Point *point, void *data) {
@@ -25,9 +22,9 @@ QuadPoint *initQuadPoint(Point *point, void *data) {
 void *getDataQuadPoint(QuadPoint *quadPoint) {
 
 
-
     return quadPoint -> data;
 }
+
 
 Point *getPositionQuadPoint(QuadPoint *quadPoint) {
 
@@ -35,12 +32,17 @@ Point *getPositionQuadPoint(QuadPoint *quadPoint) {
 }
 
 int dimensionQuad(int size) {
+    if(size <= 31)
     return 32;
+
+    else return 64;
 }
 
 
 QuadTree *initQuadInitial(int boardSize) {
 
+    gameSize = boardSize;
+    
     int dimension = dimensionQuad(boardSize);
 
     Point *mPoint = newPoint(0, 0);
@@ -69,7 +71,6 @@ QuadTree *initQuad(Point *middlePoint, nodeType type, int size) {
     }
     return new;
 }
-
 
 bool inBoundary(QuadTree *quad, Point *position) {
     
@@ -107,19 +108,9 @@ void insertQuad(QuadTree *quad, void *data, Point *p) {
 
     }
 
-    /*printf("PONTO A INSERIR: x -> %d  y -> %d\n", qPoint -> position -> x, qPoint -> position -> y);
-
-    printf("QUAD: x -> %d    y -> %d\n",quad -> middlePoint -> x, quad -> middlePoint -> y );
-
-    printf("quad dimension : %d\n", quad -> dimension);
-
-    */
-    if(quad -> type == NODELEAF) {
+     if(quad -> type == NODELEAF) {
         if(quad -> contentNode.data == NULL) {
-        printf("PONTOssss X: %d e Y: %d\n", qPoint -> position -> x, qPoint -> position -> y);
        // quadChilds type = whichQuadrant(quad, qPoint -> position);
-        printf("inseriu  no quadrante com o ponto médio x: %d   y_: %d\n", quad -> middlePoint -> x, quad -> middlePoint -> y);
-        printf("INSERI\n");
         quad -> contentNode.data = qPoint;
         } else {
             subdivide(quad);
@@ -143,12 +134,7 @@ void goThroughtFather(QuadTree *father, QuadPoint *pqpoint) {
     void *data = getDataQuadPoint(pqpoint);
     Point *p = getPositionQuadPoint(pqpoint);
 
-    //printf("PONTO -> X: %d e Y: %d\n", p -> x, p -> y);
-    //printf("dimension: %d\n", father -> dimension);
-
     if(array != -1) insertQuad(father -> contentNode.children[array], data,p);
-
-    else printf("Não dá para inserir nenhum\n");
          
 }
 
@@ -253,74 +239,38 @@ void* searchFather(QuadTree *quad, Point *p) {
     return searched;
 }
 
-
-QuadPoint **allChildrens(QuadTree *quad, int gameBoardSize,int numberPoints)  {
-
-    int k = 0;
-
-    QuadPoint *pq = NULL;
-
-    QuadPoint **allChildrens = malloc(numberPoints*sizeof(QuadPoint));
-
-
-    for(int i = 0; i < gameBoardSize; i++) {
-        for(int j = 0; j < gameBoardSize; j++) {
-            Point *p1 = newPoint(i,j);
-            pq = searchQuad(quad, p1);
-            if(pq != NULL) {
-                allChildrens[k] = pq;
-                k++;
-            }
-        }
-    }
-
-    return allChildrens;
-}
-
-
-void deletePointQuad(QuadTree *quad, Point *p, int numberPoints) {
-
-    QuadPoint **quadPointss = allChildrens(quad, 20, numberPoints);
+void deletePointQuad(QuadTree *quad, void *data,Point *p) {
 
     if(inBoundary(quad, p) == false) {
-
-        printf("Não dá para eliminar");
-        return;
-
+        return ;
     }
 
-    for(int i = 0; i < numberPoints; i++) {
+    else if(quad -> type == NODELEAF) {
+        if(quad -> contentNode.data != NULL &&
+           quad -> contentNode.data -> position -> x == p -> x &&
+           quad -> contentNode.data -> position -> y == p -> y) {
+                   printf("delete\n");
 
-        if(quadPointss[i] -> position -> x == p -> x &&
-           quadPointss[i] -> position -> y == p -> y) {
-               deletePoint(quadPointss[i] -> position);
-               quadPointss[i] = NULL;
-           }
-
-    }
-
-
-    Point *middlePoint = quad -> middlePoint;
-    int size = quad -> dimension;
-
-
-    //free(quad);
-
-   quad =  initQuad(middlePoint, NODELEAF,size);
-
-    for(int i = 0; i < numberPoints; i++) {
-
-        if(quadPointss[i] != NULL) {
-            Point *p = quadPointss[i] -> position;
-            void *data = quadPointss[i] -> data;
-            insertQuad(quad,data,p);
+           free(quad -> contentNode.data); 
+           quad -> contentNode.data = NULL;
+           return;
         }
     }
 
+    else if(quad -> type == NODEFATHER) {
+        deleteFather(quad, data, p);
+    }
 
 }
 
+void deleteFather(QuadTree *quad, void *data, Point *p) {
 
+    for(int i = 0; i < 4; i++) {
+
+        deletePointQuad(quad -> contentNode.children[i], data, p);
+
+    }
+}
 
 void printQuadTree(QuadTree *quad, int gameBoardSize) {
 
@@ -350,24 +300,6 @@ void printQuadTree(QuadTree *quad, int gameBoardSize) {
     printf("\n");
     }
 }
-
-int numberPointsInserted(QuadTree *quad) {
-
-    if(quad -> type == NODELEAF) {
-
-        if(quad -> contentNode.data != NULL) count += 1;
-    }
-
-    else if(quad -> type == NODEFATHER) {
-
-        for(int i = 0; i < 4; i++) numberPointsInserted(quad -> contentNode.children[i]);
-
-    }
-
-    return count;
-
-}
-
 
 
 /*
@@ -441,8 +373,17 @@ int main() {
     }
 
     else printf("Não está nulo\n");
+    
+    deletePointQuad(center, "ola", p2);
 
-   
+    void *encontrei543 = searchQuad(center, p2);
+
+    if(encontrei543 == NULL) {
+        printf("Está Nulo\n");
+    }
+
+    else printf("Não eliminei\n");
+
     return 0;
 
 }

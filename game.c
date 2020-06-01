@@ -193,7 +193,6 @@ bool shotPlayer(User *user, int x, int y) {
 
     bool shot = false; 
 
-
     Point *p = newPoint(y,x);
 
     void *structure = getStructure(user);
@@ -259,19 +258,14 @@ void modifyValuesStruct(User *user, int x, int y) {
 
 /*
 void modifyShotsStruct(User *user, int x, int y, bool b) {
-
   void *structure = getStructure(user);
-
   Point *p = newPoint(x,y);
   
   void *aux = searchPoint(structure,p); 
-
   if(cell != NULL) {
     
     modifyShot(cell,b);
-
 }
-
 */
 
 bool canInsert(User *user, SHIP *ship, int x, int y, int boardSize) {

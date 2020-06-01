@@ -105,7 +105,7 @@ void initializedGame(User *usr1, User *usr2, int boardSize) {
 
   if (choose == 2) {
     system("clear");
-    printBoard(usr1, boardSize);
+    printBoard(usr2, boardSize);
     printf("User %s do you would like delete some ship?\n",usr2 -> username);
     printf("1)YES\n");
     printf("2)NO \n");
@@ -448,6 +448,7 @@ void choiceShipsManual(User *user, int boardSize) {
 
 bool deleteListShip(User *usr, int x, int y, int boardSize) {
 
+    printf("Entrei na função\n");
     bool deleted = false;
    
     ShipKind kind;
@@ -457,31 +458,32 @@ bool deleteListShip(User *usr, int x, int y, int boardSize) {
     Cell *aux = searchPoint(structure,p);
 
     if(aux != NULL) {
-      int size = activatePoints(getShipCell(aux)) -> size;
 
       kind = getShipKind(getShipCell(aux));
-      deleteShip(structure,p,size);
       removeNode(usr -> shipList, getShipCell(aux));
       deleted = true;
 
-      BitMap *bp = getBitMapShip(getShipCell(aux));
+      SHIP *sh = getShipCell(aux);
+      BitMap *bp = getBitMapShip(sh);
+     // int xx = bp -> refx;
+      //int yy = bp -> refy;
 
       for(int i = 0; i < sizeBitMap; i++) {
         for(int j = 0; j < sizeBitMap; j++) {
-          unsigned char data = getCellBitMap(bp,i,j); 
-          if(data == 1) {
-            Point *p1 = newPoint(x+i,y+j);
-            void *aux1 = searchPoint(structure, p1);
-            if(aux1 != NULL) {
-                Cell *cell = (Cell*)aux;
-                free(cell); 
+          unsigned char data = getCellBitMap(bp,i,j);
+          printf("data: %c\n", data);
+          if(data == '1') {
+            printf("o data == 1\n");
+            Point *p = newPoint(i+x, j+y);
+            void *aux1 = searchPoint(structure,p);
+            if(aux1 != NULL) deleteShip(structure,aux1,p); 
+            else printf("SOU NULA\n");
             }
-          }
         }
-      }  
-
+      }
     }
 
+  
     if(deleted) {
 
      SHIP *new = newShip(kind); 
@@ -494,8 +496,6 @@ bool deleteListShip(User *usr, int x, int y, int boardSize) {
     scanPointInsert(usr, node,boardSize);
 
     }
-
-    free(p); 
 
     printf("%d\n",deleted);
 

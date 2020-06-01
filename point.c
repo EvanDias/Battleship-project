@@ -12,29 +12,6 @@ Point* newPoint(int x_, int y_) {
     return newResult;
 }
 
-int getX(Point *p) {
-
-    return p -> x;
-}
-
-int getY(Point *p) {
-
-    return p -> y;
-}
-
-void setX(Point *p, int x) {
-
-    p -> x = x; 
-
-}
-
-void setY(Point *p, int y) {
-
-    p -> y = y;
-
-}
-
-
 
 //delete a point
 void deletePoint(Point* p) {

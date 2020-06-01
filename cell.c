@@ -73,7 +73,7 @@ void modifyValues(Cell *cell, int x, int y) {
 
     if(cell != NULL) {
 
-      if(CellValue(cell) == 'x' || CellValue(cell) == '#') {
+      if(CellValue(cell) == 'x') {
 
         //value of matrix become *
         modifyCellValue(cell,'*');
@@ -108,7 +108,6 @@ bool hittedPiece(Cell *cell, int x, int y) {
 
     SHIP *sh = getShipCell(cell);
 
-    printf("ENTROU NO HIT\n");    
     if(sh != NULL)  {
         hitted = true;
         printf("Tem barco \n");

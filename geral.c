@@ -1,5 +1,8 @@
 #include "geral.h" 
 
+
+#define MATRIX 
+
 #ifdef MATRIX
 #include "matrix.h"
 
@@ -8,8 +11,8 @@ void *initDataStructure(int size) {
 }
 
 void *searchPoint(void *structure, Point *p) {
-    int x = getX(p); 
-    int y = getY(p);
+    int x = COORDX(p); 
+    int y = COORDY(p);
     //printf("fiz o ponto dentro do searchPoint\n");
     Matrix *m = (Matrix*)structure;
    // printf("STRUCTURE SIZE: %d\n", m -> size);
@@ -17,15 +20,15 @@ void *searchPoint(void *structure, Point *p) {
 }
 
 void insertShip(void *structure, void *information, Point *p) {
-    int x = getX(p); 
-    int y = getY(p);
+    int x = COORDX(p); 
+    int y = COORDY(p);
     return insertInMatrix((Matrix*)structure, information, x, y);
 }
 
-void deleteShip(void *structure, Point *p,int numberPoints) {
-    int x = getX(p); 
-    int y = getY(p);
-    return deleteShipMatrix((Matrix*)structure,x, y, 0);
+void deleteShip(void *structure, void *data, Point *p) {
+    int x = COORDX(p); 
+    int y = COORDY(p);
+    return deleteShipMatrix((Matrix*)structure, data, x, y);
 
 }
 
@@ -61,8 +64,8 @@ void insertShip(void *structure, void *information, Point *p) {
     return insertQuad((QuadTree*)structure, information, p);
 }
 
-void deleteShip(void *structure, Point *p,int numberPoints) {
-    return deletePointQuad((QuadTree*)structure,p, numberPoints);
+void deleteShip(void *structure, void *ship, Point *p) {
+    return deletePointQuad((QuadTree*)structure,ship,p);
 
 }
 

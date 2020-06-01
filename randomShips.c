@@ -59,17 +59,12 @@ void randomInsert(ListNode *node, User *user, int boardSize) {
   int y = random()%(boardSize);
 
 
-  bool inserted = insertShipInStructure(user, (SHIP*)node -> data, x, y, boardSize);
+  bool inserted = insertShipInStructure(user, (void*)node -> data, x, y, boardSize);
 
   while(inserted == false) {
       x = random()%(boardSize);
       y = random()%(boardSize);
-      inserted = insertShipInStructure(user, (SHIP*)node -> data, x, y, boardSize);
+      inserted = insertShipInStructure(user, (void*)node -> data, x, y, boardSize);
   }
 
-  if(inserted==true) {
-
-    printf("Os valores de x: %d e de y: %d\n",x,y);
-
-  }
 }

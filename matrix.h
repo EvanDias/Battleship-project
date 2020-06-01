@@ -17,7 +17,7 @@ Matrix *initMatrix(int size);
 int getMatrixSize(Matrix *matrix); 
 void insertInMatrix(Matrix *a, void *ship, int x, int y);
 void *searchInMatrix(Matrix *matrix, int x, int y);
-void deleteShipMatrix(Matrix *ma, int x, int y, int numberPoints);
+void deleteShipMatrix(Matrix *ma, void *data, int x, int y);
 bool sinkBoatMatrix(Matrix *x);
 void freeMatrix(Matrix *matrix);
 

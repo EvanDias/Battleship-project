@@ -1,6 +1,7 @@
 #include "matrix.h"
 
 
+
 // Init a matrix with its size
 Matrix* initMatrix(int size) {
 
@@ -43,23 +44,10 @@ void insertInMatrix(Matrix *matrix, void *info, int x, int y) {
 
 
 
-void deleteShipMatrix(Matrix *ma, int x, int y, int numberPoints) {
+void deleteShipMatrix(Matrix *ma, void *data, int x, int y) {
     
-    void *cell = searchInMatrix(ma,x,y); 
-    SHIP *sh = getShipCell(cell);
-    BitMap *bp = getBitMapShip(sh); 
-    int xRef = getXandY(bp,'x'); 
-    int yRef = getXandY(bp,'y');
-
-        for(int i = 0; i < sizeBitMap; i++) {
-          for(int j = 0; j < sizeBitMap; j++) {
-              if(bp -> data[j][i] == '1') {
-                  void *aux = searchInMatrix(ma,j+yRef,i+xRef);
-                  free(aux);
-              }
-          }
-
-        }
+       free(ma -> data[y][x]);
+       ma -> data[y][x] = NULL;
     }
 
 
@@ -73,21 +61,3 @@ void freeMatrix(Matrix *matrix) {
     free(matrix -> data);
     free(matrix);
 }
-
-
-/*
-int main() {
-
-    Matrix *matrix = initMatrix(20);
-
-    void *searchPoint = searchInMatrix(matrix,2,3);
-
-    Cell *cell = initCell(); 
-
-    insertInMatrix(matrix, cell, 2,3);
-
-    void *searchPoint1 = searchInMatrix(matrix,2,3);
-
-}
-
-*/

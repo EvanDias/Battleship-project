@@ -89,37 +89,37 @@ void *shipToOne(SHIP *sh) {
     int rows = getColumnsRows(sh,'r');
 
     if(sh -> kind == SOLO) {
-        changeCellValue(bp, 0, 0, ternaryValue);
+        SETCELLBP(bp, 0, 0, ternaryValue);
 
     } else if(sh -> kind == SMALL_QUAD || sh -> kind == BIGGEST_QUAD) {
 
         for(int i=0; i < columns; i++) {
             for(int j=0; j < rows; j++) {
-               changeCellValue(bp, i, j, ternaryValue);
+               SETCELLBP(bp, i, j, ternaryValue);
             }
         }
 
     } else if(sh -> kind == TRIAL)  {
         for(int i=0; i<3; i++)
-            changeCellValue(bp, 0, i, ternaryValue);
+            SETCELLBP(bp, 0, i, ternaryValue);
 
     } else if(sh -> kind == L_GUY) {
         for(int i=1; i < columns; i++)
-            changeCellValue(bp, 4, i, ternaryValue);
+            SETCELLBP(bp, 4, i, ternaryValue);
 
         for(int j=0; j < rows; j++)
-            changeCellValue(bp, j, 0, ternaryValue);
+            SETCELLBP(bp, j, 0, ternaryValue);
     }
 
     else if(sh -> kind == T_GUY) {
-        for(int i = 0; i < columns; i++) changeCellValue(bp, i,1,ternaryValue);
-        for(int j = 0; j < rows; j++) changeCellValue(bp, 0,j, ternaryValue);
+        for(int i = 0; i < columns; i++) SETCELLBP(bp, i,1,ternaryValue);
+        for(int j = 0; j < rows; j++) SETCELLBP(bp, 0,j, ternaryValue);
     }
 
     else if(sh -> kind == S_GUY) {
-        for(int i = 0; i < 3; i++) changeCellValue(bp, 4,i,ternaryValue);
-        for(int j = 0; j < 5; j++) changeCellValue(bp, j, 2, ternaryValue);
-        for(int k = 3; k <= 4; k++) changeCellValue(bp, 0,k,ternaryValue);
+        for(int i = 0; i < 3; i++) SETCELLBP(bp, 4,i,ternaryValue);
+        for(int j = 0; j < 5; j++) SETCELLBP(bp, j, 2, ternaryValue);
+        for(int k = 3; k <= 4; k++) SETCELLBP(bp, 0,k,ternaryValue);
     }
 
     return NULL;
@@ -248,7 +248,7 @@ bool translation(SHIP *sh, int sizeVertical, int sizeHorizontal) {
           break;
         }
 
-        changeCellValue(bp, j + sizeVertical, i + sizeHorizontal, '1');
+        SETCELLBP(bp, j + sizeVertical, i + sizeHorizontal, '1');
         translate = true;
       }
 
@@ -267,8 +267,8 @@ bool translation(SHIP *sh, int sizeVertical, int sizeHorizontal) {
           broke = 1;
           break;
         }
-          changeCellValue(bp, sizeVertical, i + sizeHorizontal, '1');
-          changeCellValue(bp, j + sizeVertical, 1 + sizeHorizontal, '1' );
+          SETCELLBP(bp, sizeVertical, i + sizeHorizontal, '1');
+          SETCELLBP(bp, j + sizeVertical, 1 + sizeHorizontal, '1' );
           translate = true;
       }
 
@@ -304,7 +304,7 @@ void rotation(SHIP *sh, int degrees) {
 
   for(int i = 0; i < 5; i++) {
     for(int j = 0; j < 5; j++) {
-      unsigned char data = getCellBitMap(bp,i,j);
+      unsigned char data = CELLBP(bp,i,j);
       if(data =='1') {
         x_line = cos_int(degrees)*(j-PXREF) - sin_int(degrees)*(i-PYREF) + PXREF;
         y_line = sin_int(degrees)*(j-PXREF) + cos_int(degrees)*(i-PYREF) + PYREF;
@@ -312,7 +312,7 @@ void rotation(SHIP *sh, int degrees) {
           broke = 1;
           break;
         }
-       changeCellValue(bitFinal,y_line,x_line,'1');
+       SETCELLBP(bitFinal,y_line,x_line,'1');
 
       }
       }
