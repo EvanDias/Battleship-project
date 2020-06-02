@@ -1,42 +1,20 @@
 #include "initGame.h"
 
+static List *listShips(int sizeBoard);
+static int numberShips(int sizeBoard);
 
 //Create user with a name, his matrix of game and list with his ships
 User *initUser(char *username, int sizeBoard) {
 
   User *newUser = malloc(sizeof(User));
 
-  newUser -> username = username;
-  newUser -> shipList = listShips(sizeBoard);
+  SETUSERNAME(newUser,username); 
 
-  newUser -> dataStructs = initDataStructure(sizeBoard);
+  SETUSERLIST(newUser, listShips(sizeBoard));
+
+  SETUSERSTRUCTURE(newUser,initDataStructure(sizeBoard));
 
    return newUser;
-}
-
-char *getUsername(User *user) {
-
-  return user -> username;
-}
-
-List *getShipList(User *user) {
-
-  return user -> shipList;
-}
-
-
-void *getStructure(User *user) {
-
-    return user -> dataStructs;
-
-}
-
-void setStructure(User *user, void *structure) {
-
-    freeDataStructure(user -> dataStructs);
-
-    user -> dataStructs = structure;
-
 }
 
 /*Create a list with ships

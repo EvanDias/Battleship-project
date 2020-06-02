@@ -6,10 +6,10 @@
 
 #define sizeBitMap 5
 #define BP(B) (B)
-#define BPX(B) (B -> x)
-#define BPY(B) (B -> Y)
-#define SETBPX(B,x) (B -> x = x)
-#define SETBPY(B,y) (B -> y = y)
+#define BPX(B) (B -> refx)
+#define BPY(B) (B -> refy)
+#define SETBPX(B,x) (B -> refx = x)
+#define SETBPY(B,y) (B -> refy = y)
 #define CELLBP(B,x,y) (B -> data[x][y])
 #define SETCELLBP(B,x,y,v) (B -> data[x][y] = v)
 
@@ -25,6 +25,8 @@ struct bitmap_ {
 };
 
 BitMap *initBitMap();
+void allZero(BitMap *bp, unsigned char ternaryValue);
+void copyBitMaps(BitMap *bp1, BitMap *bp2);
 void printBitMap(BitMap *x);
 void freeBitMap(BitMap *bp);
 

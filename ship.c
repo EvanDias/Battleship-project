@@ -21,6 +21,9 @@
     count;\
 })
 
+static SHIP *getShipSize(SHIP *sh);
+static void *shipToOne(SHIP *sh);
+static int numCells(SHIP *sh);
 
 /*Create a ship with :
   * kind
@@ -47,46 +50,14 @@ SHIP *newShip(ShipKind kind) {
     return ship;
 }
 
-SHIP *getShip(SHIP *ship) {
-  return ship;
-
-}
-
-ShipKind getShipKind(SHIP *sh) {
-  return sh -> kind;
-}
-
-int getColumnsRows(SHIP *sh, char c) {
-
-  if(c == 'r') return sh -> rows; 
-
-  else return sh -> columns;
-
-}
-
-BitMap *getBitMapShip(SHIP *sh) {
-
-  return getBitMap(sh -> bp);
-}
-
-
-int getShotCount(SHIP *sh) {
-
-  return sh -> shotCount;
-}
-
-void setShotCount(SHIP *sh, int value) {
-
-    sh -> shotCount = value;
-}
 
 //Change value of bitmap's cell, according ship kind
 void *shipToOne(SHIP *sh) {
     unsigned char ternaryValue = '1';
 
-    BitMap *bp = getBitMapShip(sh);
-    int columns = getColumnsRows(sh,'c'); 
-    int rows = getColumnsRows(sh,'r');
+    BitMap *bp = SHIPBITMAP(sh);
+    int columns = SHIPCOLUMNS(sh);
+    int rows = SHIPROWS(sh);
 
     if(sh -> kind == SOLO) {
         SETCELLBP(bp, 0, 0, ternaryValue);
@@ -132,7 +103,7 @@ SHIP *getShipSize(SHIP *sh) {
 
     int columns = 0, rows = 0;
 
-    ShipKind kind = getShipKind(sh);
+    ShipKind kind = SHIPKIND(sh);
 
     if(kind == SOLO) {
         columns = 1;
@@ -160,8 +131,8 @@ SHIP *getShipSize(SHIP *sh) {
           rows = 5;
       }
 
-    sh -> columns = columns;
-    sh -> rows = rows;
+    SETSHIPCOLUMNS(sh,columns);
+    SETSHIPROWS(sh, rows);
 
     return sh;
 }
@@ -170,7 +141,7 @@ SHIP *getShipSize(SHIP *sh) {
 //number of cells that is occuped in bitmap
 int numCells(SHIP *sh) {
 
-    ShipKind kind = getShipKind(sh);
+    ShipKind kind = SHIPKIND(sh);
 
     switch(kind) {
 
@@ -199,7 +170,7 @@ char *nameShip(SHIP *sh) {
 
   char *kind = "";
 
-  ShipKind shipKind = getShipKind(sh);
+  ShipKind shipKind = SHIPKIND(sh);
 
   switch(shipKind) {
 
@@ -233,11 +204,11 @@ bool translation(SHIP *sh, int sizeVertical, int sizeHorizontal) {
   bool translate = false;
   int broke = 0;
 
-  int columns = getColumnsRows(sh,'c');
-  int rows = getColumnsRows(sh, 'r');
+  int columns = SHIPCOLUMNS(sh);
+  int rows = SHIPROWS(sh);
 
-  BitMap *bp = getBitMapShip(sh);
-  ShipKind kind = getShipKind(sh);
+  BitMap *bp = SHIPBITMAP(sh);
+  ShipKind kind = SHIPKIND(sh);
 
   if(kind != L_GUY && kind != T_GUY && kind != S_GUY) {
     allZero(sh -> bp, '0');
@@ -299,7 +270,7 @@ void rotation(SHIP *sh, int degrees) {
 
   int broke = 0;
 
-  BitMap *bp = getBitMapShip(sh);
+  BitMap *bp = SHIPBITMAP(sh);
 
 
   for(int i = 0; i < 5; i++) {
@@ -331,30 +302,11 @@ void rotation(SHIP *sh, int degrees) {
 bool sinkBoat(SHIP *ship) {
     bool sinkBoatV = false;
 
-    int shotCount = getShotCount(ship);
+    int shotCount = SHIPSHOTCOUNT(ship);
 
     if(ship -> shotCount == 0) sinkBoatV = true;
 
     return sinkBoatV;
-}
-
-List *activatePoints(SHIP *sh) {
-
-  List *list = initList(); 
-
-  BitMap *bp = getBitMapShip(sh);
-
-  for(int i = 0; i < sizeBitMap; i++) {
-    for(int j = 0; j < sizeBitMap; j++) {
-      unsigned char data = getCellBitMap(bp,i,j);
-      if(data == '1') {
-        Point *p = newPoint(i,j);
-        headList(list,p);
-      }
-    }
-  }
-
-  return list;
 }
 
 // Free allocated memory

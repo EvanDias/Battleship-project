@@ -16,8 +16,6 @@ Matrix* initMatrix(int size) {
     }
     matrix -> data = data;
 
-    //free(data);
-
     return matrix;
 }
 

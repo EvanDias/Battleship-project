@@ -8,6 +8,22 @@ typedef struct Quad_ QuadTree;
 typedef struct QuadPoint_ QuadPoint;
 typedef struct QuadChilds_ QuadChilds;
 
+#define QUADNL(Q) (Q -> contentNode.data)
+#define SETQUADPOINTNL(Q, v) (Q -> contentNode.data = v)
+#define SETQUADPOINTCHILD(Q,i,v) (Q -> contentNode.children[i] = v)
+#define DATAQUADPOINT(QP) (QP -> data)
+#define SETDATAQUADPOINT(QP, d) (QP -> data = d)
+#define POSQUADPOINT(QP) (QP -> position)
+#define SETPOSQUADPOINT(QP,p) (QP -> position = p)
+#define MIDDLEPOINT(Q) (Q -> middlePoint)
+#define SETMIDDLEPOINT(Q, p) (Q -> middlePoint = p) 
+#define DIMENSION(Q) (Q -> dimension)
+#define SETDIMENSION(Q,s) (Q -> dimension = s)
+#define TYPE(Q) (Q -> type)
+#define SETTYPE(Q,t) (Q -> type = t)
+
+
+
 #define BOUNDARY 1;
 
 struct QuadPoint_ {
@@ -32,23 +48,10 @@ struct Quad_ {
 };
 
 
-QuadPoint *initQuadPoint(Point *point, void *data);
-int dimensionQuad(int size);
 QuadTree *initQuadInitial(int size);
-QuadTree *initQuad(Point *middlePoint, nodeType type, int size);
-Point *getPositionQuadPoint(QuadPoint *quadPoint);
-void *getDataQuadPoint(QuadPoint *quadPoint);
 void insertQuad(QuadTree *quad, void *data, Point *p);
-void subdivide(QuadTree *quad);
-quadChilds whichQuadrant(QuadTree *quad, Point *p);
-Point *newMiddlePoint(QuadTree *quad, int new_dimension, int i);
-void goThroughtFather(QuadTree *father, QuadPoint *pqpoint);
 int chooseQuad(QuadTree *quad, Point *p);
-int whatQuadrants(QuadTree *quad, QuadPoint *pq);
 void *searchQuad(QuadTree *quad, Point *p);
-void *searchFather(QuadTree *quad, Point *p);
-void printQuadTree(QuadTree *quad, int gameBoardSize);
 void deletePointQuad(QuadTree *quad, void *data,Point *p);
-void deleteFather(QuadTree *quad, void *data,Point *p);
 void freeQuadPoint(QuadPoint *pq);
 //int numberPointsInserted(QuadTree *quad);

@@ -18,8 +18,4 @@ struct Point_
 };
 
 Point *newPoint(int x, int y);
-int getX(Point *p); 
-int getY(Point *p); 
-void setX(Point *p, int x); 
-void setY(Point *p, int y);
 void deletePoint(Point* p);

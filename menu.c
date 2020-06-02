@@ -413,7 +413,7 @@ void choiceShipsAuto(User *user, int boardSize) {
 
     switch(agreed) {
       case 1: break;
-      case 2: setStructure(user, structure);
+      case 2: SETUSERSTRUCTURE(user,structure);
               choiceShipsAuto(user,boardSize);
             break;
       default: printf("Try other number\n");
@@ -452,25 +452,23 @@ bool deleteListShip(User *usr, int x, int y, int boardSize) {
     bool deleted = false;
    
     ShipKind kind;
-    void *structure = getStructure(usr);
+    void *structure = USERSTRUCTURE(usr);
     Point *p = newPoint(x,y);
 
     Cell *aux = searchPoint(structure,p);
 
     if(aux != NULL) {
 
-      kind = getShipKind(getShipCell(aux));
-      removeNode(usr -> shipList, getShipCell(aux));
+      SHIP *sh = SHIPCELL(aux);
+      BitMap *bp = SHIPBITMAP(sh);
+  
+      kind = SHIPKIND(sh);
+      removeNode(USERLIST(usr), sh);
       deleted = true;
-
-      SHIP *sh = getShipCell(aux);
-      BitMap *bp = getBitMapShip(sh);
-     // int xx = bp -> refx;
-      //int yy = bp -> refy;
-
+   
       for(int i = 0; i < sizeBitMap; i++) {
         for(int j = 0; j < sizeBitMap; j++) {
-          unsigned char data = getCellBitMap(bp,i,j);
+          unsigned char data = CELLBP(bp,i,j);
           printf("data: %c\n", data);
           if(data == '1') {
             printf("o data == 1\n");
@@ -488,7 +486,7 @@ bool deleteListShip(User *usr, int x, int y, int boardSize) {
 
      SHIP *new = newShip(kind); 
 
-     headList(usr -> shipList, new); 
+     headList(USERLIST(usr), new); 
 
     ListNode *node = usr -> shipList -> head;
     scanPointsTranslation(node);

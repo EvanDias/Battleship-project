@@ -4,67 +4,31 @@ Cell* initCell() {
 
     Cell* cell = malloc(sizeof(Cell));
 
-    cell -> ship = NULL;
-    cell -> shot = '0';
-    cell -> value = '.';
+    SETSHIPCELL(cell,NULL);
+    SETCELLSHOT(cell,'0');
+    SETCELLVALUE(cell,'.');
+    
     return cell;
 }
 
 
-SHIP *getShipCell(Cell *cell) {
-
-    return cell -> ship;
-
-}
-
-void setSHIPCell(Cell *cell, SHIP  *sh) {
-    
-    printf("MUDAR BARCO NA CELULA\n");    
-    cell -> ship = sh;
-
-}
-
 void insertedShipCell(Cell *cell, SHIP *sh) {
 
-    printf("INSERIU O SHIP NA CELULA\n");
-    setSHIPCell(cell,sh);
-    modifyCellValue(cell, 'x');
+    SETSHIPCELL(cell,sh);
+    SETCELLVALUE(cell, 'x');
 
 }
 
-unsigned char CellValue(Cell *cell) {
-
-    return cell ->value;
-}
-
-
-unsigned char CellShot(Cell *cell) {
-
-    return cell -> shot;
-
-}
-
-void modifyCellValue(Cell *cell, unsigned char ch) {
-
-    cell -> value = ch;
-
-}
-
-void modifyCellShot(Cell *cell, unsigned char ch) {
-
-    cell -> shot = ch;
-
-}
 
 void changeValueShotBp(Cell *cell, int x, int y, unsigned char ternaryValue) {
 
-    SHIP *sh = getShipCell(cell); 
-    BitMap *bp = getBitMapShip(sh); 
+    SHIP *sh = SHIPCELL(cell); 
+    BitMap *bp = SHIPBITMAP(sh); 
 
-    int x_value = getXandY(bp,'x');
-    int y_value = getXandY(bp,'y');
+    int x_value = BPX(bp);
+    int y_value = BPY(bp);
 
-     changeCellValue(bp, y-y_value, x-x_value, ternaryValue);
+     SETCELLBP(bp, y-y_value, x-x_value, ternaryValue);
 
 }
 
@@ -73,18 +37,19 @@ void modifyValues(Cell *cell, int x, int y) {
 
     if(cell != NULL) {
 
-      if(CellValue(cell) == 'x') {
+      if(CELLVALUE(cell) == 'x') {
 
         //value of matrix become *
-        modifyCellValue(cell,'*');
-        cell -> ship -> shotCount--;
+        SETCELLVALUE(cell,'*');
+        SHIP *sh = SHIPCELL(cell);
+        SETSHIPSHOTCOUNT(sh, sh -> shotCount--);
         //change value bitmap to ship 2
         //changeValueShotBp(cell,x,y,'2');
     
       }
-      else if(cell -> value == '.') {
+      else if(CELLVALUE(cell)== '.') {
         //o value of matrix become +
-        modifyCellValue(cell, '+');
+        SETCELLVALUE(cell, '+');
        // if(cell -> ship != NULL) changeValueShotBp(cell,x,y,'3');
      
       }
@@ -94,31 +59,33 @@ void modifyValues(Cell *cell, int x, int y) {
 
 }
 
-
 void modifyShot(Cell *cell, bool b) {
     if(b == true)
-        modifyCellShot(cell,'2');
+        SETCELLSHOT(cell,'2');
     else
-        modifyCellShot(cell,'1');
+        SETCELLSHOT(cell,'1');
 }
+
 
 bool hittedPiece(Cell *cell, int x, int y) {
 
     bool hitted = false; 
 
-    SHIP *sh = getShipCell(cell);
+    SHIP *sh = SHIPCELL(cell);
 
     if(sh != NULL)  {
         hitted = true;
-        printf("Tem barco \n");
+        //printf("Tem barco \n");
     }
         
 
     else if(sh == NULL) {
         hitted = false;
-        printf("Não tem barco\n");        
+        //printf("Não tem barco\n");        
     }
-    printf("HITTED: %d\n", hitted);
+
+    //printf("HITTED: %d\n", hitted);
+    
     return hitted; 
 }
 

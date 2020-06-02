@@ -27,7 +27,8 @@ void printBoard(User *usr, int boardSize) {
             Point *a = newPoint(i,j);
             void *aux = searchPoint(usr -> dataStructs, a);
             if(aux != NULL) {
-                printf("%c ", CellValue((Cell*)aux));                            
+                Cell *cell = (Cell*)aux; 
+                printf("%c ", CELLVALUE(cell));                            
             }
             else {
                 printf(". ");
@@ -88,10 +89,11 @@ void printBothBoard(User *start, User *other, int sizeBoard) {
             for(int j = 0; j < sizeBoard; j++) {
                 Point *a = newPoint(i,j);
                 void *aux = searchPoint(start -> dataStructs, a);
+                if(aux != NULL) {
+                    Cell *cell = (Cell*)aux; 
+                    printf("%c ", CELLVALUE(cell));
+                }
 
-                if(aux != NULL)
-                    printf("%c ", CellValue((Cell*)aux));
-                
                 else {
                     printf(". ");
 
@@ -110,8 +112,9 @@ void printBothBoard(User *start, User *other, int sizeBoard) {
                 Point *a = newPoint(i,j);
                 void *aux = searchPoint(other -> dataStructs, a);
                  if(aux != NULL) {
-                    if(CellValue((Cell*)aux) == 'x') printf(". ");   
-                    else printf("%c ", CellValue((Cell*)aux));   
+                    Cell *cell = (Cell*)aux; 
+                    if(CELLVALUE(cell) == 'x') printf(". ");   
+                    else printf("%c ", CELLVALUE(cell));   
 
                  }
                else {

@@ -6,14 +6,14 @@ bool gameTurn(User *start, User *other, int boardSize) {
   int x, y = 0;
   bool shotCan = false;
 
-  void *structureStart = getStructure(start);
-  void *structureOther = getStructure(other);
+  void *structureStart = USERSTRUCTURE(start);
+  void *structureOther = USERSTRUCTURE(other);
   bool playAgain = false;
 
   printUsers(start, other, boardSize);
   printBothBoard(start, other, boardSize);
   
-   printf("%s choose point to hit a ship of %s\n", start -> username, other -> username);
+   printf("%s choose point to hit a ship of %s\n", USERNAME(start), USERNAME(other));
     printf("x: ");
     scanf(" %c", &ch_x);
     printf("\ny: ");
@@ -36,7 +36,7 @@ bool gameTurn(User *start, User *other, int boardSize) {
         while(shotCan == false) {
       
           printf("Try Again\n");
-          printf("%s choose point to hit a ship of %s\n", start -> username, other -> username);
+          printf("%s choose point to hit a ship of %s\n", USERNAME(start), USERNAME(other));
           printf("x: ");
           scanf(" %c", &ch_x);
           printf("\ny: ");
@@ -58,7 +58,7 @@ bool gameTurn(User *start, User *other, int boardSize) {
     }
     }
 
-    if(sinkBoatStructure(other -> dataStructs, boardSize)) {
+    if(sinkBoatStructure(structureOther, boardSize)) {
         printUsers(start, other, boardSize);
         printBothBoard(start, other, boardSize);
         //printBoard(start, boardSize);
@@ -74,9 +74,10 @@ bool gameTurn(User *start, User *other, int boardSize) {
         if(aux == NULL) printf("pois\n");
         
         else {
-        if(CellValue((Cell*)aux) == '*')
+          Cell *cell = (Cell*)aux;
+        if(CELLVALUE(cell) == '*')
             printf("You hit a ship!\n");
-        else if(CellValue((Cell*)aux) == '+')
+        else if(CELLVALUE(cell) == '+')
             printf("You hit a empty cell!\n");
      }
     }
@@ -114,13 +115,13 @@ void game(User *start, User *other, int boardSize) {
       playAgainVar = playAgain(start, other, boardSize);
       if(playAgainVar) {
         printf("||     CONGRULATIONS!     ||\n");
-        printf("The player %s win the game! \n", start -> username);
+        printf("The player %s win the game! \n", USERNAME(start));
         break;
       }
       playAgainVar= playAgain(other,start, boardSize);
       if(playAgainVar) {
         printf("||     CONGRULATIONS!     ||\n");
-        printf("The player %s win the game! \n", other -> username);
+        printf("The player %s win the game! \n", USERNAME(other));
         break;
       }
     }
@@ -134,7 +135,7 @@ void game(User *start, User *other, int boardSize) {
 bool allShipsSink(User *usr) {
 
   ListNode *node = usr -> shipList -> head;
-  int countShips = usr -> shipList -> size;
+  int countShips = USERLIST(usr) -> size;
 
   bool sink = false;
 
@@ -161,7 +162,7 @@ int randomShoot(int matrixSize) {
 bool canShot(User *usr, int x, int y, int boardSize) {
 
   bool shot = true; 
-  void *structure = getStructure(usr); 
+  void *structure = USERSTRUCTURE(usr); 
 
   Point *p = newPoint(x,y);
     if(y >= boardSize || x >= boardSize) {
@@ -173,16 +174,16 @@ bool canShot(User *usr, int x, int y, int boardSize) {
 
      if(aux == NULL) {
       aux = initCell(); 
-      insertShip(usr -> dataStructs, aux,p);
+      insertShip(structure, aux,p);
       shot = true;
     }
 
     else {
       Cell *cell = (Cell*)aux;
 
-      if(CellValue(cell) == 'x' || CellValue(cell) == '.') shot = true;
+      if(CELLVALUE(cell) == 'x' || CELLVALUE(cell) == '.') shot = true;
 
-      else if(CellValue(cell) == '*' || CellValue(cell) == '#') shot = false;
+      else if(CELLVALUE(cell) == '*' || CELLVALUE(cell) == '#') shot = false;
 
     }   
 
@@ -195,7 +196,7 @@ bool shotPlayer(User *user, int x, int y) {
 
     Point *p = newPoint(y,x);
 
-    void *structure = getStructure(user);
+    void *structure = USERSTRUCTURE(user);
     void *aux = searchPoint(structure,p);
     
     if(aux != NULL) {
@@ -210,7 +211,6 @@ bool shotPlayer(User *user, int x, int y) {
 }
 
 
-
 bool sinkBoatStructure(void *structure, int boardSize) {
 
     for(int i = 0; i < boardSize; i++) {
@@ -218,8 +218,9 @@ bool sinkBoatStructure(void *structure, int boardSize) {
         Point *p = newPoint(i,j);
         void *aux = searchPoint(structure,p);
           if(aux != NULL) {
-            if(CellValue((Cell*)aux) == '*') {
-              SHIP *sh = getShipCell((Cell*)aux);
+            Cell *cell = (Cell*)aux;
+            if(CELLVALUE(cell) == '*') {
+              SHIP *sh = SHIPCELL(cell);
               if(sinkBoat(sh)==true) {
                 printf("Sink a boat with coordenates (%d,%d) \n", j,i);
                 return true;
@@ -240,7 +241,7 @@ bool sinkBoatStructure(void *structure, int boardSize) {
 void modifyValuesStruct(User *user, int x, int y) {
 
   printf("user : %s\n", user -> username);
-  void *structure = getStructure(user);
+  void *structure = USERSTRUCTURE(user);
 
   Point *p = newPoint(x,y);
   
@@ -275,13 +276,15 @@ bool canInsert(User *user, SHIP *ship, int x, int y, int boardSize) {
 
     //printf("user %s", user -> username);
 
+    void *structure = user -> dataStructs;
+
     //printBoard(user, boardSize);
 
-    BitMap *bp = getBitMapShip(ship);
+    BitMap *bp = SHIPBITMAP(ship);
 
     for(int i = 0; i < sizeBitMap; i++) {
       for(int j = 0; j < sizeBitMap; j++) {
-          unsigned char data = getCellBitMap(bp,i,j);
+          unsigned char data = CELLBP(bp,i,j);
           if(data == '1') {
             if((j+y) >= boardSize|| (i+x) >= boardSize) {
               printf("SAIU FORA DO SITIO\n");
@@ -292,7 +295,7 @@ bool canInsert(User *user, SHIP *ship, int x, int y, int boardSize) {
 
             Point *p = newPoint(x+i,y+j); 
           //printf("fiz o ponto \n");
-            void *aux = searchPoint(user -> dataStructs,p); 
+            void *aux = searchPoint(structure,p); 
         
               
             if(aux != NULL) {
@@ -331,17 +334,18 @@ bool insertShipInStructure(User *user, SHIP *ship, int x, int y, int boardSize) 
 
       //void *structure = getStructure(user);
 
-      BitMap *bp = getBitMapShip(ship);
+      BitMap *bp = SHIPBITMAP(ship);
 
+      void *structure = USERSTRUCTURE(user);
 
       if(insert) {
         for(int i = 0; i < sizeBitMap; i++) {
             for(int j = 0; j < sizeBitMap; j++) {
-              unsigned char data = getCellBitMap(bp,i,j);
+              unsigned char data = CELLBP(bp,i,j);
                 if (data == '1') {
                       Point *p = newPoint(i+x, j+y);
                       printf("ponto: x -> %d e y -> %d\n", p -> x, p -> y);
-                      void *aux = searchPoint(user -> dataStructs,p); 
+                      void *aux = searchPoint(structure,p); 
                       printf("%p\n", aux); 
                      if(aux == NULL) {
                         printf("entrei aqui \n");

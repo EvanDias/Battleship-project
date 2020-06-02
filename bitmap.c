@@ -1,12 +1,6 @@
 #include "bitmap.h"
 
 
-static void allZero(BitMap *bp, unsigned char ternaryValue);
-static void copyBitMaps(BitMap *bp1, BitMap *bp2);
-
-
-
-
 BitMap * initBitMap() {
     BitMap *bp = malloc(sizeof(BitMap));
 
@@ -32,28 +26,6 @@ BitMap * initBitMap() {
     return bp;
 }
 
-unsigned char getCellBitMap(BitMap *bp, int x, int y) {
-
-
-    return bp -> data[x][y];
-
-}  
-
-
-// Modify the ternary value contained in the BitMap
-void changeCellValue(BitMap *bp, int x, int y, unsigned char ternaryValue) {
-
-    bp -> data[x][y] = ternaryValue;
-
-}
-
-int getXandY(BitMap *bp, char ch) {
-
-    if(ch == 'x') return bp -> refx; 
-
-    else return bp -> refy;
-
-}
 
 
 // Modify the ternary value contained in the BitMap

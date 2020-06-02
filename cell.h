@@ -2,6 +2,12 @@
 #pragma once
 typedef struct cell_ Cell;
 
+#define SHIPCELL(C) (C -> ship)
+#define SETSHIPCELL(C, s) (C -> ship = s)
+#define CELLVALUE(C) (C -> value)
+#define CELLSHOT(C) (C -> shot)
+#define SETCELLVALUE(C, v) (C -> value = v)
+#define SETCELLSHOT(C, s) (C -> shot = s)
 
 struct cell_ {
 
@@ -12,16 +18,11 @@ struct cell_ {
 
 
 Cell* initCell();
-unsigned char CellValue(Cell *cell);
-unsigned char CellShot(Cell *cell);
-SHIP *getShipCell(Cell *cell);
-void modifyCellValue(Cell *cell, unsigned char ch);
-void modifyCellShot(Cell *cell, unsigned char ch);
+void insertedShipCell(Cell *cell, SHIP *sh);
 void changeValueShotBp(Cell *cell, int x, int y, unsigned char ternaryValue);
 void modifyValues(Cell *cell, int x, int y);
 void modifyShot(Cell *cell, bool b);
 bool hittedPiece(Cell *cell, int x, int y);
 void freeCell(Cell *cell);
-void insertedShipCell(Cell *cell, SHIP *sh);
 
 

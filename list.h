@@ -2,7 +2,6 @@
 #define RANDOM_LIST_H
 #include <stdio.h>
 #include <stdlib.h>
-//#include "ship.h"
 
 typedef struct listNode_ ListNode;
 typedef struct list_ List;
@@ -28,13 +27,12 @@ struct list_ {
 ListNode *initNode(void* data, ListNode* next);
 List *initList();
 void headList(List *list, void *data);
-int getSizeList(List *list);
 //List *removeNode(List *list, void *data);
 void removeNode(List *list, void *node);
 //void printList(List *l);
 void freeList(List* list);
-//List *concatenateList(List *l1, List *l2);
+
 List *concatenateList(List *l1, List *l2);
-//void print(List *list);
+
 
 #endif //RANDOM_LIST_H
