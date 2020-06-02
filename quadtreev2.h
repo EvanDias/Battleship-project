@@ -6,11 +6,7 @@ typedef enum {FIRST, SECOND, THIRD, FOURTH} quadChilds;
 
 typedef struct Quad_ QuadTree;
 typedef struct QuadPoint_ QuadPoint;
-typedef struct QuadChilds_ QuadChilds;
 
-#define QUADNL(Q) (Q -> contentNode.data)
-#define SETQUADPOINTNL(Q, v) (Q -> contentNode.data = v)
-#define SETQUADPOINTCHILD(Q,i,v) (Q -> contentNode.children[i] = v)
 #define DATAQUADPOINT(QP) (QP -> data)
 #define SETDATAQUADPOINT(QP, d) (QP -> data = d)
 #define POSQUADPOINT(QP) (QP -> position)

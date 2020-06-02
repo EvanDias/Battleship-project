@@ -14,29 +14,26 @@ static Point *newMiddlePoint(QuadTree *quad, int new_dimension, int i);
 static void *searchFather(QuadTree *quad, Point *p);
 static void deleteFather(QuadTree *quad, void *data,Point *p);
 
-
-
 QuadPoint *initQuadPoint(Point *point, void *data) {
 
     QuadPoint *new =malloc(sizeof(QuadPoint));
-    new -> position = newPoint(point -> x, point -> y);
-    new -> data = data;
+    SETPOSQUADPOINT(new,newPoint(point -> x, point -> y));
+    SETDATAQUADPOINT(new,data);
 
     return new;
 
 }
 
-
-//dimension 2^n
 int dimensionQuad(int size) {
-    if(size <= 31)
-    return 32;
 
+    if(size <= 31) return 32; 
     else return 64;
+
 }
 
+
 QuadTree *initQuadInitial(int boardSize) {
-    
+   
     int dimension = dimensionQuad(boardSize);
 
     Point *mPoint = newPoint(0, 0);
@@ -55,24 +52,26 @@ QuadTree *initQuad(Point *middlePoint, nodeType type, int size) {
 
     SETMIDDLEPOINT(new,middlePoint);
 
-    if(type == NODELEAF) SETQUADPOINTNL(new,NULL);
+    if(type == NODELEAF) new -> contentNode.data = NULL;
 
     else {
 
         for(int i = 0; i < 4; i++) {
-            SETQUADPOINTCHILD(new,i,NULL);
+            new -> contentNode.children[i] = NULL;
         }
     }
     return new;
 }
 
-
-//belong in certain quadrant
 bool inBoundary(QuadTree *quad, Point *position) {
     
     int dimensions = DIMENSION(quad);
 
     Point *p = MIDDLEPOINT(quad);
+
+   // printf("DIMENSIONS %d\n", dimensions);
+
+   //printf("POINTTTT x: %d e y: %d\n", position -> x, position -> y);
 
     //Como guardamos apenas o canto mais pequeno do quadrado, não é necessario dividir o dimensions
     int x_small = COORDX(p), x_large = COORDX(p) + dimensions,
@@ -80,7 +79,7 @@ bool inBoundary(QuadTree *quad, Point *position) {
     
     //printf("Checking X: %d small %d large %d Y: %d small %d large %d dimensions %d\n", p->x, x_small, x_large, p->y, y_small, y_large, dimensions);
 
-    if (x_small <= COORDX(p) && COORDX(p) < x_large && y_small <= COORDY(p) && COORDY(p) < y_large) {
+    if (x_small <= COORDX(position) && COORDX(position) < x_large && y_small <= COORDY(position) && COORDY(position) < y_large) {
         //printf("pertence a este quad \n");
         return true;
     }
@@ -90,22 +89,20 @@ bool inBoundary(QuadTree *quad, Point *position) {
     return false;
 }
 
-//insert a pointquad in quad
-
 void insertQuad(QuadTree *quad, void *data, Point *p) {
 
     QuadPoint *qPoint = initQuadPoint(p,data);
 
-    if(inBoundary(quad, qPoint -> position) == false) {
+    if(inBoundary(quad, POSQUADPOINT(qPoint)) == false) {
+        printf("Não pode inserir\n");
         return;
 
     }
 
      if(TYPE(quad) == NODELEAF) {
-        if(QUADNL(quad) == NULL) {
+        if(quad -> contentNode.data == NULL) {
        // quadChilds type = whichQuadrant(quad, qPoint -> position);
-        SETQUADPOINTNL(quad, qPoint);
-
+        quad -> contentNode.data = qPoint;
         } else {
             subdivide(quad);
             insertQuad(quad, data, p);
@@ -113,9 +110,12 @@ void insertQuad(QuadTree *quad, void *data, Point *p) {
     }
 
     else if(TYPE(quad) == NODEFATHER) {
+
         //printf("FATHER\n");
         goThroughtFather(quad, qPoint);
-    } 
+    } else {
+        printf("WTF\n");
+    }
 }
 
 void goThroughtFather(QuadTree *father, QuadPoint *pqpoint) {
@@ -123,30 +123,24 @@ void goThroughtFather(QuadTree *father, QuadPoint *pqpoint) {
     int array = whatQuadrants(father,pqpoint);
 
     void *data = DATAQUADPOINT(pqpoint);
+    
     Point *p = POSQUADPOINT(pqpoint);
 
     if(array != -1) insertQuad(father -> contentNode.children[array], data,p);
          
 }
 
-
-/*
- *  AFTER TRY 2 POINTS IN THE SAME QUADRANT,
- *  SUBDIVIDE IN FOUR CHILDRENS
- * 
- */
-
 void subdivide(QuadTree *quad) {
 
-    //printf("SUBDIVIR\n");
-    QuadPoint *pointQuad = QUADNL(quad);
+    printf("SUBDIVIR\n");
+    QuadPoint *pointQuad = quad -> contentNode.data;
 
     int currentDimension = DIMENSION(quad); 
     int newDimension = 0;
     
     newDimension = currentDimension/2;
 
-    SETTYPE(quad,NODEFATHER);
+    SETTYPE(quad, NODEFATHER);
 
     quad->contentNode.children = malloc(sizeof(QuadTree*) * 4);
 
@@ -164,19 +158,12 @@ void subdivide(QuadTree *quad) {
     //TODO:Free point quad
 
 }
-
-/*
- *  if the points to insert are in lines, 
- *  choose a certain quadrant 
- * 
- */
-
 int whatQuadrants(QuadTree *quad, QuadPoint *pq) {
     
-    if(inBoundary(quad -> contentNode.children[2], pq -> position)) return 2;
+    if(inBoundary(quad -> contentNode.children[2], POSQUADPOINT(pq))) return 2;
 
     for(int i = 0; i < 4; i++) {
-        if(inBoundary(quad -> contentNode.children[i], pq -> position)) return i;
+        if(inBoundary(quad -> contentNode.children[i], POSQUADPOINT(pq))) return i;
     }
 
     return -1;
@@ -197,7 +184,7 @@ Point *newMiddlePoint(QuadTree *quad, int new_dimension, int i) {
     exit(1);
 }
 
-//search a point in quad
+
 void *searchQuad(QuadTree *quad, Point *p) {
 
     void *data = NULL;
@@ -207,12 +194,12 @@ void *searchQuad(QuadTree *quad, Point *p) {
         return data = NULL;
     }
 
-    else if(quad -> type == NODELEAF) {
+    else if(TYPE(quad) == NODELEAF) {
 
-        if(QUADNL(quad) != NULL &&
-           COORDX(POSQUADPOINT(QUADNL(quad))) == COORDX(p) &&
-           COORDY(POSQUADPOINT(QUADNL(quad))) == COORDY(p)) {
-            data = DATAQUADPOINT(QUADNL(quad));
+        if(quad -> contentNode.data != NULL &&
+           COORDX(POSQUADPOINT(quad -> contentNode.data)) == COORDX(p) &&
+           COORDY(POSQUADPOINT(quad -> contentNode.data)) == COORDY(p)) {
+            data = quad -> contentNode.data -> data;
             return data;
         }
 
@@ -222,7 +209,7 @@ void *searchQuad(QuadTree *quad, Point *p) {
 
     }
 
-    else if(quad -> type == NODEFATHER) {
+    else if(TYPE(quad) == NODEFATHER) {
         data = searchFather(quad, p);
     }
 
@@ -245,9 +232,6 @@ void* searchFather(QuadTree *quad, Point *p) {
     return searched;
 }
 
-
-//delete a pointQuad in a quad
-
 void deletePointQuad(QuadTree *quad, void *data,Point *p) {
 
     if(inBoundary(quad, p) == false) {
@@ -255,9 +239,11 @@ void deletePointQuad(QuadTree *quad, void *data,Point *p) {
     }
 
     else if(TYPE(quad) == NODELEAF) {
-        if(QUADNL(quad) != NULL &&
-           COORDX(POSQUADPOINT(QUADNL(quad))) == COORDX(p) &&
-           COORDY(POSQUADPOINT(QUADNL(quad))) == COORDY(p)) {
+        if(quad -> contentNode.data != NULL &&
+           COORDX(POSQUADPOINT(quad -> contentNode.data)) == COORDX(p) &&
+           COORDY(POSQUADPOINT(quad -> contentNode.data)) == COORDY(p)) {
+                   printf("delete\n");
+
            free(quad -> contentNode.data); 
            quad -> contentNode.data = NULL;
            return;
