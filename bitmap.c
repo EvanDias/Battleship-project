@@ -26,6 +26,11 @@ BitMap * initBitMap() {
     return bp;
 }
 
+void setCellBP(BitMap *bp, int x, int y, unsigned char ternaryValue) {
+
+    bp -> data[x][y] = ternaryValue;
+
+}
 
 
 // Modify the ternary value contained in the BitMap

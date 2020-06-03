@@ -25,6 +25,11 @@ struct ship_ {
 
     int columns, rows;
 
+    int rotation; 
+
+    int translationx; 
+    int translationy;
+
     int shotCount;
 };
 

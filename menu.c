@@ -270,6 +270,7 @@ void scanPointInsert(User *user, ListNode *node, int boardSize) {
   bool inserted = false;
 
 
+  
   printf("Choose a point to insert %s in matrix\n",kind );
       printf("x: ");
       scanf(" %c", &ch_x);
@@ -278,17 +279,21 @@ void scanPointInsert(User *user, ListNode *node, int boardSize) {
       x = choiceChar(ch_x);
       y = choiceChar(ch_y);
 
-  
+     // x = random()%boardSize;
+    //y = random()%boardSize;
     inserted = insertShipInStructure(user, (SHIP*)node -> data,x,y, boardSize);
 
   while(inserted == false) {
-      printf("Try again !\n");
+     printf("Try again !\n");
       printf("x: ");
       scanf(" %c", &ch_x);
       printf("\ny: ");
       scanf(" %c",&ch_y);
       x = choiceChar(ch_x);
       y = choiceChar(ch_y);
+     
+      //x = random()%boardSize;
+      //y = random()%boardSize;
       inserted = insertShipInStructure(user,(SHIP*)node -> data, x, y, boardSize);
   }
 
@@ -301,8 +306,7 @@ void choiceModeGame(User *user, int boardSize) {
       printf("%s choose a mode game\n", user -> username);
       printf("1 - Manual Setup\n");
       printf("2 - Randomize Setup\n");
-      printf("3 - Manual/Randomize Setup \n");
-      printf("4 - Return principal menu\n");
+      printf("3 - Return principal menu\n");
       printf("Option: ");
       scanf("%d", &numberChoice);
       printf("\n");
@@ -312,77 +316,12 @@ void choiceModeGame(User *user, int boardSize) {
               break;
         case 2: choiceShipsAuto(user, boardSize);
               break;
-        case 3: choiceShips(user, boardSize);
-              break;
-        case 4: mainMenu();
+        case 3: mainMenu();
               break;
         default: choiceModeGame(user, boardSize);
               break;
       }
 }
-
-
-
-// If user want to chose manual and random ship
-void choiceShips(User *user, int boardSize) {
-
-    ListNode *node = user -> shipList -> head;
-    int choice;
-
-    while(node != NULL) {
-      printf("How %s want to do a ship?\n", user -> username);
-      printf("1) MANUAL\n");
-      printf("2) AUTO \n");
-      scanf("%d", &choice);
-
-      switch(choice) {
-        case 1: scanPointsTranslation(node);
-          scanPointRotation(node);
-         // printBitMap(node -> ship -> bp);
-          printf("\n");
-          insertMode(user, node, boardSize);
-          break;
-        case 2: randomTranslation(node);
-          randomRotation(node);
-         // printBitMap((SHIP*)(node -> data) -> bp);
-          printf("\n");
-          insertMode(user, node, boardSize);
-          break;
-
-        default: printf("Try again \n");
-          scanf("%d", &choice);
-          break;
-      }
-
-      node = node -> next;
-    }
-}
-
-
-// Auxiliar function
-void insertMode(User *user, ListNode *node, int boardSize) {
-
-  int insertMode = 0;
-
-  printf("How %s want to insert ship? \n", user -> username);
-  printf("1) MANUAL\n");
-  printf("2) AUTO\n");
-  scanf("%d",&insertMode);
-
-  switch (insertMode) {
-    case 1: scanPointInsert(user,node,boardSize);
-            printBoard(user, boardSize);
-            break;
-    case 2: randomInsert(node,user, boardSize);
-            printBoard(user, boardSize);
-            break;
-
-    default: printf("Try again \n");
-      scanf("%d", &insertMode);
-      break;
-  }
-}
-
 
 // Choose ships random
 void choiceShipsAuto(User *user, int boardSize) {
@@ -396,7 +335,7 @@ void choiceShipsAuto(User *user, int boardSize) {
     while(node != NULL) {
       randomTranslation(node);
       randomRotation(node);
-      randomInsert(node, user, boardSize);
+      randomInsert(user, node, boardSize);
 
       node =  node -> next;
     }
@@ -408,8 +347,6 @@ void choiceShipsAuto(User *user, int boardSize) {
     printf("2) NO \n");
     printf("Option: ");
     scanf("%d",&agreed);
-
-    //deleteShip(user);
 
     switch(agreed) {
       case 1: break;
@@ -448,34 +385,35 @@ void choiceShipsManual(User *user, int boardSize) {
 
 bool deleteListShip(User *usr, int x, int y, int boardSize) {
 
-    printf("Entrei na função\n");
     bool deleted = false;
    
     ShipKind kind;
     void *structure = USERSTRUCTURE(usr);
-    Point *p = newPoint(x,y);
 
+    Point *p = newPoint(x,y);
     Cell *aux = searchPoint(structure,p);
 
     if(aux != NULL) {
 
       SHIP *sh = SHIPCELL(aux);
       BitMap *bp = SHIPBITMAP(sh);
-  
+
+      printBitMap(bp);
+
       kind = SHIPKIND(sh);
       removeNode(USERLIST(usr), sh);
       deleted = true;
-   
+
+      int xx = BPX(bp); 
+      int yy = BPY(bp);
+
       for(int i = 0; i < sizeBitMap; i++) {
         for(int j = 0; j < sizeBitMap; j++) {
           unsigned char data = CELLBP(bp,i,j);
-          printf("data: %c\n", data);
           if(data == '1') {
-            printf("o data == 1\n");
-            Point *p = newPoint(i+x, j+y);
+            Point *p = newPoint(i+xx, j+yy);
             void *aux1 = searchPoint(structure,p);
             if(aux1 != NULL) deleteShip(structure,aux1,p); 
-            else printf("SOU NULA\n");
             }
         }
       }
@@ -494,8 +432,6 @@ bool deleteListShip(User *usr, int x, int y, int boardSize) {
     scanPointInsert(usr, node,boardSize);
 
     }
-
-    printf("%d\n",deleted);
 
     return deleted;
 }

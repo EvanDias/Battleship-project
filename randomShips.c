@@ -25,15 +25,15 @@ void randomTranslation(ListNode *node) {
 
   char *kind = nameShip((SHIP*)(node -> data)); 
   if(kind != "L_GUY" && kind != "S_GUY") {
-    x = rand()%sizeBitMap;
-    y = rand()%sizeBitMap;
+    x = random()%sizeBitMap;
+    y = random()%sizeBitMap;
 
   }
     bool translate = translation((SHIP*)node -> data, y, x);
 
     while(translate == false) {
-      x = rand()%sizeBitMap;
-      y = rand()%sizeBitMap;
+      x = random()%sizeBitMap;
+      y = random()%sizeBitMap;
       translate = translation((SHIP*)node -> data, y, x);
     }
 
@@ -46,25 +46,33 @@ void randomTranslation(ListNode *node) {
 
 void randomRotation(ListNode *node) {
 
-  int numberRandom = rand()%4;
+  int numberRandom = random()%4;
   rotation((SHIP*)node -> data, rotationNumber(numberRandom));
 
   printf("O valor da rotação: %d\n",rotationNumber(numberRandom));
 }
 
 
-void randomInsert(ListNode *node, User *user, int boardSize) {
+void randomInsert(User *user, ListNode *node, int boardSize) {
 
-  int x = random()%(boardSize);
-  int y = random()%(boardSize);
+  int x = 0;
+  int y = 0;
 
+  char * kind = nameShip((SHIP*)node -> data);
 
-  bool inserted = insertShipInStructure(user, (void*)node -> data, x, y, boardSize);
+  bool inserted = false;
+
+  x = random()%boardSize; 
+  y = random()%boardSize;
+
+  inserted = insertShipInStructure(user, (SHIP*)node -> data,x,y, boardSize);
 
   while(inserted == false) {
-      x = random()%(boardSize);
-      y = random()%(boardSize);
-      inserted = insertShipInStructure(user, (void*)node -> data, x, y, boardSize);
+      x = random()%boardSize;
+      y = random()%boardSize;
+      inserted = insertShipInStructure(user,(SHIP*)node -> data, x, y, boardSize);
   }
+  
+
 
 }

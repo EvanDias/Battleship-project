@@ -7,7 +7,6 @@ void choiceOne();
 void choiceTwo();
 void choiceMenu(int numberMenu);
 void choiceModeGame(User *user, int boardSize);
-void choiceShips(User *user, int boardSize);
 void choiceShipsAuto(User *user, int boardSize);
 void choiceShipsManual(User *user, int boardSize);
 void insertMode(User *user, ListNode *node, int boardSize);

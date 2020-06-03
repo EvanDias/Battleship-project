@@ -102,6 +102,7 @@ void insertQuad(QuadTree *quad, void *data, Point *p) {
      if(TYPE(quad) == NODELEAF) {
         if(quad -> contentNode.data == NULL) {
        // quadChilds type = whichQuadrant(quad, qPoint -> position);
+       printf("inseriu\n");
         quad -> contentNode.data = qPoint;
         } else {
             subdivide(quad);
@@ -114,7 +115,6 @@ void insertQuad(QuadTree *quad, void *data, Point *p) {
         //printf("FATHER\n");
         goThroughtFather(quad, qPoint);
     } else {
-        printf("WTF\n");
     }
 }
 

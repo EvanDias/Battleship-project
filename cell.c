@@ -28,7 +28,7 @@ void changeValueShotBp(Cell *cell, int x, int y, unsigned char ternaryValue) {
     int x_value = BPX(bp);
     int y_value = BPY(bp);
 
-     SETCELLBP(bp, y-y_value, x-x_value, ternaryValue);
+    setCellBP(bp, y-y_value, x-x_value, ternaryValue);
 
 }
 
@@ -42,7 +42,7 @@ void modifyValues(Cell *cell, int x, int y) {
         //value of matrix become *
         SETCELLVALUE(cell,'*');
         SHIP *sh = SHIPCELL(cell);
-        SETSHIPSHOTCOUNT(sh, sh -> shotCount--);
+        sh -> shotCount--;
         //change value bitmap to ship 2
         //changeValueShotBp(cell,x,y,'2');
     
@@ -67,7 +67,7 @@ void modifyShot(Cell *cell, bool b) {
 }
 
 
-bool hittedPiece(Cell *cell, int x, int y) {
+bool hittedPiece(Cell *cell) {
 
     bool hitted = false; 
 

@@ -22,7 +22,7 @@ void insertedShipCell(Cell *cell, SHIP *sh);
 void changeValueShotBp(Cell *cell, int x, int y, unsigned char ternaryValue);
 void modifyValues(Cell *cell, int x, int y);
 void modifyShot(Cell *cell, bool b);
-bool hittedPiece(Cell *cell, int x, int y);
+bool hittedPiece(Cell *cell);
 void freeCell(Cell *cell);
 
 

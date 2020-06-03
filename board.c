@@ -2,8 +2,6 @@
 
 void printBoard(User *usr, int boardSize) {
 
-
-    printf("entrei no printBoard\n");
     printf("\n");
     printf("  A ");
 

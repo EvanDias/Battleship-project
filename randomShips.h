@@ -4,6 +4,6 @@
 
 void randomTranslation(ListNode *node);
 void randomRotation(ListNode *node);
-void randomInsert(ListNode *node, User *usr, int boardSize);
+void randomInsert(User *usr, ListNode *node, int boardSize);
 
 #endif //RANDOM_RANDOMsHIPS_H

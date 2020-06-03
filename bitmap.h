@@ -11,7 +11,6 @@
 #define SETBPX(B,x) (B -> refx = x)
 #define SETBPY(B,y) (B -> refy = y)
 #define CELLBP(B,x,y) (B -> data[x][y])
-#define SETCELLBP(B,x,y,v) (B -> data[x][y] = v)
 
 typedef struct bitmap_ BitMap;
 
@@ -25,6 +24,7 @@ struct bitmap_ {
 };
 
 BitMap *initBitMap();
+void setCellBP(BitMap *bp, int x, int y, unsigned char value);
 void allZero(BitMap *bp, unsigned char ternaryValue);
 void copyBitMaps(BitMap *bp1, BitMap *bp2);
 void printBitMap(BitMap *x);
