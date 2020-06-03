@@ -214,9 +214,12 @@ void choiceMenu(int numberMenu) {
 void scanPointsTranslation(ListNode *node) {
 
   int x, y = 0;
-  char *kind = nameShip((SHIP*)node -> data);
-  if(kind != "L_GUY" && kind != "S_GUY") {
-    printf("Choose the points to do translation of %s \n", kind);
+
+  SHIP *sh = (SHIP*)node;
+  ShipKind kind = SHIPKIND(sh); 
+
+  if(kind != 4 && kind != 6) {
+    printf("Choose the points to do translation of %s \n", nameShip(sh));
     printf("x: ");
     scanf("%d", &x);
     printf("\ny: ");

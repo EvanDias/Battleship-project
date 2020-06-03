@@ -6,13 +6,14 @@
 static QuadPoint *initQuadPoint(Point *point, void *data);
 static int dimensionQuad(int size);
 static QuadTree *initQuad(Point *middlePoint, nodeType type, int size);
-static bool inBoundar(QuadTree *quad, Point *position);
+static bool inBoundary(QuadTree *quad, Point *position);
 static void subdivide(QuadTree *quad);
 static void goThroughtFather(QuadTree *father, QuadPoint *pqpoint);
 static int whatQuadrants(QuadTree *quad, QuadPoint *pq);
 static Point *newMiddlePoint(QuadTree *quad, int new_dimension, int i);
 static void *searchFather(QuadTree *quad, Point *p);
 static void deleteFather(QuadTree *quad, void *data,Point *p);
+static void freeQuadPoint(QuadPoint *pq);
 
 QuadPoint *initQuadPoint(Point *point, void *data) {
 
@@ -39,6 +40,8 @@ QuadTree *initQuadInitial(int boardSize) {
     Point *mPoint = newPoint(0, 0);
 
     QuadTree *new = initQuad(mPoint,NODELEAF,dimension);
+
+    return new;
 
 }
 
@@ -155,7 +158,7 @@ void subdivide(QuadTree *quad) {
 
     insertQuad(quad, pointQuad ->data, pointQuad -> position);
 
-    //TODO:Free point quad
+    freeQuadPoint(pointQuad);
 
 }
 int whatQuadrants(QuadTree *quad, QuadPoint *pq) {
@@ -242,8 +245,6 @@ void deletePointQuad(QuadTree *quad, void *data,Point *p) {
         if(quad -> contentNode.data != NULL &&
            COORDX(POSQUADPOINT(quad -> contentNode.data)) == COORDX(p) &&
            COORDY(POSQUADPOINT(quad -> contentNode.data)) == COORDY(p)) {
-                   printf("delete\n");
-
            free(quad -> contentNode.data); 
            quad -> contentNode.data = NULL;
            return;
@@ -264,3 +265,17 @@ void deleteFather(QuadTree *quad, void *data, Point *p) {
 
     }
 }
+
+void freeQuadPoint(QuadPoint *pq) {
+
+    free(pq ->position); 
+    free(pq -> data); 
+    free(pq);
+
+}
+/*
+void freeQuadTree(QuadTree *quad) {
+
+
+
+}*/

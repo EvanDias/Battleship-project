@@ -23,8 +23,9 @@ void randomTranslation(ListNode *node) {
   int x = 0;
   int y = 0;
 
-  char *kind = nameShip((SHIP*)(node -> data)); 
-  if(kind != "L_GUY" && kind != "S_GUY") {
+  SHIP *sh = (SHIP*)node;
+  ShipKind kind = SHIPKIND(sh); 
+  if(kind != 4 && kind != 6) {
     x = random()%sizeBitMap;
     y = random()%sizeBitMap;
 
@@ -57,8 +58,6 @@ void randomInsert(User *user, ListNode *node, int boardSize) {
 
   int x = 0;
   int y = 0;
-
-  char * kind = nameShip((SHIP*)node -> data);
 
   bool inserted = false;
 

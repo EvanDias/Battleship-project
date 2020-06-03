@@ -14,7 +14,7 @@ Point* newPoint(int x_, int y_) {
 
 
 //delete a point
-void deletePoint(Point* p) {
+void freePoint(Point* p) {
 
     free(p);    //delete the memory
 

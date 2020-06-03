@@ -18,4 +18,4 @@ struct Point_
 };
 
 Point *newPoint(int x, int y);
-void deletePoint(Point* p);
+void freePoint(Point* p);

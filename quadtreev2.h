@@ -49,5 +49,3 @@ void insertQuad(QuadTree *quad, void *data, Point *p);
 int chooseQuad(QuadTree *quad, Point *p);
 void *searchQuad(QuadTree *quad, Point *p);
 void deletePointQuad(QuadTree *quad, void *data,Point *p);
-void freeQuadPoint(QuadPoint *pq);
-//int numberPointsInserted(QuadTree *quad);

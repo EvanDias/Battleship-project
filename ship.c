@@ -16,7 +16,7 @@
 })
 
 static SHIP *getShipSize(SHIP *sh);
-static void *shipToOne(SHIP *sh);
+static void shipToOne(SHIP *sh);
 static int numCells(SHIP *sh);
 
 /*Create a ship with :
@@ -50,7 +50,7 @@ SHIP *newShip(ShipKind kind) {
 
 
 //Change value of bitmap's cell, according ship kind
-void *shipToOne(SHIP *sh) {
+void shipToOne(SHIP *sh) {
     unsigned char ternaryValue = '1';
 
     if(sh -> kind == SOLO) {
@@ -244,14 +244,13 @@ bool translation(SHIP *sh, int sizeVertical, int sizeHorizontal) {
 
 
 // Rotation of ship in bitmap
-void rotation(SHIP *sh, int degrees) {
+ void rotation(SHIP *sh, int degrees) {
 
   BitMap *bitFinal = initBitMap();
 
   int x_line, y_line = 0;
 
   int broke = 0;
-  bool rotate = false;
 
 
   for(int i = 0; i < 5; i++) {
@@ -264,7 +263,6 @@ void rotation(SHIP *sh, int degrees) {
           break;
         }
        setCellBP(bitFinal,y_line,x_line,'1');
-        rotate = true;
       }
       }
       if(broke) {
