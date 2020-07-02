@@ -1,8 +1,5 @@
 #include "geral.h" 
 
-
-#define MATRIX 
-
 #ifdef MATRIX
 #include "matrix.h"
 

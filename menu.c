@@ -417,6 +417,8 @@ bool deleteListShip(User *usr, int x, int y, int boardSize) {
             Point *p = newPoint(i+xx, j+yy);
             void *aux1 = searchPoint(structure,p);
             if(aux1 != NULL) deleteShip(structure,aux1,p); 
+            freePoint(p);
+
             }
         }
       }

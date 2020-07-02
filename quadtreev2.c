@@ -72,10 +72,6 @@ bool inBoundary(QuadTree *quad, Point *position) {
 
     Point *p = MIDDLEPOINT(quad);
 
-   // printf("DIMENSIONS %d\n", dimensions);
-
-   //printf("POINTTTT x: %d e y: %d\n", position -> x, position -> y);
-
     //Como guardamos apenas o canto mais pequeno do quadrado, não é necessario dividir o dimensions
     int x_small = COORDX(p), x_large = COORDX(p) + dimensions,
         y_small = COORDY(p), y_large = COORDY(p) + dimensions;
@@ -83,12 +79,9 @@ bool inBoundary(QuadTree *quad, Point *position) {
     //printf("Checking X: %d small %d large %d Y: %d small %d large %d dimensions %d\n", p->x, x_small, x_large, p->y, y_small, y_large, dimensions);
 
     if (x_small <= COORDX(position) && COORDX(position) < x_large && y_small <= COORDY(position) && COORDY(position) < y_large) {
-        //printf("pertence a este quad \n");
         return true;
     }
 
-
-    //printf("Não pertence ao quad \n");
     return false;
 }
 
@@ -115,10 +108,8 @@ void insertQuad(QuadTree *quad, void *data, Point *p) {
 
     else if(TYPE(quad) == NODEFATHER) {
 
-        //printf("FATHER\n");
         goThroughtFather(quad, qPoint);
-    } else {
-    }
+    } 
 }
 
 void goThroughtFather(QuadTree *father, QuadPoint *pqpoint) {
@@ -135,7 +126,6 @@ void goThroughtFather(QuadTree *father, QuadPoint *pqpoint) {
 
 void subdivide(QuadTree *quad) {
 
-    printf("SUBDIVIR\n");
     QuadPoint *pointQuad = quad -> contentNode.data;
 
     int currentDimension = DIMENSION(quad); 
@@ -151,14 +141,12 @@ void subdivide(QuadTree *quad) {
 
         Point *newMiddlePoint1 = newMiddlePoint(quad, newDimension, i);
 
-        //printf("i: %d   point x: %d  e  y: %d dimension %d\n",i, newMiddlePoint1 -> x, newMiddlePoint1 -> y, newDimension);
-
         quad -> contentNode.children[i] = initQuad(newMiddlePoint1,NODELEAF,newDimension);
     }
 
     insertQuad(quad, pointQuad ->data, pointQuad -> position);
 
-    freeQuadPoint(pointQuad);
+   // freeQuadPoint(pointQuad);
 
 }
 int whatQuadrants(QuadTree *quad, QuadPoint *pq) {
@@ -193,7 +181,6 @@ void *searchQuad(QuadTree *quad, Point *p) {
     void *data = NULL;
 
     if(inBoundary(quad, p) == false) {
-        //printf("O ponto não pode estar contido\n");
         return data = NULL;
     }
 
@@ -268,14 +255,28 @@ void deleteFather(QuadTree *quad, void *data, Point *p) {
 
 void freeQuadPoint(QuadPoint *pq) {
 
-    free(pq ->position); 
+    freePoint(pq ->position); 
     free(pq -> data); 
     free(pq);
 
 }
-/*
+
+void freeQuadTreePoint(QuadTree *quad) {
+
+    if(quad -> type == NODELEAF) freeQuadPoint(quad -> contentNode.data); 
+
+    else {
+        for(int i = 0; i < 4; i++) {
+            freeQuadTreePoint(quad -> contentNode.children[i]);
+        }
+    }
+}
+
 void freeQuadTree(QuadTree *quad) {
 
+    freeQuadTreePoint(quad); 
 
+    free(quad);
 
-}*/
+}
+

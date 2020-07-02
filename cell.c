@@ -40,7 +40,7 @@ void modifyValues(Cell *cell, int x, int y) {
       if(CELLVALUE(cell) == 'x') {
 
         //value of matrix become *
-        SETCELLVALUE(cell,'*');
+        SETCELLVALUE(cell,'#');
         SHIP *sh = SHIPCELL(cell);
         sh -> shotCount--;
         //change value bitmap to ship 2
@@ -75,16 +75,12 @@ bool hittedPiece(Cell *cell) {
 
     if(sh != NULL)  {
         hitted = true;
-        //printf("Tem barco \n");
     }
         
 
     else if(sh == NULL) {
-        hitted = false;
-        //printf("Não tem barco\n");        
+        hitted = false;      
     }
-
-    //printf("HITTED: %d\n", hitted);
     
     return hitted; 
 }

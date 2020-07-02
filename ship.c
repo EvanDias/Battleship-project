@@ -281,8 +281,6 @@ bool translation(SHIP *sh, int sizeVertical, int sizeHorizontal) {
 bool sinkBoat(SHIP *ship) {
     bool sinkBoatV = false;
 
-    int shotCount = ship -> shotCount;
-
     if(ship -> shotCount == 0) sinkBoatV = true;
 
     return sinkBoatV;

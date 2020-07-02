@@ -1,19 +1,19 @@
 #include "game.h"
 
 bool gameTurn(User *start, User *other, int boardSize) {
-
+  system("clear");
   char ch_x, ch_y;
   int x, y = 0;
   bool shotCan = false;
 
-  void *structureStart = USERSTRUCTURE(start);
+
   void *structureOther = USERSTRUCTURE(other);
   bool gamePlayed = false;
 
   printUsers(start, other, boardSize);
   printBothBoard(start, other, boardSize);
   
-  /*
+  
    printf("%s choose point to hit a ship of %s\n", USERNAME(start), USERNAME(other));
     printf("x: ");
     scanf(" %c", &ch_x);
@@ -22,9 +22,9 @@ bool gameTurn(User *start, User *other, int boardSize) {
     x = choiceChar(ch_x);
     y = choiceChar(ch_y);
 
-*/
-    x = randomShoot(boardSize);
-    y = randomShoot(boardSize);
+
+    //x = randomShoot(boardSize);
+    //y = randomShoot(boardSize);
 
     shotCan = canShot(other,x,y,boardSize);
 
@@ -39,7 +39,7 @@ bool gameTurn(User *start, User *other, int boardSize) {
     else {
         while(shotCan == false) {
       
-    /*       printf("Try Again\n");
+           printf("Try Again\n");
           printf("%s choose point to hit a ship of %s\n", USERNAME(start), USERNAME(other));
           printf("x: ");
           scanf(" %c", &ch_x);
@@ -47,9 +47,9 @@ bool gameTurn(User *start, User *other, int boardSize) {
           scanf(" %c",&ch_y);
           x = choiceChar(ch_x);
           y = choiceChar(ch_y);
-      */   
-        x = randomShoot(boardSize);
-        y = randomShoot(boardSize);
+         
+        //x = randomShoot(boardSize);
+        //y = randomShoot(boardSize);
 
       
 
@@ -63,14 +63,15 @@ bool gameTurn(User *start, User *other, int boardSize) {
     }
 
     if(sinkBoatStructure(structureOther, boardSize)) {
+        system("clear");
         printUsers(start, other, boardSize);
         printBothBoard(start, other, boardSize);
-      
         printf("You sank the ship!\n");
     } else {
-       printUsers(start, other, boardSize);
+        system("clear");
+        printUsers(start, other, boardSize);
         printBothBoard(start, other,boardSize);
-          //printBoard(start, boardSize);
+        //printBoard(start, boardSize);
         //printBoard(other, boardSize);
         Point *p = newPoint(x,y);
         void *aux = searchPoint(structureOther,p);
@@ -85,7 +86,7 @@ bool gameTurn(User *start, User *other, int boardSize) {
      }
     }
   
-     //sleep(2);
+    sleep(2);
 
     return gamePlayed;
 }
@@ -216,7 +217,7 @@ bool shotPlayer(User *user, int x, int y) {
 
     }
 
-    else printf("ESTOU NULA\n");
+    else printf("NULA\n");
 
     return shot;
   
@@ -301,7 +302,6 @@ bool canInsert(User *user, SHIP *ship, int x, int y, int boardSize) {
           unsigned char data = CELLBP(bp,i,j);
           if(data == '1') {
             if((j+y) >= boardSize|| (i+x) >= boardSize) {
-              printf("SAIU FORA DO SITIO\n");
               insert = false;
               broke = 1;
               break;
@@ -309,8 +309,6 @@ bool canInsert(User *user, SHIP *ship, int x, int y, int boardSize) {
 
             Point *p = newPoint(x+i,y+j); 
 
-            printf("FIZ O PONTO : x+i %d, y+j %d\n", p -> x, p -> y);
-          //printf("fiz o ponto \n");
             void *aux = searchPoint(structure,p); 
                
             if(aux != NULL) {

@@ -5,7 +5,6 @@
 // Init a matrix with its size
 Matrix* initMatrix(int size) {
 
-    printf("size: %d\n", size);
     Matrix* matrix = malloc(sizeof(Matrix));
     matrix -> size = size;
 
