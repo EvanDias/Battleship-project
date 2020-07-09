@@ -13,12 +13,12 @@ Matrix
 make matrix
 ```
 QuadTree
-``bash
+```bash
 make quad
 ```
 Run 
 ```bash
- ./main
+./main
 ```
 
 Clean files .o 
@@ -26,7 +26,7 @@ Clean files .o
 make clean
 ```
 
-##Files 
+## Files 
 ---src---<br />
 -bitmap.c: functions related to the struct bitmap, such as its initialization and changing the value of cells.<br />
 -board.c: contains several functions that serve for the graphical demonstration of each player's boards in the terminal.<br />
