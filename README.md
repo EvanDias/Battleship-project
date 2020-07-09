@@ -45,10 +45,10 @@ make clean
 ---compile---<br />
 -make<br />
 
-##Input
+## Input
 As input initially, you must choose to start the game or see the rules of the game. If you choose to start the game, you are faced with the size of the board, which must be between 20 and 40. Then each player chooses his boats in turn. To see who starts the game, it is the one who chooses the largest number. Each chooses where to place their boats, depending on whether they want to random or choose for themselves.
 
-##Observations 
+## Observations 
 A explicação de toda a elaboração do projeto está explicado no ficheiro: 
 ```bash
 BatalhaNaval - Relatório.pdf(https://github.com/EvanDias/Battleship-project/blob/master/BatalhaNaval%20-%20Relat%C3%B3rio.pdf)
